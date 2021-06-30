@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Yp9azwFAmmTL1dWJProaG2AoznirXbmc6AQsfO5sxJOhfByg0L13f2ObqsVlD4gXyvEP9QG0G98CRbEUCnwiCA==",
+  "dgSpecHash": "YRBlSCm4mZt0OHd8o/gDFyCiUgvoMnbNGCGxI8Js+XYoy2R3bgMcC7v8nC/MonkojKQt7wZAWdCqBoiiaRNgzA==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\TEST\\aspnet-microservices\\AspNetMicroservices.Products\\AspNetMicroservices.Products.Dto\\AspNetMicroservices.Products.Dto.csproj",
+  "projectFilePath": "/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Products/AspNetMicroservices.Products.Dto/AspNetMicroservices.Products.Dto.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

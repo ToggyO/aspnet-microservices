@@ -10,8 +10,8 @@ namespace AspNetMicroservices.Products.Api.Services
         public override Task<TestResponse> Test(Empty request, ServerCallContext context)
         {
             // return base.Test(request, context);
-            // return Task.FromResult(new TestResponse { TestMessage = "KEK" });
-            throw new RpcException(new Status(StatusCode.Internal, "Test"));
+            return Task.FromResult(new TestResponse { TestMessage = "KEK" });
+            // throw new RpcException(new Status(StatusCode.Internal, "Test"));
         }
     }
 }

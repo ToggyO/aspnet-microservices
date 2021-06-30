@@ -52,7 +52,8 @@ namespace AspNetMicroservices.Gateway.Api
 
             services.Configure<ApiBehaviorOptions>(opt => opt.SuppressModelStateInvalidFilter = true);
 
-            services.AddConfiguredGrpcClient<ProductsService.ProductsServiceClient>("https://localhost:5003");
+            services.AddConfiguredGrpcClient<ProductsService.ProductsServiceClient>("http://localhost:5002");
+            // services.AddConfiguredGrpcClient<ProductsService.ProductsServiceClient>("https://localhost:5003");
                 // .AddInterceptor<RpcErrorInterceptor>();
             
             services.AddControllersWithViews(opt => opt.UseGlobalRoutePrefix("api"));

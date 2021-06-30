@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-
+using System.Threading.Tasks;
+using AspNetMicroservices.Shared.Models.Response;
+using AspNetMicroservices.Shared.Protos.ProductsProtos;
 using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -34,6 +36,27 @@ namespace AspNetMicroservices.Gateway.Api.Extensions
                 // Sta
                 _ => HttpStatusCode.OK
             };
+        }
+
+        public static async Task<Response<TItem>> EnsureSuccess<TItem>(
+            this AsyncUnaryCall<TItem> call) where TItem : class
+        {
+            try
+            {
+                var response = await call;
+                return new Response<TItem>
+                {
+                    Data = response,
+                };
+            }
+            catch (RpcException e)
+            {
+                return new ErrorResponse<TItem>
+                {
+                    HttpStatusCode = e.StatusCode.ToHttpStatusCode(),
+                    Message = e.Status.Detail,
+                };
+            }
         }
     }
 }

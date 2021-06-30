@@ -20,22 +20,26 @@ namespace AspNetMicroservices.Gateway.Api.Handlers.Products.Implementation
 
         public async Task<Response<TestResponse>> Test()
         {
-            try
-            {
-                var response = await _client.TestAsync(new Empty());
-                return new Response<TestResponse>
-                {
-                    Data = response,
-                };
-            }
-            catch (RpcException e)
-            {
-                return new ErrorResponse<TestResponse>
-                {
-                    HttpStatusCode = e.StatusCode.ToHttpStatusCode(),
-                    Message = e.Status.Detail,
-                };
-            }
+            var response = await _client
+                .TestAsync(new Empty())
+                .EnsureSuccess();
+            return response;
+            // try
+            // {
+            //     var response = await _client.TestAsync(new Empty());
+            //     return new Response<TestResponse>
+            //     {
+            //         Data = response,
+            //     };
+            // }
+            // catch (RpcException e)
+            // {
+            //     return new ErrorResponse<TestResponse>
+            //     {
+            //         HttpStatusCode = e.StatusCode.ToHttpStatusCode(),
+            //         Message = e.Status.Detail,
+            //     };
+            // }
         }
 
         
