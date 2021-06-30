@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
-using Google.Protobuf.WellKnownTypes;
+
+using AspNetMicroservices.Shared.Models.Response;
+using AspNetMicroservices.Shared.Protos.ProductsProtos;
 
 namespace AspNetMicroservices.Gateway.Api.Handlers.Products
 {
     public interface IProductsHandler
     {
-        Task<Empty> Test();
+        Task<Response<TestResponse>> Test();
     }
 }

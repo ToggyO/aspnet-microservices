@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 using Grpc.Core;
@@ -30,7 +31,8 @@ namespace AspNetMicroservices.Gateway.Api.Filters
             }
             catch (RpcException e)
             {
-                throw new RpcException(new Status(e.StatusCode, e.Message));
+                // var error = JsonSerializer.Deserialize(e.Message)
+                throw new RpcException(e.Status);
             }
         }
     }

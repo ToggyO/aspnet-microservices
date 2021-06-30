@@ -1,29 +1,29 @@
 {
   "format": 1,
   "restore": {
-    "/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Products/AspNetMicroservices.Products.Dto/AspNetMicroservices.Products.Dto.csproj": {}
+    "D:\\Projects\\TEST\\aspnet-microservices\\AspNetMicroservices.Products\\AspNetMicroservices.Products.Dto\\AspNetMicroservices.Products.Dto.csproj": {}
   },
   "projects": {
-    "/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Products/AspNetMicroservices.Products.Dto/AspNetMicroservices.Products.Dto.csproj": {
+    "D:\\Projects\\TEST\\aspnet-microservices\\AspNetMicroservices.Products\\AspNetMicroservices.Products.Dto\\AspNetMicroservices.Products.Dto.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Products/AspNetMicroservices.Products.Dto/AspNetMicroservices.Products.Dto.csproj",
+        "projectUniqueName": "D:\\Projects\\TEST\\aspnet-microservices\\AspNetMicroservices.Products\\AspNetMicroservices.Products.Dto\\AspNetMicroservices.Products.Dto.csproj",
         "projectName": "AspNetMicroservices.Products.Dto",
-        "projectPath": "/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Products/AspNetMicroservices.Products.Dto/AspNetMicroservices.Products.Dto.csproj",
-        "packagesPath": "/Users/user/.nuget/packages/",
-        "outputPath": "/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Products/AspNetMicroservices.Products.Dto/obj/",
+        "projectPath": "D:\\Projects\\TEST\\aspnet-microservices\\AspNetMicroservices.Products\\AspNetMicroservices.Products.Dto\\AspNetMicroservices.Products.Dto.csproj",
+        "packagesPath": "C:\\Users\\Oleg Togushakov\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\TEST\\aspnet-microservices\\AspNetMicroservices.Products\\AspNetMicroservices.Products.Dto\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "/Users/user/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Oleg Togushakov\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {}
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nexus.esphere.local/repository/nuget-group/": {}
         },
         "frameworks": {
           "net5.0": {
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.300/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,5 +1,6 @@
 using System;
-
+using System.Collections.Generic;
+using System.Net.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ using AspNetMicroservices.Gateway.Api.Extensions;
 using AspNetMicroservices.Gateway.Api.Filters;
 using AspNetMicroservices.Gateway.Api.Middleware;
 using AspNetMicroservices.Shared.Protos.ProductsProtos;
+using Grpc.Net.Client;
 
 namespace AspNetMicroservices.Gateway.Api
 {
@@ -49,11 +51,9 @@ namespace AspNetMicroservices.Gateway.Api
                     ));
 
             services.Configure<ApiBehaviorOptions>(opt => opt.SuppressModelStateInvalidFilter = true);
-            
-            services.AddGrpcClient<ProductsService.ProductsServiceClient>(opts =>
-            {
-                opts.Address = new Uri("http://localhost:5002");
-            }).AddInterceptor<RpcErrorInterceptor>();
+
+            services.AddConfiguredGrpcClient<ProductsService.ProductsServiceClient>("https://localhost:5003");
+                // .AddInterceptor<RpcErrorInterceptor>();
             
             services.AddControllersWithViews(opt => opt.UseGlobalRoutePrefix("api"));
             services.AddConfiguredSwaggerGen();

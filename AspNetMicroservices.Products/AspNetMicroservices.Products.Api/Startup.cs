@@ -37,6 +37,8 @@ namespace AspNetMicroservices.Products.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // app.UseHttpsRedirection();
             
             app.UseRouting();
             

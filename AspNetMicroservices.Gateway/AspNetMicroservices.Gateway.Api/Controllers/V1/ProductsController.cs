@@ -1,13 +1,16 @@
 using System.Threading.Tasks;
-using AspNetMicroservices.Gateway.Api.Handlers.Products;
-using Google.Protobuf.WellKnownTypes;
+
 using Microsoft.AspNetCore.Mvc;
+
+using AspNetMicroservices.Gateway.Api.Handlers.Products;
+using AspNetMicroservices.Shared.Models.Response;
+using AspNetMicroservices.Shared.Protos.ProductsProtos;
 
 namespace AspNetMicroservices.Gateway.Api.Controllers.V1
 {
     [ApiController]
     [Route("products")]
-    public class ProductsController : ControllerBase
+    public class ProductsController : ControllerBase, IProductsHandler
     {
         private readonly IProductsHandler _handler;
 
@@ -17,6 +20,6 @@ namespace AspNetMicroservices.Gateway.Api.Controllers.V1
         }
 
         [HttpGet]
-        public async Task<Empty> Test() => await _handler.Test();
+        public async Task<Response<TestResponse>> Test() => await _handler.Test();
     }
 }

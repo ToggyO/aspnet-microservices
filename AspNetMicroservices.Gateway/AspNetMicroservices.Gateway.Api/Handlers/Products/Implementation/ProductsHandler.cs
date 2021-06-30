@@ -1,6 +1,11 @@
+using System.Net;
 using System.Threading.Tasks;
-using AspNetMicroservices.Shared.Protos.ProductsProtos;
+using AspNetMicroservices.Gateway.Api.Extensions;
 using Google.Protobuf.WellKnownTypes;
+using Grpc.Core;
+
+using AspNetMicroservices.Shared.Protos.ProductsProtos;
+using AspNetMicroservices.Shared.Models.Response;
 
 namespace AspNetMicroservices.Gateway.Api.Handlers.Products.Implementation
 {
@@ -13,11 +18,26 @@ namespace AspNetMicroservices.Gateway.Api.Handlers.Products.Implementation
             _client = client;
         }
 
-        public async Task<Empty> Test()
+        public async Task<Response<TestResponse>> Test()
         {
-            
-            var response = await _client.TestAsync(new Empty());
-            return response;
+            try
+            {
+                var response = await _client.TestAsync(new Empty());
+                return new Response<TestResponse>
+                {
+                    Data = response,
+                };
+            }
+            catch (RpcException e)
+            {
+                return new ErrorResponse<TestResponse>
+                {
+                    HttpStatusCode = e.StatusCode.ToHttpStatusCode(),
+                    Message = e.Status.Detail,
+                };
+            }
         }
+
+        
     }
 }

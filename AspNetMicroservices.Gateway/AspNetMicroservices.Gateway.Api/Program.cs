@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -14,6 +15,9 @@ namespace AspNetMicroservices.Gateway.Api
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    // AppContext.SetSwitch(
+                    //     "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
                     // if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) {
                     //     webBuilder.ConfigureKestrel(options =>
                     //     {
