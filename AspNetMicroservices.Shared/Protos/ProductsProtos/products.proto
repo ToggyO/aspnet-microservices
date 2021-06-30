@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option csharp_namespace = "AspNetMicroservices.Shared.Protos.ProductsProtos";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+service ProductsService {
+  rpc GetProducts (google.protobuf.Empty) returns (ProductModel);
+
+  rpc Test (google.protobuf.Empty) returns (google.protobuf.Empty);
+}
+
+message CreateProductDTO {
+  string name = 1;
+  string description = 2;
+  int32 price = 3;
+}
+
+message ProductModel {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  int32 price = 4;
+  google.protobuf.Timestamp createdAt = 6;
+  google.protobuf.Timestamp updatedTime = 7;
+}

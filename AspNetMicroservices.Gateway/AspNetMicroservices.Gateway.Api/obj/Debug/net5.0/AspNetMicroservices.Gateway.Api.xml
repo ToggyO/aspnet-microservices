@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AspNetMicroservices.Gateway.Api</name>
+    </assembly>
+    <members>
+        <member name="M:AspNetMicroservices.Gateway.Api.Controllers.WeatherForecastController.Get">
+            <summary>
+            Returns weather 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:AspNetMicroservices.Gateway.Api.Extensions.MvcOptionsExtensions">
+            <summary>
+            Provides an extension methods for <see cref="T:Microsoft.AspNetCore.Mvc.MvcOptions"/> class.
+            </summary>
+        </member>
+        <member name="M:AspNetMicroservices.Gateway.Api.Extensions.MvcOptionsExtensions.UseGlobalRoutePrefix(Microsoft.AspNetCore.Mvc.MvcOptions,Microsoft.AspNetCore.Mvc.Routing.IRouteTemplateProvider)">
+            <summary>
+            Extension method adds route prefix for every controller.
+            </summary>
+            <param name="options">Instance of <see cref="T:Microsoft.AspNetCore.Mvc.MvcOptions"/></param>
+            <param name="routeAttribute">Instance of object, that implements <see cref="T:Microsoft.AspNetCore.Mvc.Routing.IRouteTemplateProvider"/></param>
+        </member>
+        <member name="M:AspNetMicroservices.Gateway.Api.Extensions.MvcOptionsExtensions.UseGlobalRoutePrefix(Microsoft.AspNetCore.Mvc.MvcOptions,System.String)">
+            <summary>
+            Extension method adds route prefix for every controller.
+            </summary>
+            <param name="options">Instance of <see cref="T:Microsoft.AspNetCore.Mvc.MvcOptions"/></param>
+            <param name="prefix">String route prefix</param>
+        </member>
+        <member name="T:AspNetMicroservices.Gateway.Api.Extensions.RoutePrefixConvention">
+            <summary>
+            Represents an instance of <see cref="T:Microsoft.AspNetCore.Mvc.ApplicationModels.IApplicationModelConvention"/>
+            </summary>
+        </member>
+        <member name="M:AspNetMicroservices.Gateway.Api.Extensions.RoutePrefixConvention.#ctor(Microsoft.AspNetCore.Mvc.Routing.IRouteTemplateProvider)">
+            <summary>
+            Initialize new instance of <see cref="T:AspNetMicroservices.Gateway.Api.Extensions.RoutePrefixConvention"/>
+            </summary>
+            <param name="route">Instance of object, that implements <see cref="T:Microsoft.AspNetCore.Mvc.Routing.IRouteTemplateProvider"/></param>
+        </member>
+        <member name="F:AspNetMicroservices.Gateway.Api.Extensions.RoutePrefixConvention._routePrefix">
+            <summary>
+            Instance of <see cref="T:Microsoft.AspNetCore.Mvc.ApplicationModels.AttributeRouteModel"/>
+            </summary>
+        </member>
+        <member name="M:AspNetMicroservices.Gateway.Api.Extensions.RoutePrefixConvention.Apply(Microsoft.AspNetCore.Mvc.ApplicationModels.ApplicationModel)">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ApplicationModels.IApplicationModelConvention"/>
+        </member>
+        <member name="T:AspNetMicroservices.Gateway.Api.Extensions.SwaggerExtensions">
+            <summary>
+            Provides an extension methods for Swagger documentation package.
+            </summary>
+        </member>
+        <member name="M:AspNetMicroservices.Gateway.Api.Extensions.SwaggerExtensions.AddConfiguredSwaggerGen(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Extension method adds configured Swagger documentation service
+            to instance of <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.
+            </summary>
+            <param name="services">Instance of <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+        </member>
+        <member name="M:AspNetMicroservices.Gateway.Api.Extensions.SwaggerExtensions.UseSwaggerMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Extension method adds configured Swagger documentation middleware to
+            instance of <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/>.
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="T:AspNetMicroservices.Gateway.Api.Middleware.ExceptionMiddleware">
+            <summary>
+            Middleware handles unhandled exceptions.
+            </summary>
+        </member>
+        <member name="M:AspNetMicroservices.Gateway.Api.Middleware.ExceptionMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{AspNetMicroservices.Gateway.Api.Middleware.ExceptionMiddleware})">
+            <summary>
+            Initialize new instance of <see cref="T:AspNetMicroservices.Gateway.Api.Middleware.ExceptionMiddleware"/>
+            </summary>
+            <param name="next">Instance of <see cref="T:Microsoft.AspNetCore.Http.RequestDelegate"/></param>
+            <param name="logger">Instance of <see cref="T:Microsoft.Extensions.Logging.ILogger`1"/></param>
+        </member>
+        <member name="F:AspNetMicroservices.Gateway.Api.Middleware.ExceptionMiddleware._next">
+            <summary>
+            Instance of <see cref="T:Microsoft.AspNetCore.Http.RequestDelegate"/>
+            </summary>
+        </member>
+        <member name="F:AspNetMicroservices.Gateway.Api.Middleware.ExceptionMiddleware._logger">
+            <summary>
+            Instance of <see cref="T:Microsoft.Extensions.Logging.ILogger`1"/>
+            </summary>
+        </member>
+        <member name="M:AspNetMicroservices.Gateway.Api.Middleware.ExceptionMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Method executes next middleware or handle unhandled exceptions.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/> for the request.</param>
+        </member>
+        <member name="M:AspNetMicroservices.Gateway.Api.Middleware.ExceptionMiddleware.HandleExceptionAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Method handle unhandled http exceptions.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/> for the request.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
+        <member name="P:AspNetMicroservices.Gateway.Api.Startup.Configuration">
+            <summary>
+            Gets an instance of <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/>
+            </summary>
+        </member>
+        <member name="F:AspNetMicroservices.Gateway.Api.Startup.CorsPolicy">
+            <summary>
+            Cors policy identifier
+            </summary>
+        </member>
+        <member name="T:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductsReflection">
+            <summary>Holder for reflection information generated from products.proto</summary>
+        </member>
+        <member name="P:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductsReflection.Descriptor">
+            <summary>File descriptor for products.proto</summary>
+        </member>
+        <member name="F:AspNetMicroservices.Shared.Protos.ProductsProtos.CreateProductDTO.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="F:AspNetMicroservices.Shared.Protos.ProductsProtos.CreateProductDTO.DescriptionFieldNumber">
+            <summary>Field number for the "description" field.</summary>
+        </member>
+        <member name="F:AspNetMicroservices.Shared.Protos.ProductsProtos.CreateProductDTO.PriceFieldNumber">
+            <summary>Field number for the "price" field.</summary>
+        </member>
+        <member name="F:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductModel.IdFieldNumber">
+            <summary>Field number for the "id" field.</summary>
+        </member>
+        <member name="F:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductModel.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="F:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductModel.DescriptionFieldNumber">
+            <summary>Field number for the "description" field.</summary>
+        </member>
+        <member name="F:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductModel.PriceFieldNumber">
+            <summary>Field number for the "price" field.</summary>
+        </member>
+        <member name="F:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductModel.CreatedAtFieldNumber">
+            <summary>Field number for the "createdAt" field.</summary>
+        </member>
+        <member name="F:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductModel.UpdatedTimeFieldNumber">
+            <summary>Field number for the "updatedTime" field.</summary>
+        </member>
+        <member name="P:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductsService.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductsService.ProductsServiceClient">
+            <summary>Client for ProductsService</summary>
+        </member>
+        <member name="M:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductsService.ProductsServiceClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for ProductsService</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductsService.ProductsServiceClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for ProductsService that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductsService.ProductsServiceClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductsService.ProductsServiceClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:AspNetMicroservices.Shared.Protos.ProductsProtos.ProductsService.ProductsServiceClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
+    </members>
+</doc>

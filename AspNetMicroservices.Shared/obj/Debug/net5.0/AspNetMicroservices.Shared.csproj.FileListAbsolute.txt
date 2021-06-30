@@ -1,0 +1,14 @@
+/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Shared/bin/Debug/net5.0/AspNetMicroservices.Shared.deps.json
+/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Shared/bin/Debug/net5.0/AspNetMicroservices.Shared.dll
+/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Shared/bin/Debug/net5.0/ref/AspNetMicroservices.Shared.dll
+/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Shared/bin/Debug/net5.0/AspNetMicroservices.Shared.pdb
+/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Shared/obj/Debug/net5.0/AspNetMicroservices.Shared.csproj.AssemblyReference.cache
+/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Shared/obj/Debug/net5.0/AspNetMicroservices.Shared.GeneratedMSBuildEditorConfig.editorconfig
+/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Shared/obj/Debug/net5.0/AspNetMicroservices.Shared.AssemblyInfoInputs.cache
+/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Shared/obj/Debug/net5.0/AspNetMicroservices.Shared.AssemblyInfo.cs
+/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Shared/obj/Debug/net5.0/AspNetMicroservices.Shared.csproj.CoreCompileInputs.cache
+/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Shared/obj/Debug/net5.0/AspNetMicroservices.Shared.dll
+/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Shared/obj/Debug/net5.0/ref/AspNetMicroservices.Shared.dll
+/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Shared/obj/Debug/net5.0/AspNetMicroservices.Shared.pdb
+/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Shared/bin/Debug/net5.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/user/Projects/aspnet-microservices/AspNetMicroservices.Shared/obj/Debug/net5.0/AspNetMicroservices.Shared.csproj.CopyComplete

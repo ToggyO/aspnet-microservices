@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AspNetMicroservices.Shared\AspNetMicroservices.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.38.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Protobuf Include="..\..\AspNetMicroservices.Shared\Protos\ProductsProtos\products.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+</Project>
