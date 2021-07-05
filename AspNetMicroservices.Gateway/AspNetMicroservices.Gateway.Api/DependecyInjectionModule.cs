@@ -1,8 +1,8 @@
+using Microsoft.Extensions.DependencyInjection;
+
 using AspNetMicroservices.Gateway.Api.Filters;
 using AspNetMicroservices.Gateway.Api.Handlers.Products;
 using AspNetMicroservices.Gateway.Api.Handlers.Products.Implementation;
-using Microsoft.Extensions.DependencyInjection;
-
 using AspNetMicroservices.Shared.Extensions;
 
 namespace AspNetMicroservices.Gateway.Api
@@ -12,6 +12,8 @@ namespace AspNetMicroservices.Gateway.Api
         public static void Load(IServiceCollection services,
             ServiceLifetime serviceLifetime = ServiceLifetime.Scoped)
         {
+	        Common.DependencyInjectionModule.Load(services);
+
             services.Add<IProductsHandler, ProductsHandler>(serviceLifetime);
         }
 

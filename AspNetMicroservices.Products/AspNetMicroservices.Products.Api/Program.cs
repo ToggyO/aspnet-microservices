@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices;
 
 using Microsoft.AspNetCore.Hosting;
@@ -17,13 +18,11 @@ namespace AspNetMicroservices.Products.Api
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) {
-                        webBuilder.ConfigureKestrel(options =>
-                        {
-                            // Setup a HTTP/2 endpoint without TLS.
-                            options.ListenLocalhost(5002, o => o.Protocols = 
-                                HttpProtocols.Http2);
-                        });
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                    {
+                        webBuilder.UseKestrel(options =>
+                            options.ListenLocalhost(5002, o =>
+                                o.Protocols = HttpProtocols.Http2));
                     }
                     webBuilder.UseStartup<Startup>();
                 });

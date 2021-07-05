@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
-using AspNetMicroservices.Shared.Models.Response;
-using AspNetMicroservices.Shared.Protos.ProductsProtos;
+
 using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
 
+using AspNetMicroservices.Shared.Models.Response;
+
 namespace AspNetMicroservices.Gateway.Api.Extensions
 {
+	/// <summary>
+	/// Grpc extensions.
+	/// </summary>
     public static class GrpcExtensions
     {
         public static IHttpClientBuilder AddConfiguredGrpcClient<TService>(
@@ -28,7 +33,7 @@ namespace AspNetMicroservices.Gateway.Api.Extensions
                     };
                 });
         }
-        
+
         public static HttpStatusCode ToHttpStatusCode(this StatusCode statusCode)
         {
             return statusCode switch
@@ -41,22 +46,16 @@ namespace AspNetMicroservices.Gateway.Api.Extensions
         public static async Task<Response<TItem>> EnsureSuccess<TItem>(
             this AsyncUnaryCall<TItem> call) where TItem : class
         {
-            try
-            {
-                var response = await call;
-                return new Response<TItem>
-                {
-                    Data = response,
-                };
-            }
-            catch (RpcException e)
-            {
-                return new ErrorResponse<TItem>
-                {
-                    HttpStatusCode = e.StatusCode.ToHttpStatusCode(),
-                    Message = e.Status.Detail,
-                };
-            }
+	        try
+	        {
+		        var response = await call;
+		        return new Response<TItem> { Data = response };
+	        }
+	        catch (RpcException e)
+	        {
+		        var error = JsonSerializer.Deserialize<ErrorResponse<TItem>>(e.Status.Detail);
+		        return error;
+	        }
         }
     }
 }

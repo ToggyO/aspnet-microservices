@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\AspNetMicroservices.Shared\AspNetMicroservices.Shared.csproj" />
+    <ProjectReference Include="..\AspNetMicroservices.Gateway.Common\AspNetMicroservices.Gateway.Common.csproj" />
   </ItemGroup>
   
   <PropertyGroup>
@@ -22,7 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\..\AspNetMicroservices.Shared\Protos\ProductsProtos\products.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\AspNetMicroservices.Shared\Protos\products.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

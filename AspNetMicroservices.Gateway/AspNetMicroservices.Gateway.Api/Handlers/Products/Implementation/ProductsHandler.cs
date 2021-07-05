@@ -4,7 +4,7 @@ using AspNetMicroservices.Gateway.Api.Extensions;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 
-using AspNetMicroservices.Shared.Protos.ProductsProtos;
+using AspNetMicroservices.Shared.Protos;
 using AspNetMicroservices.Shared.Models.Response;
 
 namespace AspNetMicroservices.Gateway.Api.Handlers.Products.Implementation
@@ -24,24 +24,6 @@ namespace AspNetMicroservices.Gateway.Api.Handlers.Products.Implementation
                 .TestAsync(new Empty())
                 .EnsureSuccess();
             return response;
-            // try
-            // {
-            //     var response = await _client.TestAsync(new Empty());
-            //     return new Response<TestResponse>
-            //     {
-            //         Data = response,
-            //     };
-            // }
-            // catch (RpcException e)
-            // {
-            //     return new ErrorResponse<TestResponse>
-            //     {
-            //         HttpStatusCode = e.StatusCode.ToHttpStatusCode(),
-            //         Message = e.Status.Detail,
-            //     };
-            // }
         }
-
-        
     }
 }

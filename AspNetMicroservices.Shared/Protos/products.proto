@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "AspNetMicroservices.Shared.Protos.ProductsProtos";
+option csharp_namespace = "AspNetMicroservices.Shared.Protos";
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
