@@ -16,6 +16,13 @@ namespace AspNetMicroservices.Gateway.Api.Extensions
 	/// </summary>
     public static class GrpcExtensions
     {
+	    /// <summary>
+	    /// Method add configured Grpc client to an instance of <see cref="IServiceCollection"/>.
+	    /// </summary>
+	    /// <param name="services">Instance of <see cref="IServiceCollection"/>.</param>
+	    /// <param name="url">Url path to Rpc server.</param>
+	    /// <typeparam name="TService">Represents type of Rpc client.</typeparam>
+	    /// <returns>Returns an instance of <see cref="IHttpClientBuilder"/></returns>
         public static IHttpClientBuilder AddConfiguredGrpcClient<TService>(
             this IServiceCollection services,
             string url) where TService : ClientBase<TService>
@@ -34,6 +41,7 @@ namespace AspNetMicroservices.Gateway.Api.Extensions
                 });
         }
 
+	    // TODO: Create implementation.
         public static HttpStatusCode ToHttpStatusCode(this StatusCode statusCode)
         {
             return statusCode switch
@@ -43,6 +51,12 @@ namespace AspNetMicroservices.Gateway.Api.Extensions
             };
         }
 
+        /// <summary>
+        /// Handles Rpc exceptions.
+        /// </summary>
+        /// <param name="call">Instance of <see cref="AsyncUnaryCall{TResponse}"/></param>
+        /// <typeparam name="TItem">Type of returned data.</typeparam>
+        /// <returns>Returns an instance of <see cref="Response"/></returns>
         public static async Task<Response<TItem>> EnsureSuccess<TItem>(
             this AsyncUnaryCall<TItem> call) where TItem : class
         {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Net;
+using System.Text.Json.Serialization;
 
 namespace AspNetMicroservices.Shared.Models.Response
 {
@@ -11,8 +12,9 @@ namespace AspNetMicroservices.Shared.Models.Response
         /// <summary>
         /// Http status code <see cref="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes"/>.
         /// </summary>
+        [JsonIgnore]
         public HttpStatusCode HttpStatusCode { get; set; } = HttpStatusCode.OK;
-        
+
         /// <summary>
         /// Gets or sets a value that determines what type of response are returned from the application.
         /// </summary>
@@ -41,24 +43,24 @@ namespace AspNetMicroservices.Shared.Models.Response
         /// Gets or sets a value determines error response message returned from application.
         /// </summary>
         public string Message { get; set; }
-        
+
         /// <summary>
         /// Gets of sets a collection of <see cref="Error"/>, represents validation errors.
         /// </summary>
         public IEnumerable<Error> Errors { get; set; } = new Error[] {};
     }
-    
+
     /// <summary>
     /// Represents the http error response typed data transfer object, inherited from <see cref="Response"/>.
     /// </summary>
     /// <typeparam name="T">A type that inherits from the <see cref="Response"/> class.</typeparam>
-    public class ErrorResponse<T> : Response<T> where T : class 
+    public class ErrorResponse<T> : Response<T> where T : class
     {
         /// <summary>
         /// Gets or sets a value determines error response message returned from application.
         /// </summary>
         public string Message { get; set; }
-        
+
         /// <summary>
         /// Gets of sets a collection of <see cref="Error"/>, represents validation errors.
         /// </summary>
@@ -74,12 +76,12 @@ namespace AspNetMicroservices.Shared.Models.Response
         /// Gets or sets a value indicating the type of validation error.
         /// </summary>
         public string Code { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value represents the message of validation error.
         /// </summary>
         public string Message { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value represents the name of the invalid parameter.
         /// </summary>

@@ -7,9 +7,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using AspNetMicroservices.Gateway.Api.Extensions;
+using AspNetMicroservices.Gateway.Api.Filters;
 using AspNetMicroservices.Gateway.Api.Middleware;
 using AspNetMicroservices.Gateway.Common.Settings.RemoteServices;
-using AspNetMicroservices.Gateway.Common.Settings.RemoteServices.Implementation;
 using AspNetMicroservices.Shared.Protos;
 
 namespace AspNetMicroservices.Gateway.Api
@@ -47,16 +47,18 @@ namespace AspNetMicroservices.Gateway.Api
                         .AllowAnyMethod()
                     ));
 
-            services.AddSingleton<IRemoteServicesSettings, RemoteServicesSettings>();
             services.Configure<ApiBehaviorOptions>(opt => opt.SuppressModelStateInvalidFilter = true);
 
-            var remoteServicesSettings = services.BuildServiceProvider().GetService<IRemoteServicesSettings>();
+            var remoteServicesSettings = new RemoteServicesSettings(Configuration);
             services.AddConfiguredGrpcClient<ProductsService.ProductsServiceClient>(remoteServicesSettings.ProductServiceUrl);
-            // services.AddConfiguredGrpcClient<ProductsService.ProductsServiceClient>("http://localhost:5002");
             // services.AddConfiguredGrpcClient<ProductsService.ProductsServiceClient>("https://localhost:5003");
                 // .AddInterceptor<RpcErrorInterceptor>();
 
-            services.AddControllersWithViews(opt => opt.UseGlobalRoutePrefix("api"));
+            services.AddControllersWithViews(opt =>
+            {
+	            opt.UseGlobalRoutePrefix("api");
+	            opt.Filters.Add<StatusCodeFilter>();
+            });
             services.AddConfiguredSwaggerGen();
 
             DependencyInjectionModule.LoadRpcDependencies(services);

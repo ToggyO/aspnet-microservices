@@ -7,6 +7,9 @@ using Grpc.Core.Interceptors;
 
 namespace AspNetMicroservices.Gateway.Api.Filters
 {
+	/// <summary>
+	/// Rpc error interceptor.
+	/// </summary>
     public class RpcErrorInterceptor : Interceptor
     {
         public override AsyncUnaryCall<TResponse> AsyncUnaryCall<TRequest, TResponse>(
