@@ -6,11 +6,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\AspNetMicroservices.Shared\AspNetMicroservices.Shared.csproj" />
-    <ProjectReference Include="..\AspNetMicroservices.Products.Common\AspNetMicroservices.Products.Common.csproj" />
+    <ProjectReference Include="..\AspNetMicroservices.Products.Business\AspNetMicroservices.Products.Business.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.38.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
   </ItemGroup>
   
   <ItemGroup>

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMicroservices.Shared"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMicroservices.Products.Common", "AspNetMicroservices.Products.Common\AspNetMicroservices.Products.Common.csproj", "{5FCAD5E2-8D45-46CE-8AE2-6FEDA0B8F15D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMicroservices.Products.Business", "AspNetMicroservices.Products.Business\AspNetMicroservices.Products.Business.csproj", "{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,5 +74,17 @@ Global
 		{5FCAD5E2-8D45-46CE-8AE2-6FEDA0B8F15D}.Release|x64.Build.0 = Release|Any CPU
 		{5FCAD5E2-8D45-46CE-8AE2-6FEDA0B8F15D}.Release|x86.ActiveCfg = Release|Any CPU
 		{5FCAD5E2-8D45-46CE-8AE2-6FEDA0B8F15D}.Release|x86.Build.0 = Release|Any CPU
+		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Debug|x64.Build.0 = Debug|Any CPU
+		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Debug|x86.Build.0 = Debug|Any CPU
+		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Release|x64.ActiveCfg = Release|Any CPU
+		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Release|x64.Build.0 = Release|Any CPU
+		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Release|x86.ActiveCfg = Release|Any CPU
+		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
