@@ -1,9 +1,7 @@
-using System.Net;
 using System.Threading.Tasks;
-using AspNetMicroservices.Gateway.Api.Extensions;
 using Google.Protobuf.WellKnownTypes;
-using Grpc.Core;
 
+using AspNetMicroservices.Gateway.Api.Extensions;
 using AspNetMicroservices.Shared.Protos;
 using AspNetMicroservices.Shared.Models.Response;
 
@@ -32,7 +30,7 @@ namespace AspNetMicroservices.Gateway.Api.Handlers.Products.Implementation
         {
             var response = await _client
                 .TestAsync(new Empty())
-                .EnsureSuccess();
+                .EnsureRpcCallSuccess();
             return response;
         }
     }

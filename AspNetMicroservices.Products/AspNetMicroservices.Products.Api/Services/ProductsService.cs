@@ -1,5 +1,4 @@
 using System.Net;
-using System.Text.Json;
 using System.Threading.Tasks;
 using AspNetMicroservices.Shared.Errors;
 using AspNetMicroservices.Shared.Exceptions;
