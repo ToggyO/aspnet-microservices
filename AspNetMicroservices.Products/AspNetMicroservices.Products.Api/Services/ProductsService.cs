@@ -1,12 +1,12 @@
-using System.Net;
 using System.Threading.Tasks;
+
 using AspNetMicroservices.Products.Business.Features.Products.Commands;
-using AspNetMicroservices.Shared.Errors;
-using AspNetMicroservices.Shared.Exceptions;
-using AspNetMicroservices.Shared.Models.Response;
 using AspNetMicroservices.Shared.Protos;
+
 using Google.Protobuf.WellKnownTypes;
+
 using Grpc.Core;
+
 using MediatR;
 
 namespace AspNetMicroservices.Products.Api.Services

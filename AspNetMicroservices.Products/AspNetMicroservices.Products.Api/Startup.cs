@@ -1,4 +1,3 @@
-using System.Reflection;
 using MediatR;
 
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using AspNetMicroservices.Products.Api.Services;
+using AspNetMicroservices.Products.Business.Behaviours;
+
+using FluentValidation;
 
 namespace AspNetMicroservices.Products.Api
 {
@@ -24,7 +26,7 @@ namespace AspNetMicroservices.Products.Api
 
             Configuration = builder.Build();
         }
-        
+
         private IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
@@ -35,6 +37,8 @@ namespace AspNetMicroservices.Products.Api
             });
 
             services.AddMediatR(typeof(Business.DependencyInjectionModule));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            services.AddValidatorsFromAssembly(typeof(Business.DependencyInjectionModule).Assembly);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -45,9 +49,9 @@ namespace AspNetMicroservices.Products.Api
             }
 
             // app.UseHttpsRedirection();
-            
+
             app.UseRouting();
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<ProductsService>();
