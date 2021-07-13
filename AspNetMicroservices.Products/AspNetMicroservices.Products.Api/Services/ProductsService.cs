@@ -1,13 +1,12 @@
-using System.Net;
 using System.Threading.Tasks;
+
 using AspNetMicroservices.Products.Business.Features.Products.Commands;
-using AspNetMicroservices.Shared.Errors;
-using AspNetMicroservices.Shared.Exceptions;
-using AspNetMicroservices.Shared.Models.Response;
 using AspNetMicroservices.Shared.Protos;
 using AutoMapper;
 using Google.Protobuf.WellKnownTypes;
+
 using Grpc.Core;
+
 using MediatR;
 
 namespace AspNetMicroservices.Products.Api.Services
@@ -23,19 +22,11 @@ namespace AspNetMicroservices.Products.Api.Services
         private readonly IMediator _mediator;
 
         /// <summary>
-        /// Instance of <see cref="IMapper"/>.
-        /// </summary>
-        private readonly IMapper _mapper;
-
-        /// <summary>
         /// Creates an instance of <see cref="ProductsService"/>.
         /// </summary>
-        public ProductsService(
-            IMediator mediator,
-            IMapper mapper)
+        public ProductsService(IMediator mediator)
         {
             _mediator = mediator;
-            _mapper = mapper;
         }
 
         public override async Task<TestResponse> Test(Empty request, ServerCallContext context)

@@ -1,23 +1,23 @@
 using System;
 using System.Reflection;
-using MediatR;
 
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using FluentValidation;
+using FluentMigrator.Runner;
+using LinqToDB.AspNet;
+using LinqToDB.Configuration;
 
 using AspNetMicroservices.Products.Api.Services;
+using AspNetMicroservices.Products.Business.Behaviours;
 using AspNetMicroservices.Products.Common.Settings;
 using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection;
 using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection.Implementation;
-
-using FluentMigrator.Runner;
-
-using LinqToDB.AspNet;
-using LinqToDB.Configuration;
 
 namespace AspNetMicroservices.Products.Api
 {
@@ -46,6 +46,8 @@ namespace AspNetMicroservices.Products.Api
             });
 
             services.AddMediatR(typeof(Business.DependencyInjectionModule));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            services.AddValidatorsFromAssembly(typeof(Business.DependencyInjectionModule).Assembly);
 
             var dbSettings = new DbSettings
             {
