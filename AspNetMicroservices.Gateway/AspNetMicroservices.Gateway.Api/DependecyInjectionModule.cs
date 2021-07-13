@@ -8,12 +8,12 @@ using AspNetMicroservices.Shared.Extensions;
 namespace AspNetMicroservices.Gateway.Api
 {
 	/// <summary>
-	/// Add to DI container additional services.
+	/// Adds additional services to IoC container.
 	/// </summary>
     public static class DependencyInjectionModule
     {
 	    /// <summary>
-	    /// Method loads a set of services to DI container.
+	    /// Method loads a set of services to IoC container.
 	    /// </summary>
 	    /// <param name="services">Instance of <see cref="IServiceCollection"/>.</param>
 	    /// <param name="serviceLifetime">Service lifetime.</param>

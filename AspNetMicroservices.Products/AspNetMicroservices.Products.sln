@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMicroservices.Product
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMicroservices.Products.Business", "AspNetMicroservices.Products.Business\AspNetMicroservices.Products.Business.csproj", "{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMicroservices.Products.DataLayer", "AspNetMicroservices.Products.DataLayer\AspNetMicroservices.Products.DataLayer.csproj", "{CBB74C99-E188-4B56-AB98-2C5C3090FE50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,5 +88,17 @@ Global
 		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Release|x64.Build.0 = Release|Any CPU
 		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Release|x86.ActiveCfg = Release|Any CPU
 		{BF7C0123-6CAD-42F8-B783-5E14DEE5A9F1}.Release|x86.Build.0 = Release|Any CPU
+		{CBB74C99-E188-4B56-AB98-2C5C3090FE50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB74C99-E188-4B56-AB98-2C5C3090FE50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB74C99-E188-4B56-AB98-2C5C3090FE50}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CBB74C99-E188-4B56-AB98-2C5C3090FE50}.Debug|x64.Build.0 = Debug|Any CPU
+		{CBB74C99-E188-4B56-AB98-2C5C3090FE50}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CBB74C99-E188-4B56-AB98-2C5C3090FE50}.Debug|x86.Build.0 = Debug|Any CPU
+		{CBB74C99-E188-4B56-AB98-2C5C3090FE50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB74C99-E188-4B56-AB98-2C5C3090FE50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBB74C99-E188-4B56-AB98-2C5C3090FE50}.Release|x64.ActiveCfg = Release|Any CPU
+		{CBB74C99-E188-4B56-AB98-2C5C3090FE50}.Release|x64.Build.0 = Release|Any CPU
+		{CBB74C99-E188-4B56-AB98-2C5C3090FE50}.Release|x86.ActiveCfg = Release|Any CPU
+		{CBB74C99-E188-4B56-AB98-2C5C3090FE50}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

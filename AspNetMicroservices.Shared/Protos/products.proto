@@ -6,7 +6,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 
 service ProductsService {
-  rpc GetProducts (google.protobuf.Empty) returns (ProductModel);
+  rpc CreateProduct (CreateProductDTO) returns (ProductDto);
 
   rpc Test (google.protobuf.Empty) returns (TestResponse);
 }
@@ -17,13 +17,11 @@ message CreateProductDTO {
   int32 price = 3;
 }
 
-message ProductModel {
+message ProductDto {
   int32 id = 1;
   string name = 2;
   string description = 3;
-  int32 price = 4;
-  google.protobuf.Timestamp createdAt = 6;
-  google.protobuf.Timestamp updatedTime = 7;
+  int64 price = 4;
 }
 
 message TestResponse {

@@ -4,6 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
     <CodeAnalysisSummary>true</CodeAnalysisSummary>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

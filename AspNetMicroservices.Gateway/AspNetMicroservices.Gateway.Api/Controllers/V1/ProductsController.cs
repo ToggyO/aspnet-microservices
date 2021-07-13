@@ -31,5 +31,11 @@ namespace AspNetMicroservices.Gateway.Api.Controllers.V1
 
         [HttpGet]
         public async Task<Response<TestResponse>> Test() => await _handler.Test();
+
+        /// <inheritdoc cref="IProductsHandler"/>
+        [HttpPost]
+        public async Task<Response<ProductDto>> CreateProduct(CreateProductDTO dto) =>
+	        await _handler.CreateProduct(dto);
+
     }
 }

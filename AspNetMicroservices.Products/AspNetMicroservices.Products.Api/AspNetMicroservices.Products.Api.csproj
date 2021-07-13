@@ -10,6 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="DotNetEnv" Version="2.1.1" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.38.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
   </ItemGroup>
