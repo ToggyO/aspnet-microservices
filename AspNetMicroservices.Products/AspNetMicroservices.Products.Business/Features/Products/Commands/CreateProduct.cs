@@ -77,8 +77,14 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Commands
 
 	    #region Validator
 
+	    /// <summary>
+	    /// Validator for <see cref="Command"/>.
+	    /// </summary>
 	    public sealed class Validator : AbstractValidator<Command>
 	    {
+		    /// <summary>
+		    /// Creates an instance of <see cref="Validator"/>.
+		    /// </summary>
 		    public Validator()
 		    {
 			    RuleFor(x => x.Name).NotEmpty().WithErrorCode(ErrorCodes.Validation.FieldNotEmpty);
@@ -95,6 +101,9 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Commands
 	    /// </summary>
         public sealed class MapperProfile : Profile
         {
+	        /// <summary>
+	        /// Creates an instance of <see cref="MapperProfile"/>.
+	        /// </summary>
             public MapperProfile()
             {
                 CreateMap<ProductEntity, ProductModel>().ReverseMap();

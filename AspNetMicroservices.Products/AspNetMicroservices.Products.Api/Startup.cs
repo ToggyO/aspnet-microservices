@@ -19,8 +19,6 @@ using AspNetMicroservices.Products.Common.Settings;
 using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection;
 using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection.Implementation;
 
-using NetREST.DTO;
-
 namespace AspNetMicroservices.Products.Api
 {
     public class Startup

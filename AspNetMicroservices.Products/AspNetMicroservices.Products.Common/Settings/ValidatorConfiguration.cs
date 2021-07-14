@@ -1,10 +1,17 @@
 using System.Linq;
+
 using FluentValidation;
 
-namespace NetREST.DTO
+namespace AspNetMicroservices.Products.Common.Settings
 {
+	/// <summary>
+	/// Global validation configuration overload for <see cref="FluentValidation"/>.
+	/// </summary>
     public static class ValidatorConfigurationOverload
     {
+	    /// <summary>
+	    /// Override validation configuration.
+	    /// </summary>
         public static void Override()
         {
             ValidatorOptions.Global.PropertyNameResolver = (_, member, _) =>
