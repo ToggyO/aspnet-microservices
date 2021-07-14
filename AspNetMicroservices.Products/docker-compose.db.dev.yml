@@ -12,4 +12,7 @@ services:
       - POSTGRES_DB=${PRODUCTS_DB_NAME}
       - POSTGRES_HOST=${POSTGRES_DB_HOST}
     volumes:
-      - './volume-products-service-postgres-dev:/var/lib/postgresql/data'
+      - volume-products-service-postgres-dev:/var/lib/postgresql/data
+        
+volumes:
+  volume-products-service-postgres-dev:

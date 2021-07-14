@@ -14,10 +14,12 @@ using LinqToDB.AspNet;
 using LinqToDB.Configuration;
 
 using AspNetMicroservices.Products.Api.Services;
-using AspNetMicroservices.Products.Business.Behaviours;
+using AspNetMicroservices.Products.Common.Behaviours;
 using AspNetMicroservices.Products.Common.Settings;
 using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection;
 using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection.Implementation;
+
+using NetREST.DTO;
 
 namespace AspNetMicroservices.Products.Api
 {
@@ -48,6 +50,7 @@ namespace AspNetMicroservices.Products.Api
             services.AddMediatR(typeof(Business.DependencyInjectionModule));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddValidatorsFromAssembly(typeof(Business.DependencyInjectionModule).Assembly);
+            ValidatorConfigurationOverload.Override();
 
             var dbSettings = new DbSettings
             {

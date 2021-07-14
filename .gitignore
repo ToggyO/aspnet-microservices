@@ -1,9 +1,6 @@
 .idea
 .vscode
 .git
-volume-posgtres-dev
-AspNetMicroservices.Products/AspNetMicroservices.Products.Api/bin
-AspNetMicroservices.Products/AspNetMicroservices.Products.Api/obj
 AspNetMicroservices.Products/**/bin/
 AspNetMicroservices.Products/**/obj/
 AspNetMicroservices.*/.idea

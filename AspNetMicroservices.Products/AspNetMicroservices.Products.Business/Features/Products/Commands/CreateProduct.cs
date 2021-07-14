@@ -3,8 +3,12 @@ using System.Threading.Tasks;
 
 using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection;
 using AspNetMicroservices.Products.DataLayer.Entities.Product;
+using AspNetMicroservices.Shared.Errors;
 
 using AutoMapper;
+
+using FluentValidation;
+
 using LinqToDB;
 using MediatR;
 
@@ -71,12 +75,25 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Commands
             }
         }
 
+	    #region Validator
+
+	    public sealed class Validator : AbstractValidator<Command>
+	    {
+		    public Validator()
+		    {
+			    RuleFor(x => x.Name).NotEmpty().WithErrorCode(ErrorCodes.Validation.FieldNotEmpty);
+			    RuleFor(x => x.Price).NotEmpty().WithErrorCode(ErrorCodes.Validation.FieldNotEmpty);
+		    }
+	    }
+
+	    #endregion
+
 	    #region Mapper
 
 	    /// <summary>
 	    /// Mapper profile.
 	    /// </summary>
-        public class MapperProfile : Profile
+        public sealed class MapperProfile : Profile
         {
             public MapperProfile()
             {

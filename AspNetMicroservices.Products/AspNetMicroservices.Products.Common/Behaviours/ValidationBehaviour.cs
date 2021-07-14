@@ -13,7 +13,7 @@ using Grpc.Core;
 
 using MediatR;
 
-namespace AspNetMicroservices.Products.Business.Behaviours
+namespace AspNetMicroservices.Products.Common.Behaviours
 {
     public class ValidationBehaviour<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
