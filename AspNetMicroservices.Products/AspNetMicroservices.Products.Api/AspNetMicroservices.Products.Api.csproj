@@ -17,7 +17,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Protobuf Include="..\..\AspNetMicroservices.Shared\Protos\products.proto" GrpcServices="Server" />
+    <Protobuf Include="..\..\AspNetMicroservices.Shared\Protos\common.proto" GrpcServices="Server" ProtoRoot="..\..\AspNetMicroservices.Shared" />
+    <Protobuf Include="..\..\AspNetMicroservices.Shared\Protos\products.proto" GrpcServices="Server" ProtoRoot="..\..\AspNetMicroservices.Shared" />
   </ItemGroup>
 
 </Project>

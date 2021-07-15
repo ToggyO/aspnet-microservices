@@ -5,10 +5,11 @@ option csharp_namespace = "AspNetMicroservices.Shared.Protos";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 
+import "Proto/common.proto";
+
 service ProductsService {
   rpc CreateProduct (CreateProductDTO) returns (ProductDto);
-
-  rpc Test (google.protobuf.Empty) returns (TestResponse);
+  
 }
 
 message CreateProductDTO {
@@ -22,8 +23,4 @@ message ProductDto {
   string name = 2;
   string description = 3;
   int64 price = 4;
-}
-
-message TestResponse {
-  string testMessage = 1;
 }

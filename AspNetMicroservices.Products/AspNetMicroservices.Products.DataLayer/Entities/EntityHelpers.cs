@@ -7,7 +7,7 @@ namespace AspNetMicroservices.Products.DataLayer.Entities
 	/// <summary>
 	/// Represents custom methods, that takes data from <see cref="LinqToDB"/> attributes.
 	/// </summary>
-	public static class DataLayerHelpers
+	public static class EntityHelpers
 	{
 		/// <summary>
 		/// Retrieves `Name` field from <see cref="TableAttribute"/>.

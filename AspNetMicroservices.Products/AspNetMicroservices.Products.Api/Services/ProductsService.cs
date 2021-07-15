@@ -2,8 +2,6 @@ using System.Threading.Tasks;
 
 using AspNetMicroservices.Products.Business.Features.Products.Commands;
 using AspNetMicroservices.Shared.Protos;
-using AutoMapper;
-using Google.Protobuf.WellKnownTypes;
 
 using Grpc.Core;
 
@@ -27,21 +25,6 @@ namespace AspNetMicroservices.Products.Api.Services
         public ProductsService(IMediator mediator)
         {
             _mediator = mediator;
-        }
-
-        public override async Task<TestResponse> Test(Empty request, ServerCallContext context)
-        {
-            // return base.Test(request, context);
-            // return Task.FromResult(new TestResponse { TestMessage = "KEK" });
-            // var error = new ErrorResponse<TestResponse>
-            // {
-            //     Message = ErrorMessages.Global.Forbidden,
-            //     HttpStatusCode = HttpStatusCode.Forbidden,
-            //     Code = ErrorCodes.Global.Forbidden,
-            // };
-            // throw new ErrorResponseRpcException<TestResponse>(StatusCode.Internal, error);
-            // var testModel = await _mediator.Send(new AddProduct.Command());
-            return new TestResponse();
         }
 
         /// <summary>

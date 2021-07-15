@@ -14,24 +14,24 @@ namespace AspNetMicroservices.Products.DataLayer.Migrations
 		/// <summary>
 		/// Products table name.
 		/// </summary>
-		private readonly string _productsTableName = DataLayerHelpers.ExtractTableName<ProductEntity>();
+		private readonly string _productsTableName = EntityHelpers.ExtractTableName<ProductEntity>();
 
 		/// <inheritdoc cref="MigrationBase"/>
 		public override void Up()
 		{
 			Create.Table(_productsTableName)
 				.WithColumn(
-					DataLayerHelpers.ExtractTableColumnName<ProductEntity>(nameof(ProductEntity.Id))).AsInt32().PrimaryKey().Identity()
+					EntityHelpers.ExtractTableColumnName<ProductEntity>(nameof(ProductEntity.Id))).AsInt32().PrimaryKey().Identity()
 				.WithColumn(
-					DataLayerHelpers.ExtractTableColumnName<ProductEntity>(nameof(ProductEntity.Name))).AsString().NotNullable()
+					EntityHelpers.ExtractTableColumnName<ProductEntity>(nameof(ProductEntity.Name))).AsString().NotNullable()
 				.WithColumn
-					(DataLayerHelpers.ExtractTableColumnName<ProductEntity>(nameof(ProductEntity.Description))).AsString()
+					(EntityHelpers.ExtractTableColumnName<ProductEntity>(nameof(ProductEntity.Description))).AsString()
 				.WithColumn(
-					DataLayerHelpers.ExtractTableColumnName<ProductEntity>(nameof(ProductEntity.Price))).AsInt64().NotNullable()
+					EntityHelpers.ExtractTableColumnName<ProductEntity>(nameof(ProductEntity.Price))).AsInt64().NotNullable()
 				.WithColumn(
-					DataLayerHelpers.ExtractTableColumnName<ProductEntity>(nameof(ProductEntity.CreatedAt))).AsDateTime().NotNullable()
+					EntityHelpers.ExtractTableColumnName<ProductEntity>(nameof(ProductEntity.CreatedAt))).AsDateTime().NotNullable()
 				.WithColumn(
-					DataLayerHelpers.ExtractTableColumnName<ProductEntity>(nameof(ProductEntity.UpdatedAt))).AsDateTime().NotNullable();
+					EntityHelpers.ExtractTableColumnName<ProductEntity>(nameof(ProductEntity.UpdatedAt))).AsDateTime().NotNullable();
 		}
 
 		/// <inheritdoc cref="MigrationBase"/>
