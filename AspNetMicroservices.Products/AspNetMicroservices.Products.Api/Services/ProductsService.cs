@@ -1,7 +1,11 @@
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Products.Business.Features.Products;
 using AspNetMicroservices.Products.Business.Features.Products.Commands;
 using AspNetMicroservices.Shared.Protos;
+using AspNetMicroservices.Shared.Protos.Common;
+
+using AutoMapper;
 
 using Grpc.Core;
 
@@ -20,11 +24,24 @@ namespace AspNetMicroservices.Products.Api.Services
         private readonly IMediator _mediator;
 
         /// <summary>
+        /// Instance of <see cref="IMapper"/>.
+        /// </summary>
+        private readonly IMapper _mapper;
+
+        /// <summary>
         /// Creates an instance of <see cref="ProductsService"/>.
         /// </summary>
-        public ProductsService(IMediator mediator)
+        public ProductsService(
+	        IMediator mediator,
+	        IMapper mapper)
         {
             _mediator = mediator;
+            _mapper = mapper;
+        }
+
+        public override Task GetProductsList(QueryFilterModel request, IServerStreamWriter<ProductDto> responseStream, ServerCallContext context)
+        {
+	        return base.GetProductsList(request, responseStream, context);
         }
 
         /// <summary>
@@ -42,13 +59,7 @@ namespace AspNetMicroservices.Products.Api.Services
                 Price = dto.Price,
             };
             var productModel = await _mediator.Send(cmd);
-            return new ProductDto
-            {
-                Id = productModel.Id,
-                Name = productModel.Name,
-                Description = productModel.Description,
-                Price = productModel.Price,
-            };
+            return _mapper.Map<ProductModel, ProductDto>(productModel);
         }
     }
 }

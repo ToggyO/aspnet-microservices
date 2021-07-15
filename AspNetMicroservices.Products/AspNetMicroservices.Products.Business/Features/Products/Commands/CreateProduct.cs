@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection;
 using AspNetMicroservices.Products.DataLayer.Entities.Product;
 using AspNetMicroservices.Shared.Errors;
+using AspNetMicroservices.Shared.Protos;
 
 using AutoMapper;
 
@@ -17,7 +18,7 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Commands
 	/// <summary>
 	/// Create product command.
 	/// </summary>
-    public class CreateProduct
+    public static class CreateProduct
     {
 	    /// <summary>
 	    /// Get deal agreement command.
@@ -107,6 +108,7 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Commands
             public MapperProfile()
             {
                 CreateMap<ProductEntity, ProductModel>().ReverseMap();
+                CreateMap<ProductModel, ProductDto>().ReverseMap();
             }
         }
 

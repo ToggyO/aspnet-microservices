@@ -4,6 +4,11 @@ option csharp_namespace = "AspNetMicroservices.Shared.Protos.Common";
 
 import "google/protobuf/any.proto";
 
+message QueryFilterModel {
+  int32 Page = 1;
+  int32 PageSize = 2;
+}
+
 message PaginationModel {
   int32 Page = 1;
   int32 PageSize = 2;

@@ -2,14 +2,11 @@ syntax = "proto3";
 
 option csharp_namespace = "AspNetMicroservices.Shared.Protos";
 
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/empty.proto";
-
-import "Proto/common.proto";
+import "Protos/common.proto";
 
 service ProductsService {
+  rpc GetProductsList(common.QueryFilterModel) returns (stream ProductDto);
   rpc CreateProduct (CreateProductDTO) returns (ProductDto);
-  
 }
 
 message CreateProductDTO {
