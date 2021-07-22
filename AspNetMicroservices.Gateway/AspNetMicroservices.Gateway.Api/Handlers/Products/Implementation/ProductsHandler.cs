@@ -4,6 +4,7 @@ using Google.Protobuf.WellKnownTypes;
 using AspNetMicroservices.Gateway.Api.Extensions;
 using AspNetMicroservices.Shared.Protos;
 using AspNetMicroservices.Shared.Models.Response;
+using AspNetMicroservices.Shared.Protos.Common;
 
 namespace AspNetMicroservices.Gateway.Api.Handlers.Products.Implementation
 {
@@ -26,11 +27,12 @@ namespace AspNetMicroservices.Gateway.Api.Handlers.Products.Implementation
             _client = client;
         }
 
-        public async Task<Response<TestResponse>> Test() =>
-	         await _client.TestAsync(new Empty()).EnsureRpcCallSuccess();
+	    /// <inheritdoc cref="IProductsHandler.GetProductsList"/>
+	    public async Task<Response<ProductsListDto>> GetProductsList(QueryFilterRequest filter)
+		    => await _client.GetProductsListAsync(filter).EnsureRpcCallSuccess();
 
-        /// <inheritdoc cref="IProductsHandler"/>
-        public async Task<Response<ProductDto>> CreateProduct(CreateProductDTO dto) =>
+	    /// <inheritdoc cref="IProductsHandler.CreateProduct"/>
+        public async Task<Response<ProductDto>> CreateProduct(CreateUpdateProductDTO dto) =>
 	        await _client.CreateProductAsync(dto).EnsureRpcCallSuccess();
     }
 }

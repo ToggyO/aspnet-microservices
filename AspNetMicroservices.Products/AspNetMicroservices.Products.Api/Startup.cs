@@ -17,7 +17,6 @@ using AspNetMicroservices.Products.Api.Services;
 using AspNetMicroservices.Products.Common.Behaviours;
 using AspNetMicroservices.Products.Common.Settings;
 using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection;
-using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection.Implementation;
 
 namespace AspNetMicroservices.Products.Api
 {
@@ -59,7 +58,7 @@ namespace AspNetMicroservices.Products.Api
                 DB_USER = DotNetEnv.Env.GetString("PRODUCTS_DB_USER"),
                 DB_PASSWORD = DotNetEnv.Env.GetString("PRODUCTS_DB_PASSWORD"),
             };
-            services.AddLinqToDbContext<IAppDataConnection, AppDataConnection>((provider, options) =>
+            services.AddLinqToDbContext<AppDataConnection>((provider, options) =>
             {
                 options.UsePostgreSQL(dbSettings.DbConnectionString);
             });
@@ -72,6 +71,8 @@ namespace AspNetMicroservices.Products.Api
 	            .AddLogging(cfg => cfg.AddFluentMigratorConsole());
 
             services.AddAutoMapper(typeof(Business.DependencyInjectionModule));
+
+            Business.DependencyInjectionModule.Load(services);
         }
 
         public void Configure(

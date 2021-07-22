@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection;
 using AspNetMicroservices.Products.DataLayer.Entities.Product;
+using AspNetMicroservices.Products.DataLayer.Repositories.Products;
 using AspNetMicroservices.Shared.Errors;
 using AspNetMicroservices.Shared.Protos;
 
@@ -10,7 +10,6 @@ using AutoMapper;
 
 using FluentValidation;
 
-using LinqToDB;
 using MediatR;
 
 namespace AspNetMicroservices.Products.Business.Features.Products.Commands
@@ -21,7 +20,7 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Commands
     public static class CreateProduct
     {
 	    /// <summary>
-	    /// Get deal agreement command.
+	    /// Create product command.
 	    /// </summary>
         public sealed class Command : IRequest<ProductModel>
         {
@@ -45,20 +44,27 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Commands
 	    /// Handle <see cref="Command"/>.
 	    /// </summary>
         public sealed class Handler : IRequestHandler<Command, ProductModel>
-        {
-            private readonly IAppDataConnection _connection;
+	    {
+		    /// <summary>
+		    /// Instance of <see cref="IProductsRepository"/>.
+		    /// </summary>
+		    private readonly IProductsRepository _repository;
+
+            /// <summary>
+            /// Instance of <see cref="IMapper"/>.
+            /// </summary>
             private readonly IMapper _mapper;
 
             /// <summary>
             /// Creates an instance of <see cref="Handler"/>.
             /// </summary>
-            /// <param name="connection">Application database connection.</param>
+            /// <param name="repository">Instance of <see cref="IProductsRepository"/>.</param>
             /// <param name="mapper">Instance of <see cref="IMapper"/>.</param>
             public Handler(
-                IAppDataConnection connection,
-                IMapper mapper)
+	            IProductsRepository repository,
+	            IMapper mapper)
             {
-                _connection = connection;
+	            _repository = repository;
                 _mapper = mapper;
             }
 
@@ -71,8 +77,7 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Commands
                     Description = cmd.Description,
                     Price = cmd.Price,
                 };
-                entity.Id = await _connection.InsertWithInt32IdentityAsync(entity);
-                return _mapper.Map<ProductEntity, ProductModel>(entity);
+                return _mapper.Map<ProductEntity, ProductModel>(await _repository.Create(entity));
             }
         }
 
@@ -92,25 +97,6 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Commands
 			    RuleFor(x => x.Price).NotEmpty().WithErrorCode(ErrorCodes.Validation.FieldNotEmpty);
 		    }
 	    }
-
-	    #endregion
-
-	    #region Mapper
-
-	    /// <summary>
-	    /// Mapper profile.
-	    /// </summary>
-        public sealed class MapperProfile : Profile
-        {
-	        /// <summary>
-	        /// Creates an instance of <see cref="MapperProfile"/>.
-	        /// </summary>
-            public MapperProfile()
-            {
-                CreateMap<ProductEntity, ProductModel>().ReverseMap();
-                CreateMap<ProductModel, ProductDto>().ReverseMap();
-            }
-        }
 
 	    #endregion
     }

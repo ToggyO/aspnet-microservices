@@ -1,0 +1,25 @@
+﻿using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
+using AspNetMicroservices.Shared.Protos.Common;
+
+using AutoMapper;
+
+namespace AspNetMicroservices.Products.Business.Mappings
+{
+	/// <summary>
+	/// Query filter mapper profile.
+	/// </summary>
+	public class DataTransferObjectProfile : Profile
+	{
+		/// <summary>
+		/// Creates an instance of <see cref="DataTransferObjectProfile"/>.
+		/// </summary>
+		public DataTransferObjectProfile()
+		{
+			CreateMap<QueryFilterRequest, QueryFilterModel>()
+				.ForMember(x => x.Page, opts => opts
+					.MapFrom((src, dest) => dest.Page = src.Page == 0 ? 1 : src.Page))
+				.ForMember(x => x.PageSize, opts => opts
+					.MapFrom((src, dest) => dest.PageSize = src.PageSize == 0 ? 10 : src.PageSize));
+		}
+	}
+}

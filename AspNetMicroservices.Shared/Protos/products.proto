@@ -2,14 +2,19 @@ syntax = "proto3";
 
 option csharp_namespace = "AspNetMicroservices.Shared.Protos";
 
+import "google/protobuf/empty.proto";
+
 import "Protos/common.proto";
 
 service ProductsService {
-  rpc GetProductsList(common.QueryFilterModel) returns (stream ProductDto);
-  rpc CreateProduct (CreateProductDTO) returns (ProductDto);
+  rpc GetProductsList(common.QueryFilterRequest) returns (ProductsListDto);
+  rpc GetProductById(common.RetrieveSingleEntityRequest) returns (ProductDto);
+  rpc CreateProduct (CreateUpdateProductDTO) returns (ProductDto);
+  rpc UpdateProduct (CreateUpdateProductDTO) returns (ProductDto);
+  rpc RemoveProduct (common.RemoveSingleEntityRequest) returns (google.protobuf.Empty);
 }
 
-message CreateProductDTO {
+message CreateUpdateProductDTO {
   string name = 1;
   string description = 2;
   int32 price = 3;
@@ -20,4 +25,9 @@ message ProductDto {
   string name = 2;
   string description = 3;
   int64 price = 4;
+}
+
+message ProductsListDto {
+  repeated ProductDto items = 2;
+  common.PaginationDto pagination = 1;
 }

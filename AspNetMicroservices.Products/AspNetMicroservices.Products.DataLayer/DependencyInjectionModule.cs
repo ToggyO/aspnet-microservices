@@ -1,6 +1,10 @@
+using AspNetMicroservices.Products.DataLayer.Repositories.Products;
+using AspNetMicroservices.Products.DataLayer.Repositories.Products.Implementation;
+using AspNetMicroservices.Shared.Extensions;
+
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AspNetMicroservices.Products.Business
+namespace AspNetMicroservices.Products.DataLayer
 {
     /// <summary>
     /// Adds additional services to IoC container.
@@ -15,7 +19,7 @@ namespace AspNetMicroservices.Products.Business
         public static void Load(IServiceCollection services,
             ServiceLifetime serviceLifetime = ServiceLifetime.Scoped)
         {
-	        DataLayer.DependencyInjectionModule.Load(services, serviceLifetime);
+	        services.Add<IProductsRepository, ProductsRepository>(serviceLifetime);
         }
     }
 }

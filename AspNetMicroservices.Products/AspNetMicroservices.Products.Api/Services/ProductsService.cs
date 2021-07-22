@@ -1,7 +1,11 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using AspNetMicroservices.Products.Business.Features.Products;
 using AspNetMicroservices.Products.Business.Features.Products.Commands;
+using AspNetMicroservices.Products.Business.Features.Products.Queries;
+using AspNetMicroservices.Products.Common.Extensions;
+using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
 using AspNetMicroservices.Shared.Protos;
 using AspNetMicroservices.Shared.Protos.Common;
 
@@ -39,9 +43,21 @@ namespace AspNetMicroservices.Products.Api.Services
             _mapper = mapper;
         }
 
-        public override Task GetProductsList(QueryFilterModel request, IServerStreamWriter<ProductDto> responseStream, ServerCallContext context)
+        /// <summary>
+        /// Method retrieves a list of products with pagination.
+        /// </summary>
+        /// <param name="request">Instance of <see cref="QueryFilterRequest"/>.</param>
+        /// <param name="context">Instance of <see cref="ServerCallContext"/>.</param>
+        /// <returns>List of products with pagination.</returns>
+        public override async Task<ProductsListDto> GetProductsList(QueryFilterRequest request, ServerCallContext context)
         {
-	        return base.GetProductsList(request, responseStream, context);
+	        var filter = _mapper.Map<QueryFilterRequest, QueryFilterModel>(request);
+			var pageModel = await _mediator.Send(new GetProductsList.Query(filter));
+			var productsListDto = new ProductsListDto();
+			productsListDto.Items.AddRange(
+				_mapper.Map<IEnumerable<ProductModel>, IEnumerable<ProductDto>>(pageModel.Items));
+			productsListDto.Pagination = pageModel.ToPaginationDto();
+			return productsListDto;
         }
 
         /// <summary>
@@ -50,15 +66,14 @@ namespace AspNetMicroservices.Products.Api.Services
         /// <param name="dto">Instance of <see cref="CreateProductDTO"/>.</param>
         /// <param name="context">Instance of <see cref="ServerCallContext"/>.</param>
         /// <returns>Created product.</returns>
-        public override async Task<ProductDto> CreateProduct(CreateProductDTO dto, ServerCallContext context)
+        public override async Task<ProductDto> CreateProduct(CreateUpdateProductDTO dto, ServerCallContext context)
         {
-            var cmd = new CreateProduct.Command
+            var productModel = await _mediator.Send(new CreateProduct.Command
             {
-                Name = dto.Name,
-                Description = dto.Description,
-                Price = dto.Price,
-            };
-            var productModel = await _mediator.Send(cmd);
+	            Name = dto.Name,
+	            Description = dto.Description,
+	            Price = dto.Price,
+            });
             return _mapper.Map<ProductModel, ProductDto>(productModel);
         }
     }

@@ -4,15 +4,23 @@ option csharp_namespace = "AspNetMicroservices.Shared.Protos.Common";
 
 import "google/protobuf/any.proto";
 
-message QueryFilterModel {
-  int32 Page = 1;
-  int32 PageSize = 2;
+message QueryFilterRequest {
+  string search = 1;
+  int32 page = 2;
+  int32 pageSize = 3;
 }
 
-message PaginationModel {
-  int32 Page = 1;
-  int32 PageSize = 2;
-  int32 Total = 3;
-  repeated google.protobuf.Any Items = 4;
+message RetrieveSingleEntityRequest {
+  int32 id = 1; 
+}
+
+message RemoveSingleEntityRequest {
+  int32 id = 1;
+}
+
+message PaginationDto {
+  int32 page = 1;
+  int32 pageSize = 2;
+  int32 total = 3;
 }
 

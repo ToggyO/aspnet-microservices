@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using AspNetMicroservices.Gateway.Api.Handlers.Products;
 using AspNetMicroservices.Shared.Models.Response;
 using AspNetMicroservices.Shared.Protos;
+using AspNetMicroservices.Shared.Protos.Common;
 
 namespace AspNetMicroservices.Gateway.Api.Controllers.V1
 {
@@ -29,12 +30,14 @@ namespace AspNetMicroservices.Gateway.Api.Controllers.V1
             _handler = handler;
         }
 
-        [HttpGet]
-        public async Task<Response<TestResponse>> Test() => await _handler.Test();
+	    /// <inheritdoc cref="IProductsHandler.GetProductsList"/>
+	    [HttpGet]
+	    public async Task<Response<ProductsListDto>> GetProductsList([FromQuery] QueryFilterRequest filter)
+		    => await _handler.GetProductsList(filter);
 
-        /// <inheritdoc cref="IProductsHandler"/>
+	    /// <inheritdoc cref="IProductsHandler.CreateProduct"/>
         [HttpPost]
-        public async Task<Response<ProductDto>> CreateProduct(CreateProductDTO dto) =>
+        public async Task<Response<ProductDto>> CreateProduct([FromBody] CreateUpdateProductDTO dto) =>
 	        await _handler.CreateProduct(dto);
 
     }
