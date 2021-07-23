@@ -1,3 +1,5 @@
+using AspNetMicroservices.Shared.Contracts;
+
 using LinqToDB.Mapping;
 
 namespace AspNetMicroservices.Products.DataLayer.Entities.Product
@@ -6,8 +8,14 @@ namespace AspNetMicroservices.Products.DataLayer.Entities.Product
 	/// Products table entity.
 	/// </summary>
     [Table("dat_products")]
-    public class ProductEntity : BaseEntity
+    public class ProductEntity : BaseEntity, IHaveIdentifier
     {
+	    /// <summary>
+	    /// Item unique identity.
+	    /// </summary>
+	    [PrimaryKey, Identity, Column(Name = "id")]
+	    public int Id { get; set; }
+
 	    /// <summary>
 	    /// Product name.
 	    /// </summary>

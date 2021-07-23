@@ -2,9 +2,7 @@
 
 namespace AspNetMicroservices.Shared.Models.QueryFilter.Implementation
 {
-	/// <summary>
-	/// Represents common filter for data querying.
-	/// </summary>
+	/// <inheritdoc cref="IQueryFilter"/>.
 	public class QueryFilterModel : IQueryFilter
 	{
 		/// <inheritdoc cref="IQueryFilter.Search"/>.
@@ -29,7 +27,6 @@ namespace AspNetMicroservices.Shared.Models.QueryFilter.Implementation
 		/// <param name="filter">Instance of <see cref="IQueryFilter"/>,</param>
 		public QueryFilterModel(IQueryFilter filter)
 		{
-			// TODO: CHECK DEFAULT VALUES
 			Search = filter.Search;
 			Page = filter.Page;
 			PageSize = filter.PageSize;

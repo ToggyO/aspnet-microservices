@@ -12,12 +12,6 @@ namespace AspNetMicroservices.Products.DataLayer.Entities
     public abstract class BaseEntity
     {
 	    /// <summary>
-	    /// Item unique identity.
-	    /// </summary>
-	    [PrimaryKey, Identity, Column(Name = "id")]
-	    public int Id { get; set; }
-
-	    /// <summary>
 	    /// Entity created timestamp.
 	    /// </summary>
         [Column("created_at", SkipOnUpdate = true)]

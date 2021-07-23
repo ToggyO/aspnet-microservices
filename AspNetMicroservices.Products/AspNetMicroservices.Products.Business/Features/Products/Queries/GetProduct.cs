@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 using AspNetMicroservices.Products.Business.Features.Products.Models;
 using AspNetMicroservices.Products.DataLayer.Entities.Product;
 using AspNetMicroservices.Products.DataLayer.Repositories.Products;
-using AspNetMicroservices.Shared.Models.Pagination;
-using AspNetMicroservices.Shared.Models.QueryFilter;
-using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
+using AspNetMicroservices.Shared.Contracts;
 
 using AutoMapper;
 
@@ -16,24 +13,23 @@ using MediatR;
 namespace AspNetMicroservices.Products.Business.Features.Products.Queries
 {
 	/// <summary>
-	/// Get products list.
+	/// Get product identifier id.
 	/// </summary>
-	public class GetProductsList
+	public class GetProduct
 	{
 		/// <summary>
-		/// Get products list query.
+		/// Get product by identifier query.
 		/// </summary>
-		public sealed class Query : QueryFilterModel, IRequest<PaginationModel<ProductModel>>
+		public sealed class Query : IHaveIdentifier, IRequest<ProductModel>
 		{
-			public Query(IQueryFilter filter) : base(filter)
-			{
-			}
+			/// <inheritdoc cref="IHaveIdentifier"/>
+			public int Id { get; set; }
 		}
 
 		/// <summary>
 		/// Handle <see cref="Query"/>.
 		/// </summary>
-		public sealed class Handler : IRequestHandler<Query, PaginationModel<ProductModel>>
+		public sealed class Handler : IRequestHandler<Query, ProductModel>
 		{
 			/// <summary>
 			/// Instance of <see cref="IProductsRepository"/>.
@@ -59,16 +55,12 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Queries
 			}
 
 			/// <inheritdoc cref="IRequestHandler{TRequest,TResponse}"/>
-			public async Task<PaginationModel<ProductModel>> Handle(Query request, CancellationToken cancellationToken)
+			public async Task<ProductModel> Handle(Query query, CancellationToken cancellationToken = default)
 			{
-				var paginationModel = await _repository.GetList(request);
-				return new PaginationModel<ProductModel>
-				{
-					Page = paginationModel.Page,
-					PageSize = paginationModel.PageSize,
-					Total = paginationModel.Total,
-					Items = _mapper.Map<IEnumerable<ProductEntity>, IEnumerable<ProductModel>>(paginationModel.Items),
-				};
+				var entity = await _repository.GetById(query.Id);
+				if (entity is null)
+					return null;
+				return _mapper.Map<ProductEntity, ProductModel>(entity);
 			}
 		}
 	}

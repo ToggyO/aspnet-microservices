@@ -1,4 +1,5 @@
-﻿using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
+﻿using AspNetMicroservices.Shared.Constants.Common;
+using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
 using AspNetMicroservices.Shared.Protos.Common;
 
 using AutoMapper;
@@ -17,9 +18,11 @@ namespace AspNetMicroservices.Products.Business.Mappings
 		{
 			CreateMap<QueryFilterRequest, QueryFilterModel>()
 				.ForMember(x => x.Page, opts => opts
-					.MapFrom((src, dest) => dest.Page = src.Page == 0 ? 1 : src.Page))
+					.MapFrom((src, dest)
+						=> dest.Page = src.Page == 0 ? PaginationDefaults.DefaultPageNumber : src.Page))
 				.ForMember(x => x.PageSize, opts => opts
-					.MapFrom((src, dest) => dest.PageSize = src.PageSize == 0 ? 10 : src.PageSize));
+					.MapFrom((src, dest)
+						=> dest.PageSize = src.PageSize == 0 ? PaginationDefaults.DefaultPageSize : src.PageSize));
 		}
 	}
 }

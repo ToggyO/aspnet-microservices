@@ -1,10 +1,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Products.Business.Features.Products.Models;
 using AspNetMicroservices.Products.DataLayer.Entities.Product;
 using AspNetMicroservices.Products.DataLayer.Repositories.Products;
 using AspNetMicroservices.Shared.Errors;
-using AspNetMicroservices.Shared.Protos;
 
 using AutoMapper;
 

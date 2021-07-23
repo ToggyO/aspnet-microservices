@@ -31,6 +31,10 @@ namespace AspNetMicroservices.Gateway.Api.Handlers.Products.Implementation
 	    public async Task<Response<ProductsListDto>> GetProductsList(QueryFilterRequest filter)
 		    => await _client.GetProductsListAsync(filter).EnsureRpcCallSuccess();
 
+	    /// <inheritdoc cref="IProductsHandler.GetProductById"/>
+	    public async Task<Response<ProductDto>> GetProductById(int id)
+		     => await _client.GetProductByIdAsync(new RetrieveSingleEntityRequest { Id = id }).EnsureRpcCallSuccess();
+
 	    /// <inheritdoc cref="IProductsHandler.CreateProduct"/>
         public async Task<Response<ProductDto>> CreateProduct(CreateUpdateProductDTO dto) =>
 	        await _client.CreateProductAsync(dto).EnsureRpcCallSuccess();

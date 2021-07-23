@@ -22,4 +22,20 @@ namespace AspNetMicroservices.Shared.Exceptions
             : base(new Status(statusCode, JsonSerializer.Serialize(errorResponse)))
         {}
     }
+
+	/// <summary>
+	/// Represents typed instance of <see cref="RpcException"/>.
+	/// </summary>
+	public class ErrorResponseRpcException : RpcException
+	{
+		/// <summary>
+		/// Creates an instance of <see cref="ErrorResponseRpcException{TItem}"/> associated with
+		/// the given status code and error response data transfer object
+		/// </summary>
+		/// <param name="statusCode">Result of a remote procedure call.</param>
+		/// <param name="errorResponse">Instance of <see cref="ErrorResponse{TItem}"/>.</param>
+		public ErrorResponseRpcException(StatusCode statusCode, ErrorResponse errorResponse)
+			: base(new Status(statusCode, JsonSerializer.Serialize(errorResponse)))
+		{}
+	}
 }

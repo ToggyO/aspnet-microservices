@@ -1,4 +1,5 @@
-﻿using AspNetMicroservices.Products.DataLayer.Entities.Product;
+﻿using AspNetMicroservices.Products.Business.Features.Products.Models;
+using AspNetMicroservices.Products.DataLayer.Entities.Product;
 using AspNetMicroservices.Shared.Protos;
 
 using AutoMapper;

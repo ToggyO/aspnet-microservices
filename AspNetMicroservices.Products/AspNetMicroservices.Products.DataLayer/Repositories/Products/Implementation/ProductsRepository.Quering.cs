@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Products.DataLayer.Common;
 using AspNetMicroservices.Products.DataLayer.DataBase.Extensions;
 using AspNetMicroservices.Products.DataLayer.Entities.Product;
 using AspNetMicroservices.Shared.Models.Pagination;
@@ -21,21 +22,16 @@ namespace AspNetMicroservices.Products.DataLayer.Repositories.Products.Implement
 
 		    if (!string.IsNullOrEmpty(filter.Search))
 		    {
-			    Func<string, bool> query = (string target) => Sql.Like(target, filter.Search);
 			    products = from p in products
-				    // TODO: check case sensitiveness
-					where Sql.Like(p.Name, filter.Search)
-				    // where p.Name.Contains(filter.Search)
+					where p.Name.Contains(filter.Search, StringComparison.OrdinalIgnoreCase)
 				    select p;
 		    }
 
 		    return await products.ToPaginatedListAsync(filter);
 	    }
 
+
 	    /// <inheritdoc cref="IProductsRepository.GetById"/>
-	    public Task<ProductEntity> GetById(int id)
-        {
-            throw new System.NotImplementedException();
-        }
+	    public Task<ProductEntity> GetById(int id) => _connection.Products.GetById(id);
     }
 }

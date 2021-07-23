@@ -42,13 +42,8 @@ namespace AspNetMicroservices.Products.Common.Behaviours
 
                 if (validationErrors.Any())
                 {
-	                var error = new ErrorResponse<object>
-	                {
-		                Code = ErrorCodes.Global.BadParameters,
-		                Message = ErrorMessages.Global.BadParameters,
-		                Errors = validationErrors.Select(GetError).ToArray(),
-	                };
-	                throw new ErrorResponseRpcException<object>(StatusCode.InvalidArgument, error);
+	                var error = new BadParametersErrorResponse(validationErrors.Select(GetError).ToArray());
+	                throw new ErrorResponseRpcException(StatusCode.InvalidArgument, error);
                 }
             }
 

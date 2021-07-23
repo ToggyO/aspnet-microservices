@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Shared.Constants.Common;
 using AspNetMicroservices.Shared.Contracts;
 using AspNetMicroservices.Shared.Models.Pagination;
 
@@ -13,16 +14,6 @@ namespace AspNetMicroservices.Products.DataLayer.DataBase.Extensions
 	/// </summary>
 	public static class PaginatedList
 	{
-		/// <summary>
-		/// Default page number to get.
-		/// </summary>
-		private static readonly int _defaultPage = 1;
-
-		/// <summary>
-		/// Default number of items on each page.
-		/// </summary>
-		private static readonly int _defaultPageSize = 10;
-
 		/// <summary>
 		/// Creates paginated list.
 		/// </summary>
@@ -57,7 +48,7 @@ namespace AspNetMicroservices.Products.DataLayer.DataBase.Extensions
 			return new PaginationModel<TSource>
 			{
 				Page = query.Page,
-				PageSize = query.PageSize < 0 ? _defaultPageSize : query.PageSize,
+				PageSize = query.PageSize < 0 ? PaginationDefaults.DefaultPageSize : query.PageSize,
 				Total = source.Count(),
 				Items = source.Skip(skipCount).Take(query.PageSize).ToList(),
 			};
@@ -76,7 +67,7 @@ namespace AspNetMicroservices.Products.DataLayer.DataBase.Extensions
 			return new PaginationModel<TSource>
 			{
 				Page = query.Page,
-				PageSize = query.PageSize < 0 ? _defaultPageSize : query.PageSize,
+				PageSize = query.PageSize < 0 ? PaginationDefaults.DefaultPageSize : query.PageSize,
 				Total = await source.CountAsync(),
 				Items = await source.Skip(skipCount).Take(query.PageSize).ToListAsync(),
 			};
@@ -90,7 +81,7 @@ namespace AspNetMicroservices.Products.DataLayer.DataBase.Extensions
 		private static int GetPageDbIndexNumber(IPaginatedQuery query)
 		{
 			int queryPage = (query.Page - 1) * query.PageSize;
-			return queryPage < 0 ? _defaultPage : queryPage;
+			return queryPage < 0 ? PaginationDefaults.DefaultPageNumber : queryPage;
 		}
 	}
 }

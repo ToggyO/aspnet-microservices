@@ -18,6 +18,13 @@ namespace AspNetMicroservices.Gateway.Api.Handlers.Products
 		/// <returns>List of products with pagination.</returns>
 		Task<Response<ProductsListDto>> GetProductsList(QueryFilterRequest filter);
 
+		/// <summary>
+		/// Get product by identifier.
+		/// </summary>
+		/// <param name="id">Product identifier.</param>
+		/// <returns>Requested product.</returns>
+		Task<Response<ProductDto>> GetProductById(int id);
+
         /// <summary>
         /// Create product.
         /// </summary>

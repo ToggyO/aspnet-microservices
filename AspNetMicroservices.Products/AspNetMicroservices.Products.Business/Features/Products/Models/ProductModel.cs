@@ -1,4 +1,4 @@
-namespace AspNetMicroservices.Products.Business.Features.Products
+namespace AspNetMicroservices.Products.Business.Features.Products.Models
 {
     public class ProductModel
     {

@@ -46,7 +46,8 @@ namespace AspNetMicroservices.Gateway.Api.Extensions
         {
             return statusCode switch
             {
-                // Sta
+                StatusCode.InvalidArgument => HttpStatusCode.BadRequest,
+                StatusCode.NotFound => HttpStatusCode.NotFound,
                 _ => HttpStatusCode.OK
             };
         }
@@ -68,6 +69,8 @@ namespace AspNetMicroservices.Gateway.Api.Extensions
 	        catch (RpcException e)
 	        {
 		        var error = JsonSerializer.Deserialize<ErrorResponse<TItem>>(e.Status.Detail);
+		        if (error != null && Enum.IsDefined(e.StatusCode))
+					error.HttpStatusCode = e.StatusCode.ToHttpStatusCode();
 		        return error;
 	        }
         }

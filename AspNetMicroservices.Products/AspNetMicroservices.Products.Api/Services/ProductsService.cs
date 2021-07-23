@@ -1,15 +1,19 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using AspNetMicroservices.Products.Business.Features.Products;
 using AspNetMicroservices.Products.Business.Features.Products.Commands;
+using AspNetMicroservices.Products.Business.Features.Products.Models;
 using AspNetMicroservices.Products.Business.Features.Products.Queries;
 using AspNetMicroservices.Products.Common.Extensions;
+using AspNetMicroservices.Shared.Exceptions;
 using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
+using AspNetMicroservices.Shared.Models.Response;
 using AspNetMicroservices.Shared.Protos;
 using AspNetMicroservices.Shared.Protos.Common;
 
 using AutoMapper;
+
+using Google.Protobuf.WellKnownTypes;
 
 using Grpc.Core;
 
@@ -61,9 +65,24 @@ namespace AspNetMicroservices.Products.Api.Services
         }
 
         /// <summary>
+        /// Method retrieves product by identifier.
+        /// </summary>
+        /// <param name="request">Instance of <see cref="RetrieveSingleEntityRequest"/>.</param>
+        /// <param name="context">Instance of <see cref="ServerCallContext"/>.</param>
+        /// <returns>Requested product.</returns>
+        /// <exception cref="ErrorResponseRpcException">Throws, if product with provided identifier not found.</exception>
+        public override async Task<ProductDto> GetProductById(RetrieveSingleEntityRequest request, ServerCallContext context)
+        {
+	        var productModel = await _mediator.Send(new GetProduct.Query { Id = request.Id });
+	        if (productModel is null)
+		        throw new ErrorResponseRpcException(StatusCode.NotFound, new NotFoundErrorResponse());
+	        return _mapper.Map<ProductDto>(productModel);
+        }
+
+        /// <summary>
         /// Method creates product.
         /// </summary>
-        /// <param name="dto">Instance of <see cref="CreateProductDTO"/>.</param>
+        /// <param name="dto">Instance of <see cref="CreateUpdateProductDTO"/>.</param>
         /// <param name="context">Instance of <see cref="ServerCallContext"/>.</param>
         /// <returns>Created product.</returns>
         public override async Task<ProductDto> CreateProduct(CreateUpdateProductDTO dto, ServerCallContext context)
@@ -75,6 +94,16 @@ namespace AspNetMicroservices.Products.Api.Services
 	            Price = dto.Price,
             });
             return _mapper.Map<ProductModel, ProductDto>(productModel);
+        }
+
+        public override Task<ProductDto> UpdateProduct(CreateUpdateProductDTO request, ServerCallContext context)
+        {
+	        return base.UpdateProduct(request, context);
+        }
+
+        public override Task<Empty> RemoveProduct(RemoveSingleEntityRequest request, ServerCallContext context)
+        {
+	        return base.RemoveProduct(request, context);
         }
     }
 }
