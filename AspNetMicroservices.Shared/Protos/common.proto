@@ -8,6 +8,8 @@ message QueryFilterRequest {
   string search = 1;
   int32 page = 2;
   int32 pageSize = 3;
+  string orderBy = 4;
+  bool isDesc = 5;
 }
 
 message RetrieveSingleEntityRequest {

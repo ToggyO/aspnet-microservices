@@ -1,4 +1,5 @@
-﻿using AspNetMicroservices.Shared.Contracts;
+﻿using AspNetMicroservices.Shared.Constants.Common;
+using AspNetMicroservices.Shared.Contracts;
 
 namespace AspNetMicroservices.Shared.Models.QueryFilter.Implementation
 {
@@ -9,10 +10,16 @@ namespace AspNetMicroservices.Shared.Models.QueryFilter.Implementation
 		public string Search { get; set; }
 
 		/// <inheritdoc cref="IQueryFilter.Page"/>.
-		public int Page { get; set; } = 1;
+		public int Page { get; set; } = PaginationDefaults.DefaultPageNumber;
 
 		/// <inheritdoc cref="IQueryFilter.PageSize"/>.
-		public int PageSize { get; set; } = 10;
+		public int PageSize { get; set; } = PaginationDefaults.DefaultPageSize;
+
+		/// <inheritdoc cref="IQueryFilter.OrderBy"/>.
+		public string OrderBy { get; set; }
+
+		/// <inheritdoc cref="IQueryFilter.IsDesc"/>.
+		public bool IsDesc { get; set; }
 
 		/// <summary>
 		/// Creates an instance of <see cref="QueryFilterModel"/>.
@@ -30,6 +37,8 @@ namespace AspNetMicroservices.Shared.Models.QueryFilter.Implementation
 			Search = filter.Search;
 			Page = filter.Page;
 			PageSize = filter.PageSize;
+			OrderBy = filter.OrderBy;
+			IsDesc = filter.IsDesc;
 		}
 	}
 }

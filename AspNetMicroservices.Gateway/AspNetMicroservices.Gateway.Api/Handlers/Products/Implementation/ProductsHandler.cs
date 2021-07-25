@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Google.Protobuf.WellKnownTypes;
 
 using AspNetMicroservices.Gateway.Api.Extensions;
 using AspNetMicroservices.Shared.Protos;
@@ -22,21 +21,36 @@ namespace AspNetMicroservices.Gateway.Api.Handlers.Products.Implementation
 	    /// Creates an instance of <see cref="ProductsHandler"/>.
 	    /// </summary>
 	    /// <param name="client">Instance of <see cref="ProductsService.ProductsServiceClient"/>.</param>
-        public ProductsHandler(ProductsService.ProductsServiceClient client)
-        {
-            _client = client;
-        }
+	    public ProductsHandler(ProductsService.ProductsServiceClient client)
+		    => _client = client;
 
 	    /// <inheritdoc cref="IProductsHandler.GetProductsList"/>
 	    public async Task<Response<ProductsListDto>> GetProductsList(QueryFilterRequest filter)
-		    => await _client.GetProductsListAsync(filter).EnsureRpcCallSuccess();
+		    => await _client.GetProductsListAsync(filter).HandleRpcCall();
 
 	    /// <inheritdoc cref="IProductsHandler.GetProductById"/>
 	    public async Task<Response<ProductDto>> GetProductById(int id)
-		     => await _client.GetProductByIdAsync(new RetrieveSingleEntityRequest { Id = id }).EnsureRpcCallSuccess();
+		     => await _client.GetProductByIdAsync(new RetrieveSingleEntityRequest { Id = id }).HandleRpcCall();
 
 	    /// <inheritdoc cref="IProductsHandler.CreateProduct"/>
-        public async Task<Response<ProductDto>> CreateProduct(CreateUpdateProductDTO dto) =>
-	        await _client.CreateProductAsync(dto).EnsureRpcCallSuccess();
+        public async Task<Response<ProductDto>> CreateProduct(CreateProductDto dto) =>
+	        await _client.CreateProductAsync(dto).HandleRpcCall();
+
+	    /// <inheritdoc cref="IProductsHandler.UpdateProduct"/>
+	    public async Task<Response<ProductDto>> UpdateProduct(int id, CreateProductDto dto)
+		    => await _client.UpdateProductAsync(new ProductDto
+		    {
+			    Id = id,
+			    Name = dto.Name,
+			    Description = dto.Description,
+			    Price = dto.Price,
+		    }).HandleRpcCall();
+
+	    /// <inheritdoc cref="IProductsHandler.DeleteProduct"/>
+	    public async Task<Response> DeleteProduct(int id)
+	    {
+		    await _client.RemoveProductAsync(new RemoveSingleEntityRequest { Id = id });
+		    return new Response();
+	    }
     }
 }

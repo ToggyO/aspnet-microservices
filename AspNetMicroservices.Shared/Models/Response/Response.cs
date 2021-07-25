@@ -16,6 +16,19 @@ namespace AspNetMicroservices.Shared.Models.Response
         public HttpStatusCode HttpStatusCode { get; set; } = HttpStatusCode.OK;
 
         /// <summary>
+        /// Gives information about the success of the operation.
+        /// </summary>
+        [JsonIgnore]
+        public bool IsSuccess
+        {
+	        get
+	        {
+		        var asInt = (int)HttpStatusCode;
+		        return asInt is >= 200 and <= 299;
+	        }
+        }
+
+        /// <summary>
         /// Gets or sets a value that determines what type of response are returned from the application.
         /// </summary>
         public dynamic Code { get; set; } = "success";

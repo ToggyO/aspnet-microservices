@@ -70,7 +70,7 @@ namespace AspNetMicroservices.Products.Api
 	            )
 	            .AddLogging(cfg => cfg.AddFluentMigratorConsole());
 
-            services.AddAutoMapper(typeof(Business.DependencyInjectionModule));
+            services.AddAutoMapper(typeof(Startup), typeof(Business.DependencyInjectionModule));
 
             Business.DependencyInjectionModule.Load(services);
         }

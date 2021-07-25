@@ -4,7 +4,7 @@ using AspNetMicroservices.Shared.Protos.Common;
 
 using AutoMapper;
 
-namespace AspNetMicroservices.Products.Business.Mappings
+namespace AspNetMicroservices.Products.Api.Mappings
 {
 	/// <summary>
 	/// Query filter mapper profile.

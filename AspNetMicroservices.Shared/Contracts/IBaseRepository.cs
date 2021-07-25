@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace AspNetMicroservices.Products.DataLayer.Repositories
+namespace AspNetMicroservices.Shared.Contracts
 {
 	/// <summary>
 	/// Represents basic entity repository.

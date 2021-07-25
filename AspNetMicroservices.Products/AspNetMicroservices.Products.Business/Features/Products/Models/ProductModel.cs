@@ -1,10 +1,13 @@
+using AspNetMicroservices.Shared.Contracts;
+
 namespace AspNetMicroservices.Products.Business.Features.Products.Models
 {
-    public class ProductModel
+	/// <summary>
+	/// Product model.
+	/// </summary>
+    public class ProductModel : CreateProductModel, IHaveIdentifier
     {
+	    /// <inheritdoc cref="IHaveIdentifier"/>.
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public long Price { get; set; }
     }
 }

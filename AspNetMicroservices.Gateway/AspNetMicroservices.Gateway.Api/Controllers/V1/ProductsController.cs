@@ -26,24 +26,31 @@ namespace AspNetMicroservices.Gateway.Api.Controllers.V1
 	    /// </summary>
 	    /// <param name="handler">Instance of <see cref="IProductsHandler"/>.</param>
         public ProductsController(IProductsHandler handler)
-        {
-            _handler = handler;
-        }
+			=> _handler = handler;
 
-	    /// <inheritdoc cref="IProductsHandler.GetProductsList"/>
+            /// <inheritdoc cref="IProductsHandler.GetProductsList"/>
 	    [HttpGet]
 	    public async Task<Response<ProductsListDto>> GetProductsList([FromQuery] QueryFilterRequest filter)
 		    => await _handler.GetProductsList(filter);
 
 	    /// <inheritdoc cref="IProductsHandler.GetProductById"/>
 	    [HttpGet("{id}")]
-	    public async Task<Response<ProductDto>> GetProductById(int id)
+	    public async Task<Response<ProductDto>> GetProductById([FromRoute] int id)
 		    => await _handler.GetProductById(id);
 
 	    /// <inheritdoc cref="IProductsHandler.CreateProduct"/>
         [HttpPost]
-        public async Task<Response<ProductDto>> CreateProduct([FromBody] CreateUpdateProductDTO dto) =>
+        public async Task<Response<ProductDto>> CreateProduct([FromBody] CreateProductDto dto) =>
 	        await _handler.CreateProduct(dto);
 
+	    /// <inheritdoc cref="IProductsHandler.UpdateProduct"/>
+	    [HttpPut("{id}")]
+	    public async Task<Response<ProductDto>> UpdateProduct([FromRoute] int id,[FromBody] CreateProductDto dto)
+		    => await _handler.UpdateProduct(id, dto);
+
+	    /// <inheritdoc cref="IProductsHandler.DeleteProduct"/>
+	    [HttpDelete("{id}")]
+	    public async Task<Response> DeleteProduct([FromRoute] int id)
+		    => await _handler.DeleteProduct(id);
     }
 }

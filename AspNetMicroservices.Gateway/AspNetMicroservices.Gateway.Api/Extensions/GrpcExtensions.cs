@@ -48,6 +48,7 @@ namespace AspNetMicroservices.Gateway.Api.Extensions
             {
                 StatusCode.InvalidArgument => HttpStatusCode.BadRequest,
                 StatusCode.NotFound => HttpStatusCode.NotFound,
+                StatusCode.Internal => HttpStatusCode.InternalServerError,
                 _ => HttpStatusCode.OK
             };
         }
@@ -58,7 +59,7 @@ namespace AspNetMicroservices.Gateway.Api.Extensions
         /// <param name="call">Instance of <see cref="AsyncUnaryCall{TResponse}"/></param>
         /// <typeparam name="TItem">Type of returned data.</typeparam>
         /// <returns>Returns an instance of <see cref="Response"/></returns>
-        public static async Task<Response<TItem>> EnsureRpcCallSuccess<TItem>(
+        public static async Task<Response<TItem>> HandleRpcCall<TItem>(
             this AsyncUnaryCall<TItem> call) where TItem : class
         {
 	        try

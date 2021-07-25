@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Shared.Constants.Common;
 using AspNetMicroservices.Shared.Contracts;
 
 namespace AspNetMicroservices.Shared.Models.Pagination
@@ -13,10 +14,10 @@ namespace AspNetMicroservices.Shared.Models.Pagination
     public class PaginationModel<TItem> : IPaginatedQuery
     {
 	    /// <inheritdoc cref="IPaginatedQuery.Page"/>.
-	    public int Page { get; set; } = 1;
+	    public int Page { get; set; } = PaginationDefaults.DefaultPageNumber;
 
 	    /// <inheritdoc cref="IPaginatedQuery.PageSize"/>.
-	    public int PageSize { get; set; } = 10;
+	    public int PageSize { get; set; } = PaginationDefaults.DefaultPageSize;
 
 	    /// <summary>
 	    /// Total count of elements.

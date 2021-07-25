@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 using AspNetMicroservices.Products.DataLayer.Common;
 using AspNetMicroservices.Products.DataLayer.DataBase.Extensions;
 using AspNetMicroservices.Products.DataLayer.Entities.Product;
+using AspNetMicroservices.Shared.Extensions;
 using AspNetMicroservices.Shared.Models.Pagination;
 using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
-
-using LinqToDB;
 
 namespace AspNetMicroservices.Products.DataLayer.Repositories.Products.Implementation
 {
@@ -21,11 +20,12 @@ namespace AspNetMicroservices.Products.DataLayer.Repositories.Products.Implement
 		    var products = from p in _connection.Products select p;
 
 		    if (!string.IsNullOrEmpty(filter.Search))
-		    {
 			    products = from p in products
 					where p.Name.Contains(filter.Search, StringComparison.OrdinalIgnoreCase)
 				    select p;
-		    }
+
+		    if (!string.IsNullOrEmpty(filter.OrderBy))
+			    products = products.OrderBy(filter.OrderBy, filter.IsDesc);
 
 		    return await products.ToPaginatedListAsync(filter);
 	    }

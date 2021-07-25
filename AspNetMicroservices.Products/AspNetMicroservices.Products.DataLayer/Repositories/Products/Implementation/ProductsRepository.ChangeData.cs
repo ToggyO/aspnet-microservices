@@ -2,35 +2,48 @@
 
 using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection;
 using AspNetMicroservices.Products.DataLayer.Entities.Product;
+using AspNetMicroservices.Products.DataLayer.Transactions;
 
 using LinqToDB;
 
 namespace AspNetMicroservices.Products.DataLayer.Repositories.Products.Implementation
 {
-	// TODO: add summary.
-	public partial class ProductsRepository
+	/// <inheritdoc cref="IProductsRepository"/>
+	public partial class ProductsRepository : TransactionBuilder
 	{
+		/// <summary>
+		/// Instance of <see cref="AppDataConnection"/>.
+		/// </summary>
 		private readonly AppDataConnection _connection;
 
-		public ProductsRepository(AppDataConnection connection)
+		/// <summary>
+		/// Initialize new instance of <see cref="ProductsRepository"/>.
+		/// </summary>
+		/// <param name="connection">Database connection.</param>
+		public ProductsRepository(AppDataConnection connection) : base(connection)
 		{
 			_connection = connection;
 		}
 
+		/// <inheritdoc cref="IProductsRepository.Create"/>
 		public async Task<ProductEntity> Create(ProductEntity entity)
 		{
 			entity.Id = await _connection.InsertWithInt32IdentityAsync(entity);
 			return entity;
 		}
 
-		public Task<ProductEntity> Update(ProductEntity entity)
+		/// <inheritdoc cref="IProductsRepository.Update"/>
+		public async Task<ProductEntity> Update(ProductEntity entity)
 		{
-			throw new System.NotImplementedException();
+			await _connection.UpdateAsync(entity);
+			return entity;
 		}
 
-		public Task<ProductEntity> Delete(int id)
+		/// <inheritdoc cref="IProductsRepository.Delete"/>
+		public async Task<ProductEntity> Delete(int id)
 		{
-			throw new System.NotImplementedException();
+			await _connection.Products.DeleteAsync(x => x.Id == id);
+			return await GetById(id);
 		}
 	}
 }

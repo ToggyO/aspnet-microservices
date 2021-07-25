@@ -9,12 +9,12 @@ import "Protos/common.proto";
 service ProductsService {
   rpc GetProductsList(common.QueryFilterRequest) returns (ProductsListDto);
   rpc GetProductById(common.RetrieveSingleEntityRequest) returns (ProductDto);
-  rpc CreateProduct (CreateUpdateProductDTO) returns (ProductDto);
-  rpc UpdateProduct (CreateUpdateProductDTO) returns (ProductDto);
+  rpc CreateProduct (CreateProductDto) returns (ProductDto);
+  rpc UpdateProduct (ProductDto) returns (ProductDto);
   rpc RemoveProduct (common.RemoveSingleEntityRequest) returns (google.protobuf.Empty);
 }
 
-message CreateUpdateProductDTO {
+message CreateProductDto {
   string name = 1;
   string description = 2;
   int32 price = 3;

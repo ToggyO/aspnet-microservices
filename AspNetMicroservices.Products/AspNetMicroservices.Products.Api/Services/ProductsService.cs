@@ -82,28 +82,31 @@ namespace AspNetMicroservices.Products.Api.Services
         /// <summary>
         /// Method creates product.
         /// </summary>
-        /// <param name="dto">Instance of <see cref="CreateUpdateProductDTO"/>.</param>
+        /// <param name="dto">Instance of <see cref="CreateProductDto"/>.</param>
         /// <param name="context">Instance of <see cref="ServerCallContext"/>.</param>
         /// <returns>Created product.</returns>
-        public override async Task<ProductDto> CreateProduct(CreateUpdateProductDTO dto, ServerCallContext context)
+        public override async Task<ProductDto> CreateProduct(CreateProductDto dto, ServerCallContext context)
         {
-            var productModel = await _mediator.Send(new CreateProduct.Command
-            {
-	            Name = dto.Name,
-	            Description = dto.Description,
-	            Price = dto.Price,
-            });
+	        var model = _mapper.Map<CreateProductDto, CreateProduct.Command>(dto);
+	        var productModel = await _mediator.Send(model);
+	        if (productModel is null)
+	            throw new ErrorResponseRpcException(StatusCode.Internal, new InternalErrorResponse());
             return _mapper.Map<ProductModel, ProductDto>(productModel);
         }
 
-        public override Task<ProductDto> UpdateProduct(CreateUpdateProductDTO request, ServerCallContext context)
+        public override async Task<ProductDto> UpdateProduct(ProductDto dto, ServerCallContext context)
         {
-	        return base.UpdateProduct(request, context);
+	        var model = _mapper.Map<ProductDto, UpdateProduct.Command>(dto);
+	        var productModel = await _mediator.Send(model);
+	        if (productModel is null)
+		        throw new ErrorResponseRpcException(StatusCode.NotFound, new NotFoundErrorResponse());
+	        return _mapper.Map<ProductModel, ProductDto>(productModel);
         }
 
-        public override Task<Empty> RemoveProduct(RemoveSingleEntityRequest request, ServerCallContext context)
+        public override async Task<Empty> RemoveProduct(RemoveSingleEntityRequest dto, ServerCallContext context)
         {
-	        return base.RemoveProduct(request, context);
+	        await _mediator.Send(new DeleteProduct.Command { Id = dto.Id });
+	        return new Empty();
         }
     }
 }

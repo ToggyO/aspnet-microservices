@@ -1,10 +1,11 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 using AspNetMicroservices.Products.Business.Features.Products.Models;
+using AspNetMicroservices.Products.Business.Features.Products.Validators;
 using AspNetMicroservices.Products.DataLayer.Entities.Product;
 using AspNetMicroservices.Products.DataLayer.Repositories.Products;
-using AspNetMicroservices.Shared.Errors;
 
 using AutoMapper;
 
@@ -15,29 +16,15 @@ using MediatR;
 namespace AspNetMicroservices.Products.Business.Features.Products.Commands
 {
 	/// <summary>
-	/// Create product command.
+	/// Create product.
 	/// </summary>
     public static class CreateProduct
     {
 	    /// <summary>
 	    /// Create product command.
 	    /// </summary>
-        public sealed class Command : IRequest<ProductModel>
+        public sealed class Command : CreateProductModel, IRequest<ProductModel>
         {
-	        /// <summary>
-	        /// Gets or sets the product name.
-	        /// </summary>
-            public string Name { get; set; }
-
-	        /// <summary>
-	        /// Gets or sets the product description.
-	        /// </summary>
-            public string Description { get; set; }
-
-	        /// <summary>
-	        /// Gets or sets the product price.
-	        /// </summary>
-            public long Price { get; set; }
         }
 
 	    /// <summary>
@@ -71,13 +58,18 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Commands
             /// <inheritdoc cref="IRequestHandler{TRequest,TResponse}"/>
             public async Task<ProductModel> Handle(Command cmd, CancellationToken ct)
             {
-                var entity = new ProductEntity
+	            await using var ts = await _repository.CreateTransactionAsync();
+                try
                 {
-                    Name = cmd.Name,
-                    Description = cmd.Description,
-                    Price = cmd.Price,
-                };
-                return _mapper.Map<ProductEntity, ProductModel>(await _repository.Create(entity));
+	                var entity = await _repository.Create(_mapper.Map<ProductEntity>(cmd));
+	                await ts.CommitAsync(ct);
+	                return _mapper.Map<ProductModel>(entity);
+                }
+                catch (Exception)
+                {
+	                await ts.RollbackAsync(ct);
+	                return default;
+                }
             }
         }
 
@@ -86,15 +78,24 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Commands
 	    /// <summary>
 	    /// Validator for <see cref="Command"/>.
 	    /// </summary>
-	    public sealed class Validator : AbstractValidator<Command>
+	    public class Validator : CreateUpdateProductValidator<Command>
+	    {}
+
+	    #endregion
+
+	    #region Mapper
+
+	    /// <summary>
+	    /// Mapper profile.
+	    /// </summary>
+	    public class MapperProfile : Profile
 	    {
 		    /// <summary>
-		    /// Creates an instance of <see cref="Validator"/>.
+		    /// Initialize new instance of <see cref="MapperProfile"/>.
 		    /// </summary>
-		    public Validator()
+		    public MapperProfile()
 		    {
-			    RuleFor(x => x.Name).NotEmpty().WithErrorCode(ErrorCodes.Validation.FieldNotEmpty);
-			    RuleFor(x => x.Price).NotEmpty().WithErrorCode(ErrorCodes.Validation.FieldNotEmpty);
+			    CreateMap<Command, ProductEntity>();
 		    }
 	    }
 

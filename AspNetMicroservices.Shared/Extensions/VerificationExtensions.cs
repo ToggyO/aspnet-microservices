@@ -5,7 +5,6 @@ using AspNetMicroservices.Shared.Models.Response;
 
 using Grpc.Core;
 
-// TODO: check
 namespace AspNetMicroservices.Shared.Extensions
 {
 	/// <summary>

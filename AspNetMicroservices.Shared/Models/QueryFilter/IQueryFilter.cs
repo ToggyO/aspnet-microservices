@@ -5,7 +5,7 @@ namespace AspNetMicroservices.Shared.Models.QueryFilter
 	/// <summary>
 	/// Represents common filter for data querying.
 	/// </summary>
-	public interface IQueryFilter : IPaginatedQuery
+	public interface IQueryFilter : IPaginatedQuery, IOrderedQuery
 	{
 		/// <summary>
 		/// Search string.
