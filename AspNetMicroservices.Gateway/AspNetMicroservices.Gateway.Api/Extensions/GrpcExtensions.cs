@@ -33,6 +33,7 @@ namespace AspNetMicroservices.Gateway.Api.Extensions
                 })
                 .ConfigureChannel(cfg =>
                 {
+	                // TODO: separate for prod and dev
                     cfg.HttpHandler = new HttpClientHandler
                     {
                         ServerCertificateCustomValidationCallback =

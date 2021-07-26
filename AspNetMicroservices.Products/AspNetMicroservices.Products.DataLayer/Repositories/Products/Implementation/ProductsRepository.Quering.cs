@@ -25,7 +25,7 @@ namespace AspNetMicroservices.Products.DataLayer.Repositories.Products.Implement
 				    select p;
 
 		    if (!string.IsNullOrEmpty(filter.OrderBy))
-			    products = products.OrderBy(filter.OrderBy, filter.IsDesc);
+			    products = products.TrySort(filter.OrderBy, filter.IsDesc);
 
 		    return await products.ToPaginatedListAsync(filter);
 	    }

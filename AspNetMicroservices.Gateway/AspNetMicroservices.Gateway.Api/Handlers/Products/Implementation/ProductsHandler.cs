@@ -33,8 +33,8 @@ namespace AspNetMicroservices.Gateway.Api.Handlers.Products.Implementation
 		     => await _client.GetProductByIdAsync(new RetrieveSingleEntityRequest { Id = id }).HandleRpcCall();
 
 	    /// <inheritdoc cref="IProductsHandler.CreateProduct"/>
-        public async Task<Response<ProductDto>> CreateProduct(CreateProductDto dto) =>
-	        await _client.CreateProductAsync(dto).HandleRpcCall();
+        public async Task<Response<ProductDto>> CreateProduct(CreateProductDto dto)
+			=> await _client.CreateProductAsync(dto).HandleRpcCall();
 
 	    /// <inheritdoc cref="IProductsHandler.UpdateProduct"/>
 	    public async Task<Response<ProductDto>> UpdateProduct(int id, CreateProductDto dto)

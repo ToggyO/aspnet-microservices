@@ -6,7 +6,7 @@ using LinqToDB.Data;
 
 namespace AspNetMicroservices.Products.DataLayer.Transactions
 {
-	/// <inheritdoc cref="ITransactional{TTransactionExecutor}"/>
+	/// <inheritdoc cref="ITransactional{TTransactionProvider}"/>
 	public class TransactionBuilder : ITransactional<DataConnectionTransaction>
 	{
 		/// <summary>
@@ -21,7 +21,7 @@ namespace AspNetMicroservices.Products.DataLayer.Transactions
 		public TransactionBuilder(DataConnection connection)
 			=> _connection = connection;
 
-		/// <inheritdoc cref="ITransactional{TTransactionExecutor}.CreateTransactionAsync"/>.
+		/// <inheritdoc cref="ITransactional{TTransactionProvider}.CreateTransactionAsync"/>.
 		public async Task<DataConnectionTransaction> CreateTransactionAsync()
 			=> await _connection.BeginTransactionAsync();
 	}
