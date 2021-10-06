@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  auth-service-redis-dev:
+    container_name: auth-service-redis-dev
+    image: redis:6.0.8-alpine
+    restart: unless-stopped
+    command:
+      - 'redis-server'
+      - '--port ${AUTH_SERVICE_REDIS_PORT}'
+      - '--requirepass ${AUTH_SERVICE_REDIS_PASSWORD}'
+      - '--loglevel ${REDIS_LOGLEVEL:-warning}'
+      - '--databases 1'
+      - '--save 900 1'
+      - '--save 300 10'
+      - '--save 60 10000'
+      - '--maxmemory ${REDIS_MAXMEM:-50mb}'
+      - '--maxmemory-policy ${REDIS_POLICY:-noeviction}'
+    volumes:
+      - 'volume-auth-service-redis-dev:/data/redis'
+    ports:
+      - ${AUTH_SERVICE_REDIS_EXTERNAL_PORT}:${AUTH_SERVICE_REDIS_PORT}
+
+volumes:
+  volume-auth-service-redis-dev:
