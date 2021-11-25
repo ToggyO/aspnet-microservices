@@ -11,10 +11,19 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\AspNetMicroservices.Shared\AspNetMicroservices.Shared.csproj" />
+    <ProjectReference Include="..\AspNetMicroservices.Auth.DataAccess\AspNetMicroservices.Auth.DataAccess.csproj" />
+    <ProjectReference Include="..\AspNetMicroservices.Auth.Domain\AspNetMicroservices.Auth.Domain.csproj" />
+    <ProjectReference Include="..\AspNetMicroservices.Auth.Infrastructure\AspNetMicroservices.Auth.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\v1" />
+    <_ContentIncludedByDefault Remove="AspNetMicroservices.Auth.Infrastructure\obj\AspNetMicroservices.Auth.Infrastructure.csproj.nuget.dgspec.json" />
+    <_ContentIncludedByDefault Remove="AspNetMicroservices.Auth.Infrastructure\obj\project.assets.json" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace AspNetMicroservices.Auth.Application.Common.Interfaces
 {
@@ -23,5 +24,13 @@ namespace AspNetMicroservices.Auth.Application.Common.Interfaces
 		/// <typeparam name="TValue">Value type.</typeparam>
 		/// <returns></returns>
 		Task SetCacheValueAsync<TValue>(string key, TValue value);
+
+		/// <summary>
+		/// Sets value to cache by specified key with expiration time.
+		/// </summary>
+		/// <inheritdoc cref="SetCacheValueAsync{TValue}(string,TValue)"/>
+		/// <param name="timeToLive">Expiration time.</param>
+		/// <returns></returns>
+		Task SetCacheValueAsync<TValue>(string key, TValue value, TimeSpan timeToLive);
 	}
 }

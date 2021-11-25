@@ -1,13 +1,13 @@
-version: '3.8'
+version: '3.5'
 services:
   auth-service-redis-dev:
     container_name: auth-service-redis-dev
-    image: redis:6.0.8-alpine
-    restart: unless-stopped
+    image: redis:6.2.6-alpine
+    restart: on-failure
     command:
       - 'redis-server'
-      - '--port ${AUTH_SERVICE_REDIS_PORT}'
-      - '--requirepass ${AUTH_SERVICE_REDIS_PASSWORD}'
+      - '--port ${AUTH_REDIS_PORT}'
+      - '--requirepass ${AUTH_REDIS_PASSWORD}'
       - '--loglevel ${REDIS_LOGLEVEL:-warning}'
       - '--databases 1'
       - '--save 900 1'
@@ -18,7 +18,13 @@ services:
     volumes:
       - 'volume-auth-service-redis-dev:/data/redis'
     ports:
-      - ${AUTH_SERVICE_REDIS_EXTERNAL_PORT}:${AUTH_SERVICE_REDIS_PORT}
+      - ${AUTH_REDIS_EXTERNAL_PORT}:${AUTH_REDIS_PORT}
+    networks:
+      - external-network
 
+networks:
+  external-network:
+    driver: bridge
+    
 volumes:
   volume-auth-service-redis-dev:

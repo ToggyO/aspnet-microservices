@@ -17,6 +17,7 @@ using AspNetMicroservices.Products.Api.Services;
 using AspNetMicroservices.Products.Common.Behaviours;
 using AspNetMicroservices.Products.Common.Settings;
 using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection;
+using AspNetMicroservices.Shared.Models.Settings;
 
 namespace AspNetMicroservices.Products.Api
 {
@@ -49,14 +50,14 @@ namespace AspNetMicroservices.Products.Api
             services.AddValidatorsFromAssembly(typeof(Business.DependencyInjectionModule).Assembly);
             ValidatorConfigurationOverload.Override();
 
-            var dbSettings = new DbSettings
+            var dbSettings = new PostgresDataSettings
             {
-                DB_HOST = DotNetEnv.Env.GetString("POSTGRES_DB_HOST"),
-                DB_PORT = DotNetEnv.Env.GetString(
+                Host = DotNetEnv.Env.GetString("POSTGRES_DB_HOST"),
+                Port = DotNetEnv.Env.GetInt(
                     isDevelopment ? "PRODUCTS_DB_EXTERNAL_PORT" : "PRODUCTS_DB_PORT"),
-                DB_NAME = DotNetEnv.Env.GetString("PRODUCTS_DB_NAME"),
-                DB_USER = DotNetEnv.Env.GetString("PRODUCTS_DB_USER"),
-                DB_PASSWORD = DotNetEnv.Env.GetString("PRODUCTS_DB_PASSWORD"),
+                DbName = DotNetEnv.Env.GetString("PRODUCTS_DB_NAME"),
+                User = DotNetEnv.Env.GetString("PRODUCTS_DB_USER"),
+                Password = DotNetEnv.Env.GetString("PRODUCTS_DB_PASSWORD"),
             };
             services.AddLinqToDbContext<AppDataConnection>((provider, options) =>
             {

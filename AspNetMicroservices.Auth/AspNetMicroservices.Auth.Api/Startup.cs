@@ -1,6 +1,12 @@
+using System;
+
 using AspNetMicroservices.Auth.Api.Extensions;
 using AspNetMicroservices.Auth.Api.Filters;
 using AspNetMicroservices.Auth.Api.Middleware;
+using AspNetMicroservices.Auth.DataAccess;
+using AspNetMicroservices.Auth.Infrastructure;
+using AspNetMicroservices.Shared.Models.Settings;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +43,8 @@ namespace AspNetMicroservices.Auth.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+	        bool isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+
             services.AddCors(o =>
                 o.AddPolicy(CorsPolicy, builder => builder
                     .AllowAnyHeader()
@@ -45,11 +53,31 @@ namespace AspNetMicroservices.Auth.Api
                 ));
 
             services.Configure<ApiBehaviorOptions>(o => o.SuppressModelStateInvalidFilter = true);
+            services.Configure<RedisSettings>(o =>
+            {
+	            o.Host = DotNetEnv.Env.GetString("AUTH_REDIS_HOST");
+	            o.Db = DotNetEnv.Env.GetInt("AUTH_REDIS_DATABASE");
+	            o.Password = DotNetEnv.Env.GetString("AUTH_REDIS_PASSWORD");
+	            o.Port = DotNetEnv.Env.GetInt(isDevelopment ? "AUTH_REDIS_EXTERNAL_PORT" : "AUTH_REDIS_PORT");
+	            o.KeyExpirationInSec = DotNetEnv.Env.GetInt("AUTH_REDIS_KEY_EXPIRATION_IN_SEC");
+            });
+
+            var dbSettings = new PostgresDataSettings
+            {
+	            Host = DotNetEnv.Env.GetString("AUTH_DB_HOST"),
+	            Port = DotNetEnv.Env.GetInt(isDevelopment ? "AUTH_DB_EXTERNAL_PORT" : "AUTH_DB_PORT"),
+	            User = DotNetEnv.Env.GetString("AUTH_DB_USER"),
+	            Password = DotNetEnv.Env.GetString("AUTH_DBPASSWORD"),
+	            DbName = DotNetEnv.Env.GetString("AUTH_DB_NAME"),
+            };
+
+            services.AddDataAccess(dbSettings.DbConnectionString);
+            services.AddInfrastructure();
 
             services.AddControllersWithViews(mvcOpts =>
             {
-                mvcOpts.UseGlobalRoutePrefix("api");
-                mvcOpts.Filters.Add<StatusCodeFilter>();
+	            mvcOpts.UseGlobalRoutePrefix("api");
+	            mvcOpts.Filters.Add<StatusCodeFilter>();
             });
             services.AddConfiguredSwaggerGen();
         }
