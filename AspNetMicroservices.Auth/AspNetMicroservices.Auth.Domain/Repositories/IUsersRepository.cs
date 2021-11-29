@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
 using AspNetMicroservices.Shared.Contracts;
@@ -13,7 +12,11 @@ namespace AspNetMicroservices.Auth.Domain.Repositories
 	/// </summary>
 	public interface IUsersRepository : IBaseRepository<UserModel>
 	{
-		// TODO: add summary
+		/// <summary>
+		/// Retrieves a list of users.
+		/// </summary>
+		/// <param name="filter">Query filter.</param>
+		/// <returns>List of users.</returns>
 		Task<PaginationModel<UserModel>> GetList(QueryFilterModel filter);
 	}
 }

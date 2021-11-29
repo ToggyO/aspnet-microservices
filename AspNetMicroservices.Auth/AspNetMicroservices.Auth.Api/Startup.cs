@@ -67,7 +67,7 @@ namespace AspNetMicroservices.Auth.Api
 	            Host = DotNetEnv.Env.GetString("AUTH_DB_HOST"),
 	            Port = DotNetEnv.Env.GetInt(isDevelopment ? "AUTH_DB_EXTERNAL_PORT" : "AUTH_DB_PORT"),
 	            User = DotNetEnv.Env.GetString("AUTH_DB_USER"),
-	            Password = DotNetEnv.Env.GetString("AUTH_DBPASSWORD"),
+	            Password = DotNetEnv.Env.GetString("AUTH_DB_PASSWORD"),
 	            DbName = DotNetEnv.Env.GetString("AUTH_DB_NAME"),
             };
 

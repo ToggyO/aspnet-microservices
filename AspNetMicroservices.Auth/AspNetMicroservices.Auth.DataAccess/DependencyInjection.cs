@@ -1,4 +1,11 @@
-﻿using AspNetMicroservices.Auth.DataAccess.Context;
+﻿using System.Reflection;
+
+using AspNetMicroservices.Auth.DataAccess.Context;
+using AspNetMicroservices.Auth.DataAccess.Repositories;
+using AspNetMicroservices.Auth.Domain.Repositories;
+using AspNetMicroservices.Shared.Extensions;
+
+using FluentMigrator.Runner;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +23,15 @@ namespace AspNetMicroservices.Auth.DataAccess
 			string connectionString, ServiceLifetime serviceLifetime = ServiceLifetime.Scoped)
 		{
 			services.AddScoped(x => new AuthServiceDbContext(connectionString));
+			services.AddFluentMigratorCore()
+				.ConfigureRunner(cfg => cfg
+					.AddPostgres()
+					.WithGlobalConnectionString(connectionString)
+					.ScanIn(Assembly.GetExecutingAssembly()).For.All())
+				.AddLogging(cfg => cfg.AddFluentMigratorConsole());
+
+
+			services.Add<IUsersRepository, UsersRepository>(serviceLifetime);
 		}
 	}
 }

@@ -81,7 +81,7 @@ namespace AspNetMicroservices.Products.DataLayer.DataBase.Extensions
 		private static int GetPageDbIndexNumber(IPaginatedQuery query)
 		{
 			int queryPage = (query.Page - 1) * query.PageSize;
-			return queryPage < 0 ? PaginationDefaults.DefaultPageNumber : queryPage;
+			return queryPage < 0 ? PaginationDefaults.DefaultPageNumber - 1 : queryPage;
 		}
 	}
 }
