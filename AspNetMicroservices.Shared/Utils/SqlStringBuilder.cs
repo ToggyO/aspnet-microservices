@@ -1,9 +1,10 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace AspNetMicroservices.Shared.Utils
 {
+	// TODO: add description
 	public class SqlStringBuilder
 	{
 		private readonly StringBuilder _builder;
@@ -13,6 +14,13 @@ namespace AspNetMicroservices.Shared.Utils
 		private string _defaultPageNumberName = "Page";
 
 		private string _defaultPageSizeName = "PageSize";
+
+		private Dictionary<SqlJoinTypes, string> _joinDictionary = new()
+		{
+			{ SqlJoinTypes.Inner, "INNER" },
+			{ SqlJoinTypes.OuterLeft, "LEFT OUTER" },
+			{ SqlJoinTypes.OuterRight, "RIGHT OUTER" },
+		};
 
 		// TODO: add ctor with sb capacity
 		public SqlStringBuilder()
@@ -34,21 +42,23 @@ namespace AspNetMicroservices.Shared.Utils
 		public SqlStringBuilder AppendLeftJoinQuery(string tableToJoin,
 			string firstEqualityCondition, string secondEqualityCondition)
 		{
-			AppendJoinQuery(tableToJoin, firstEqualityCondition, secondEqualityCondition, "OUTER LEFT");
+			AppendJoinQuery(tableToJoin,
+				firstEqualityCondition, secondEqualityCondition, _joinDictionary[SqlJoinTypes.OuterLeft]);
 			return this;
 		}
 
 		public SqlStringBuilder AppendRightJoinQuery(string tableToJoin,
 			string firstEqualityCondition, string secondEqualityCondition)
 		{
-			AppendJoinQuery(tableToJoin, firstEqualityCondition, secondEqualityCondition, "OUTER RIGHT");
+			AppendJoinQuery(tableToJoin,
+				firstEqualityCondition, secondEqualityCondition, _joinDictionary[SqlJoinTypes.OuterRight]);
 			return this;
 		}
 
 		public SqlStringBuilder AppendJoinQuery(string tableToJoin,
 			string firstEqualityCondition, string secondEqualityCondition, string joinType = "")
 		{
-			AppendQuery($"${joinType} JOIN {tableToJoin} ON {firstEqualityCondition} = {secondEqualityCondition}");
+			AppendQuery($"{joinType} JOIN {tableToJoin} ON {firstEqualityCondition} = {secondEqualityCondition} ");
 			return this;
 		}
 
@@ -67,12 +77,14 @@ namespace AspNetMicroservices.Shared.Utils
 		public SqlStringBuilder AppendSorting(params SqlBuilderOrder[] orderConditions)
 		{
 			var columns = orderConditions.Select(x => x.Concat());
-			AppendQuery($"ORDER BY {string.Join(", ", columns)}");
+			AppendQuery($"ORDER BY {string.Join(", ", columns)} ");
 			return this;
 		}
 
+		// TODO: add semicolon at the end of the SQL statement
 		public override string ToString() => _builder.ToString();
 
+		public void Clear() => _builder.Clear();
 
 		/// <summary>
 		/// Check if page index is valid.
@@ -111,6 +123,8 @@ namespace AspNetMicroservices.Shared.Utils
 	// TODO: вынести в отдельный файл
 	public enum SqlJoinTypes
 	{
-
+		Inner,
+		OuterLeft,
+		OuterRight,
 	}
 }

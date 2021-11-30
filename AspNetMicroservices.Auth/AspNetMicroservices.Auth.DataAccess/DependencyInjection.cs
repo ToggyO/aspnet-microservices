@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 
 using AspNetMicroservices.Auth.DataAccess.Context;
+using AspNetMicroservices.Auth.DataAccess.Mapping;
 using AspNetMicroservices.Auth.DataAccess.Repositories;
 using AspNetMicroservices.Auth.Domain.Repositories;
 using AspNetMicroservices.Shared.Extensions;
@@ -30,6 +31,7 @@ namespace AspNetMicroservices.Auth.DataAccess
 					.ScanIn(Assembly.GetExecutingAssembly()).For.All())
 				.AddLogging(cfg => cfg.AddFluentMigratorConsole());
 
+			DbModelsMapping.Initialize();
 
 			services.Add<IUsersRepository, UsersRepository>(serviceLifetime);
 		}

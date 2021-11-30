@@ -19,9 +19,9 @@ namespace AspNetMicroservices.Auth.DataAccess
 					=> Utils.GetNameFromColumnAttribute(x) == columnName.ToLower());
 
 		/// <summary>
-		///
+		/// Create map from POCO model to table.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="T">POCO type.</typeparam>
 		public static void SetTypeMap<T>()
 		{
 			var map = new CustomPropertyTypeMap(typeof(T), _propertySelector);

@@ -12,7 +12,7 @@ namespace AspNetMicroservices.Shared.Errors
             public const string Unauthorized = "security_error";
             public const string Forbidden = "forbidden";
         }
-        
+
         public static class Validation
         {
             public const string FieldInvalidType = "validation.field_invalid_type";
@@ -30,7 +30,7 @@ namespace AspNetMicroservices.Shared.Errors
             public const string FieldPhone = "validation.field_phone";
             public const string FieldDuplicate = "validation.field_duplicate";
         }
-        
+
         public static class Security
         {
             public const string AuthDataInvalid = "sec.auth_data_invalid";
@@ -41,7 +41,7 @@ namespace AspNetMicroservices.Shared.Errors
             public const string RefreshTokenInvalid = "sec.refresh_token_invalid";
             public const string RefreshTokenExpired = "sec.refresh_token_expired";
         }
-        
+
         public static class Business
         {
             public const string EmailExists = "bus.email_already_exists";
@@ -52,10 +52,10 @@ namespace AspNetMicroservices.Shared.Errors
             public const string InvalidRegistrationStep = "bus.invalid_registration_step";
             public const string PasswordChangeRequestInvalid = "bus.password_change_request_invalid";
         }
-        
+
         public static class System
         {
-            public const string InternalError = "internal_error";
+            public const string InternalError = "internal_server_error";
         }
     }
 }

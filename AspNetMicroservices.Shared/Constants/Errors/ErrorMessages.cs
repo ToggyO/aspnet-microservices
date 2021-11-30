@@ -27,7 +27,7 @@ namespace AspNetMicroservices.Shared.Errors
             public const string FieldCardNumber = "Card number isn't valid";
             public const string FieldPhone = "The phone number isn't valid";
             public const string FieldDuplicate = "The field value should be unique";
-            
+
             public static string FieldMax(int maxNumber) => $"The number can't be greater than ${maxNumber}";
             public static string FieldMin(int minNumber) => "The number can't be less than ${minNumber}";
             public static string FieldFuture(DateTime maxDate) => $"The date should be later than ${maxDate}";
@@ -54,10 +54,10 @@ namespace AspNetMicroservices.Shared.Errors
             public const string PasswordChangeRequestInvalid = "Password change request is invalid";
             public const string PasswordChangeCodeInvalid = "Code for change password invalid";
         };
-        
+
         public static class System
         {
-            public const string InternalError = "Internal error";
+            public const string InternalError = "Internal server error";
         }
     }
 }

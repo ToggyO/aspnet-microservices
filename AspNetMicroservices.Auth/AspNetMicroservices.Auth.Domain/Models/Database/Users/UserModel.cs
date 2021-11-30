@@ -7,6 +7,7 @@ namespace AspNetMicroservices.Auth.Domain.Models.Database.Users
 	/// <summary>
 	/// Represents user model.
 	/// </summary>
+	[Table("users")]
 	public class UserModel : BaseModel, IHaveIdentifier
 	{
 		/// <inheritdoc cref="IHaveIdentifier.Id"/>.

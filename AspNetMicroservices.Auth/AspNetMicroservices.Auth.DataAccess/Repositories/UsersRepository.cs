@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,10 +7,10 @@ using AspNetMicroservices.Auth.Domain.Models.Database.Users;
 using AspNetMicroservices.Auth.Domain.Repositories;
 using AspNetMicroservices.Shared.Models.Pagination;
 using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
-using AspNetMicroservices.Shared.Extensions;
 using AspNetMicroservices.Shared.Utils;
 
 using Dapper;
+using Dapper.Mapper;
 
 namespace AspNetMicroservices.Auth.DataAccess.Repositories
 {
@@ -64,15 +64,19 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 			sqlStringBuilder.AppendQuery("WHERE u.id = @Id ");
 
 			await using var connection = _connectionFactory.GetDbConnection();
-			var users = await connection.QueryAsync<UserModel, UserDetailModel, UserModel>(
-				sqlStringBuilder.ToString(),
-				(u, d) =>
-				{
-					u.Details = d;
-					return u;
-				},
-				splitOn: "user_id",
-				param: new { Id = id });
+			// TODO: delete
+			// var users = await connection.QueryAsync<UserModel, UserDetailModel, UserModel>(
+			// 	sqlStringBuilder.ToString(),
+			// 	(u, d) =>
+			// 	{
+			// 		u.Details = d;
+			// 		return u;
+			// 	},
+			// 	splitOn: "user_id",
+			// 	param: new { Id = id });
+
+			var users = await connection.QueryAsync<UserModel, UserDetailModel>(
+				sqlStringBuilder.ToString(), param: new { Id = id });
 
 			return users.FirstOrDefault();
 		}
@@ -81,15 +85,33 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 		public async Task<UserModel> Create(UserModel entity)
 		{
 			// Вынести в конфиг названия таблиц
-			var sqlStringBuilder = new SqlStringBuilder("INSERT INTO users (id, first_name, last_name, email, password, created_at, updated_at)");
+			var sqlStringBuilder = new SqlStringBuilder("INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) ");
 			sqlStringBuilder.AppendQuery(
-				"VALUES (null, @FirstName, @LastName, @Email, @Password, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP())");
+				"VALUES (@FirstName, @LastName, @Email, @Password, @CreatedAt, @UpdatedAt)");
 
 			await using var connection = _connectionFactory.GetDbConnection();
-			int userId = await connection.ExecuteAsync(sqlStringBuilder.ToString(), entity);
+			await using var t = await connection.BeginTransactionAsync();
 
-			entity.Id = userId;
-			return entity;
+			try
+			{
+				entity.Id = await connection.ExecuteAsync(sqlStringBuilder.ToString(), entity);
+				sqlStringBuilder.Clear();
+
+				if (entity.Details is not null)
+				{
+					sqlStringBuilder.AppendQuery("INSERT INTO user_details (address, phone_number, created_at, updated_at) ");
+					sqlStringBuilder.AppendQuery("VALUES (@Address, @PhoneNumber, @CreatedAt, @UpdatedAt)");
+					entity.Details.Id = await connection.ExecuteAsync(sqlStringBuilder.ToString(), entity.Details);
+				}
+
+				await t.CommitAsync();
+				return entity;
+			}
+			catch (Exception e)
+			{
+				await t.RollbackAsync();
+				return default;
+			}
 		}
 
 		/// <inheritdoc cref="IUsersRepository.Update"/>.
