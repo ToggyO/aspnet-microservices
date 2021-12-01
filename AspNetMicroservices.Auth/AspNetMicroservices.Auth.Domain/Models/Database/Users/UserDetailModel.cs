@@ -25,5 +25,11 @@ namespace AspNetMicroservices.Auth.Domain.Models.Database.Users
 		/// </summary>
 		[Column("phone_number")]
 		public string PhoneNumber { get; set; }
+
+		/// <summary>
+		/// User identifier.
+		/// </summary>
+		[Column("user_id")]
+		public int UserId { get; set; }
 	}
 }

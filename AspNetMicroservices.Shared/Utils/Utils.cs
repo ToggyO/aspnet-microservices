@@ -11,6 +11,16 @@ namespace AspNetMicroservices.Shared.Utils
 		/// <summary>
 		/// Retrieve value of `Name` field of <see cref="ColumnAttribute"/>.
 		/// </summary>
+		/// <param name="propertyName">Name of property.</param>
+		/// <typeparam name="TEntity">Entity type.</typeparam>
+		/// <returns></returns>
+		public static string GetNameFromColumnAttribute<TEntity>(string propertyName)
+			where TEntity : new()
+			=> GetNameFromColumnAttribute(typeof(TEntity).GetProperty(propertyName));
+
+		/// <summary>
+		/// Retrieve value of `Name` field of <see cref="ColumnAttribute"/>.
+		/// </summary>
 		/// <param name="member">Member info.</param>
 		/// <returns></returns>
 		public static string GetNameFromColumnAttribute(MemberInfo member)
@@ -20,6 +30,25 @@ namespace AspNetMicroservices.Shared.Utils
 
 			var attribute = member.GetCustomAttribute<ColumnAttribute>();
 			return (attribute?.Name ?? member.Name).ToLower();
+		}
+
+		/// <summary>
+		/// Retrieve value of `Name` field of <see cref="TableAttribute"/>.
+		/// </summary>
+		/// <param name="toLower">Indicates, whether to return name in lower case.</param>
+		/// <typeparam name="TEntity">Entity type.</typeparam>
+		/// <returns></returns>
+		public static string GetNameFromTableAttribute<TEntity>(bool toLower = false)
+			where TEntity : new()
+		{
+			var attribute = typeof(TEntity).GetCustomAttribute<TableAttribute>();
+			if (attribute is null)
+				return null;
+
+			if (toLower)
+				return attribute.Name.ToLower();
+
+			return attribute.Name;
 		}
 	}
 }

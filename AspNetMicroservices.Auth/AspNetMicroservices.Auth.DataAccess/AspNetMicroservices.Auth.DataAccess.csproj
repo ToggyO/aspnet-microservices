@@ -12,7 +12,7 @@
     <PackageReference Include="FluentMigrator.Extensions.Postgres" Version="3.3.1" />
     <PackageReference Include="FluentMigrator.Runner" Version="3.3.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="Npgsql" Version="5.0.1" />
   </ItemGroup>
 

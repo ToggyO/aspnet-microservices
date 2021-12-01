@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -59,22 +60,11 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 		/// <inheritdoc cref="IUsersRepository.GetById"/>.
 		public async Task<UserModel> GetById(int id)
 		{
-			var sqlStringBuilder = new SqlStringBuilder(UserModel.BaseQuery);
+			var sqlStringBuilder = new SqlStringBuilder("SELECT u.id, u.first_name, u.last_name, u.email, u.created_at, u.updated_at, ud.* FROM users u ");
 			sqlStringBuilder.AppendLeftJoinQuery("user_details ud", "u.id", "ud.user_id");
 			sqlStringBuilder.AppendQuery("WHERE u.id = @Id ");
 
 			await using var connection = _connectionFactory.GetDbConnection();
-			// TODO: delete
-			// var users = await connection.QueryAsync<UserModel, UserDetailModel, UserModel>(
-			// 	sqlStringBuilder.ToString(),
-			// 	(u, d) =>
-			// 	{
-			// 		u.Details = d;
-			// 		return u;
-			// 	},
-			// 	splitOn: "user_id",
-			// 	param: new { Id = id });
-
 			var users = await connection.QueryAsync<UserModel, UserDetailModel>(
 				sqlStringBuilder.ToString(), param: new { Id = id });
 
@@ -90,24 +80,27 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 				"VALUES (@FirstName, @LastName, @Email, @Password, @CreatedAt, @UpdatedAt)");
 
 			await using var connection = _connectionFactory.GetDbConnection();
+			await connection.OpenAsync();
 			await using var t = await connection.BeginTransactionAsync();
 
 			try
 			{
-				entity.Id = await connection.ExecuteAsync(sqlStringBuilder.ToString(), entity);
+				entity.Id = await connection.ExecuteAsync(sqlStringBuilder.ToString(), entity, transaction: t);
 				sqlStringBuilder.Clear();
 
 				if (entity.Details is not null)
 				{
-					sqlStringBuilder.AppendQuery("INSERT INTO user_details (address, phone_number, created_at, updated_at) ");
-					sqlStringBuilder.AppendQuery("VALUES (@Address, @PhoneNumber, @CreatedAt, @UpdatedAt)");
-					entity.Details.Id = await connection.ExecuteAsync(sqlStringBuilder.ToString(), entity.Details);
+					sqlStringBuilder.AppendQuery("INSERT INTO user_details (address, user_id, phone_number, created_at, updated_at) ");
+					sqlStringBuilder.AppendQuery("VALUES (@Address, @UserId, @PhoneNumber, @CreatedAt, @UpdatedAt)");
+
+					entity.Details.UserId = entity.Id;
+					entity.Details.Id = await connection.ExecuteAsync(sqlStringBuilder.ToString(), entity.Details, transaction: t);
 				}
 
 				await t.CommitAsync();
 				return entity;
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				await t.RollbackAsync();
 				return default;
