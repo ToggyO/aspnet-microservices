@@ -37,7 +37,7 @@ namespace AspNetMicroservices.Auth.DataAccess.Migrations
 
 			Create.Table(_userDetailsTableName)
 				.WithColumn(Utils.GetNameFromColumnAttribute<UserDetailModel>(nameof(UserDetailModel.Id))).AsInt32().PrimaryKey().Identity()
-				.WithColumn(foreign_user_Id).AsInt32()
+				.WithColumn(foreign_user_Id).AsInt32().Nullable()
 				.WithColumn(Utils.GetNameFromColumnAttribute<UserDetailModel>(nameof(UserDetailModel.Address))).AsString(200)
 				.WithColumn(Utils.GetNameFromColumnAttribute<UserDetailModel>(nameof(UserDetailModel.PhoneNumber))).AsString(50)
 				.WithColumn(Utils.GetNameFromColumnAttribute<UserDetailModel>(nameof(UserDetailModel.CreatedAt))).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)

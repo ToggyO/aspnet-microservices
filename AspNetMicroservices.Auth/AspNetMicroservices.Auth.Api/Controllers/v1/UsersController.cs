@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Transactions;
 
 using AspNetMicroservices.Auth.Application.Dto.Users;
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
@@ -43,7 +44,13 @@ namespace AspNetMicroservices.Auth.Api.Controllers.v1
 					PhoneNumber = dto.PhoneNumber,
 				}
 			};
-			return await _repository.Create(user);
+
+			using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);;
+			user = await _repository.Create(user);
+			user.Details.UserId = user.Id;
+			user.Details = await _repository.CreateDetails(user.Details);
+			scope.Complete();
+			return user;
 		}
 	}
 }

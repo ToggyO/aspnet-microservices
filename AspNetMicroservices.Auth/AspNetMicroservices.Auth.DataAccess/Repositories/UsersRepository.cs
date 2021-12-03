@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
 using AspNetMicroservices.Auth.DataAccess.Context;
@@ -18,8 +16,15 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 	/// <inheritdoc cref="IUsersRepository"/>.
 	public class UsersRepository : IUsersRepository
 	{
+		/// <summary>
+		/// Instance of <see cref="AuthServiceDbContext"/>.
+		/// </summary>
 		private readonly AuthServiceDbContext _connectionFactory;
 
+		/// <summary>
+		/// Initialize new instance of <see cref="UsersRepository"/>.
+		/// </summary>
+		/// <param name="context">Instance of <see cref="AuthServiceDbContext"/>.</param>
 		public UsersRepository(AuthServiceDbContext context)
 		{
 			_connectionFactory = context;
@@ -65,6 +70,7 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 			sqlStringBuilder.AppendQuery("WHERE u.id = @Id ");
 
 			await using var connection = _connectionFactory.GetDbConnection();
+
 			var users = await connection.QueryAsync<UserModel, UserDetailModel>(
 				sqlStringBuilder.ToString(), param: new { Id = id });
 
@@ -74,37 +80,17 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 		/// <inheritdoc cref="IUsersRepository.Create"/>.
 		public async Task<UserModel> Create(UserModel entity)
 		{
+			await using var connection = _connectionFactory.GetDbConnection();
+
 			// Вынести в конфиг названия таблиц
 			var sqlStringBuilder = new SqlStringBuilder("INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) ");
 			sqlStringBuilder.AppendQuery(
 				"VALUES (@FirstName, @LastName, @Email, @Password, @CreatedAt, @UpdatedAt)");
+			sqlStringBuilder.AppendReturningIdentity(connection);
 
-			await using var connection = _connectionFactory.GetDbConnection();
-			await connection.OpenAsync();
-			await using var t = await connection.BeginTransactionAsync();
+			entity.Id = await connection.ExecuteScalarAsync<int>(sqlStringBuilder.ToString(), entity);
 
-			try
-			{
-				entity.Id = await connection.ExecuteAsync(sqlStringBuilder.ToString(), entity, transaction: t);
-				sqlStringBuilder.Clear();
-
-				if (entity.Details is not null)
-				{
-					sqlStringBuilder.AppendQuery("INSERT INTO user_details (address, user_id, phone_number, created_at, updated_at) ");
-					sqlStringBuilder.AppendQuery("VALUES (@Address, @UserId, @PhoneNumber, @CreatedAt, @UpdatedAt)");
-
-					entity.Details.UserId = entity.Id;
-					entity.Details.Id = await connection.ExecuteAsync(sqlStringBuilder.ToString(), entity.Details, transaction: t);
-				}
-
-				await t.CommitAsync();
-				return entity;
-			}
-			catch (Exception)
-			{
-				await t.RollbackAsync();
-				return default;
-			}
+			return entity;
 		}
 
 		/// <inheritdoc cref="IUsersRepository.Update"/>.
@@ -117,6 +103,20 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 		public Task<UserModel> Delete(int id)
 		{
 			throw new System.NotImplementedException();
+		}
+
+		/// <inheritdoc cref="IUsersRepository.CreateDetails"/>.
+		public async Task<UserDetailModel> CreateDetails(UserDetailModel entity)
+		{
+			await using var connection = _connectionFactory.GetDbConnection();
+
+			var sqlStringBuilder = new SqlStringBuilder("INSERT INTO user_details (address, user_id, phone_number, created_at, updated_at) ");
+			sqlStringBuilder.AppendQuery("VALUES (@Address, @UserId, @PhoneвыNumber, @CreatedAt, @UpdatedAt)");
+			sqlStringBuilder.AppendReturningIdentity(connection);
+
+			entity.Id = await connection.ExecuteScalarAsync<int>(sqlStringBuilder.ToString(), entity);
+
+			return entity;
 		}
 	}
 }

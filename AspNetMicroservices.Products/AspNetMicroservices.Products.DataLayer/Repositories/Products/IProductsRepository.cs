@@ -12,7 +12,7 @@ namespace AspNetMicroservices.Products.DataLayer.Repositories.Products
 	/// <summary>
 	/// Represents products entity repository.
 	/// </summary>
-    public interface IProductsRepository : IBaseRepository<ProductEntity>, ITransactional<DataConnectionTransaction>
+    public interface IProductsRepository : IBaseRepository<ProductEntity>, IAsyncTransactional<DataConnectionTransaction>
     {
 	    /// <summary>
 	    /// Retrieves a collection of <see cref="ProductEntity"/>.

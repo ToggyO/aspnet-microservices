@@ -17,7 +17,7 @@ namespace AspNetMicroservices.Products.DataLayer.Repositories.Products.Implement
 	    /// <inheritdoc cref="IProductsRepository.GetList"/>
 	    public async Task<PaginationModel<ProductEntity>> GetList(QueryFilterModel filter)
 	    {
-		    var products = from p in _connection.Products select p;
+		    var products = from p in Connection.Products select p;
 
 		    if (!string.IsNullOrEmpty(filter.Search))
 			    products = from p in products
@@ -32,6 +32,6 @@ namespace AspNetMicroservices.Products.DataLayer.Repositories.Products.Implement
 
 
 	    /// <inheritdoc cref="IProductsRepository.GetById"/>
-	    public Task<ProductEntity> GetById(int id) => _connection.Products.GetById(id);
+	    public Task<ProductEntity> GetById(int id) => Connection.Products.GetById(id);
     }
 }

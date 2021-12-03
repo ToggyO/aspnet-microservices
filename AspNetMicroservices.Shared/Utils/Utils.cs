@@ -50,5 +50,13 @@ namespace AspNetMicroservices.Shared.Utils
 
 			return attribute.Name;
 		}
+
+
+		public static bool CheckOnNotMappedAttribute(MemberInfo member)
+		{
+			if (member is null)
+				return false;
+			return member.GetCustomAttribute<NotMappedAttribute>() is not null;
+		}
 	}
 }
