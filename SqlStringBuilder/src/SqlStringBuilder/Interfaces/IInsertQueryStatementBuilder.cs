@@ -1,6 +1,6 @@
 namespace SqlStringBuilder.Interfaces
 {
-    public interface IInsertQueryStatementBuilder
+    public interface IInsertQueryStatementBuilder : IBaseQueryStatementBuilder
     {
         
     }

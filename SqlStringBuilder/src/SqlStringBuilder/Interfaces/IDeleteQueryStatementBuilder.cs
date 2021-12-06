@@ -1,6 +1,6 @@
 namespace SqlStringBuilder.Interfaces
 {
-    public interface IDeleteQueryStatementBuilder
+    public interface IDeleteQueryStatementBuilder : IBaseQueryStatementBuilder
     {
         
     }
