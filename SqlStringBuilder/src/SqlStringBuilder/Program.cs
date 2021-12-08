@@ -7,7 +7,9 @@ namespace SqlStringBuilder
         static void Main(string[] args)
         {
             SqlStringBuilder
-                .Select();
+                .UseSelect()
+                .From("kek")
+                .Select("df", "sdf", "df");
         }
     }
 }
