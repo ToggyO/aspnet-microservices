@@ -1,24 +1,35 @@
 namespace SqlStringBuilder.Internal.Components
 {
+	/// <summary>
+	/// Represents an abstract "from" component.
+	/// </summary>
+	internal abstract class AbstractFrom : AbstractComponent
+	{
+		protected string _alias;
+
+		/// <summary>
+		/// Try to extract the Alias for the current component.
+		/// </summary>
+		/// <returns></returns>
+		public virtual string Alias { get => _alias; set => _alias = value; }
+	}
+
     /// <summary>
     /// Represents a "from" component.
     /// </summary>
-    internal class FromComponent : AbstractComponent
+    internal class FromComponent : AbstractFrom
     {
-        private readonly string _alias;
 
         /// <summary>
         /// Table name.
         /// </summary>
         public string Table { get; init; }
 
-        /// <summary>
-        /// Table alias.
-        /// </summary>
-        public string Alias
+        /// <inheritdoc cref="AbstractFrom.Alias"/>.
+        public override string Alias
         {
             get => _alias;
-            init => _alias = value ?? Table;
+            set => _alias = value ?? Table;
         }
     }
 }

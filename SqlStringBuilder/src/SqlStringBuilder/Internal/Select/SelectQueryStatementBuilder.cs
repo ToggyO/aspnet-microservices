@@ -2,13 +2,14 @@ using SqlStringBuilder.Interfaces.Select;
 using SqlStringBuilder.Internal.BaseQuery;
 using SqlStringBuilder.Internal.Components;
 using SqlStringBuilder.Internal.Constants;
+using SqlStringBuilder.Internal.Enums;
 
 namespace SqlStringBuilder.Internal.Select
 {
     internal sealed class SelectQueryStatementBuilder
         : BaseQueryStatementBuilder<SelectQueryStatementBuilder>, ISelectQueryStatementBuilder
     {
-        private SelectQueryStatementBuilder() {}
+	    private SelectQueryStatementBuilder() => QueryType = SqlStatementTypes.Select;
 
         public static ISelectQueryStatementBuilder Create()
         {

@@ -1,10 +1,13 @@
-using SqlStringBuilder.Interfaces;
+using SqlStringBuilder.Interfaces.Common;
+using SqlStringBuilder.Internal.BaseQuery;
+using SqlStringBuilder.Internal.Enums;
 
 namespace SqlStringBuilder.Internal
 {
-    internal sealed class DeleteQueryStatementBuilder : IDeleteQueryStatementBuilder
+    internal sealed class DeleteQueryStatementBuilder : BaseQueryStatementBuilder<DeleteQueryStatementBuilder>,
+	    IDeleteQueryStatementBuilder
     {
-        private DeleteQueryStatementBuilder() {}
+	    private DeleteQueryStatementBuilder() => QueryType = SqlStatementTypes.Delete;
 
         public static IDeleteQueryStatementBuilder Create()
         {

@@ -1,13 +1,14 @@
-using SqlStringBuilder.Interfaces;
+using SqlStringBuilder.Interfaces.Common;
 using SqlStringBuilder.Interfaces.Select;
 using SqlStringBuilder.Internal;
+using SqlStringBuilder.Internal.Select;
 
 namespace SqlStringBuilder
 {
     /// <summary>
     /// SQL statement string builder.
     /// </summary>
-    public static class SqlStringBuilder 
+    public static class SqlStringBuilder
     {
         /// <summary>
         /// Initialize new instance of <see cref="ISelectQueryStatementBuilder"/>.

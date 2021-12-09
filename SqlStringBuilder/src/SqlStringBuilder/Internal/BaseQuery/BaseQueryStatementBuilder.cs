@@ -8,51 +8,66 @@ using SqlStringBuilder.Internal.Components;
 namespace SqlStringBuilder.Internal.BaseQuery
 {
     /// <inheritdoc cref="IBaseQueryStatementBuilder"/>.
-    internal abstract partial class BaseQueryStatementBuilder<TQuery>: AbstractQueryStatementBuilder
+    internal abstract partial class BaseQueryStatementBuilder<TQuery> : AbstractQueryStatementBuilder<TQuery>
 	    where TQuery : BaseQueryStatementBuilder<TQuery>
     {
+	    private bool _orFlag = false;
+
+	    private bool _notFlag = false;
+
 	    /// <summary>
-        /// If the query already contains a component for the given component name,
-        /// replace it with the specified component. Otherwise, just
-        /// add the component.
-        /// </summary>
-        /// <param name="componentName">Component name.</param>
-        /// <param name="component">Instance of component.</param>
-        /// <returns></returns>
-        internal TQuery AddOrReplaceComponent(string componentName, AbstractComponent component)
+	    /// Indicates whether next condition component as "AND" statement.
+	    /// </summary>
+	    /// <returns></returns>
+	    public TQuery And()
         {
-            var current= GetComponents<AbstractComponent>(componentName).FirstOrDefault();
-            if (current is not null)
-                Components.Remove(current);
-
-            return AddComponent(componentName, component);
+	        _orFlag = false;
+	        return (TQuery)this;
         }
 
-        /// <summary>
-        /// Add a component to the query.
-        /// </summary>
-        /// <param name="componentName">Component name.</param>
-        /// <param name="component">Instance of component.</param>
-        /// <returns></returns>
-        internal TQuery AddComponent(string componentName, AbstractComponent component)
+	    /// <summary>
+	    /// Indicates whether next condition component as "AND" statement.
+	    /// </summary>
+	    /// <returns></returns>
+        public TQuery Or()
         {
-            component.ComponentName = componentName;
-            Components.AddLast(component);
-            return (TQuery)this;
+	        _orFlag = true;
+	        return (TQuery)this;
         }
 
-        /// <summary>
-        /// Get the list of components for a given component name.
-        /// </summary>
-        /// <param name="componentName">Component name.</param>
-        /// <typeparam name="TComponent">Type of component, based on <see cref="AbstractComponent"/>.</typeparam>
-        /// <returns></returns>
-        internal List<TComponent> GetComponents<TComponent>(string componentName) where TComponent : AbstractComponent
+	    /// <summary>
+	    /// Indicates whether next condition component as "NOT" statement.
+	    /// </summary>
+	    /// <param name="flag">Whether to include "NOT" condition.</param>
+	    /// <returns></returns>
+        public TQuery Not(bool flag = true)
         {
-            var components = Components.AsEnumerable()
-                .Where(x => x.ComponentName == componentName)
-                .Cast<TComponent>();
-            return components.ToList();
+	        _notFlag = flag;
+	        return (TQuery)this;
+        }
+
+	    /// <summary>
+	    /// Retrieves "OR" flag value and resets it.
+	    /// </summary>
+	    /// <returns></returns>
+        internal bool GetOr()
+        {
+	        bool val = _orFlag;
+	        // Reset the flag
+	        _orFlag = false;
+	        return val;
+        }
+
+	    /// <summary>
+	    /// Retrieves "NOT" flag value and resets it.
+	    /// </summary>
+	    /// <returns></returns>
+        internal bool GetNot()
+        {
+	        bool val = _notFlag;
+	        // Reset the flag
+	        _notFlag = false;
+	        return val;
         }
 
         // TODO: check

@@ -1,3 +1,6 @@
+using SqlStringBuilder.Common;
+using SqlStringBuilder.Internal.Enums;
+
 namespace SqlStringBuilder.Interfaces.Common
 {
     /// <summary>
@@ -6,10 +9,15 @@ namespace SqlStringBuilder.Interfaces.Common
     public interface IBaseQueryStatementBuilder
     {
 	    /// <summary>
+	    /// SQL statement type.
+	    /// </summary>
+	    SqlStatementTypes QueryType { get; init; }
+
+	    /// <summary>
 	    /// Build SQL statement.
 	    /// </summary>
 	    /// <returns></returns>
-        string Build();
+	    SqlResult Build();
 
 	    /// <summary>
 	    /// Set raw SQL statement.

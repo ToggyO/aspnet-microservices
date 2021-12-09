@@ -1,5 +1,8 @@
 ﻿namespace SqlStringBuilder.Internal.Constants
 {
+	/// <summary>
+	/// Comparison operator literals.
+	/// </summary>
 	public static class ComparisonOperators
 	{
 		public const string Equal = "=";
