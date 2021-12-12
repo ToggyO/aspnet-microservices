@@ -1,11 +1,13 @@
-using SqlStringBuilder.Interfaces;
 using SqlStringBuilder.Interfaces.Common;
+using SqlStringBuilder.Internal.BaseQuery;
+using SqlStringBuilder.Internal.Enums;
 
 namespace SqlStringBuilder.Internal
 {
-    internal sealed class InsertQueryStatementBuilder : IInsertQueryStatementBuilder
+    internal sealed class InsertQueryStatementBuilder : BaseQueryStatementBuilder<InsertQueryStatementBuilder>,
+        IInsertQueryStatementBuilder
     {
-        private InsertQueryStatementBuilder() {}
+        private InsertQueryStatementBuilder() => QueryType = SqlStatementTypes.Insert;
 
         public static IInsertQueryStatementBuilder Create()
         {

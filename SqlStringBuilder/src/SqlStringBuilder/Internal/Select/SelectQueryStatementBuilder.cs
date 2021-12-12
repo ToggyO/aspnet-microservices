@@ -25,7 +25,14 @@ namespace SqlStringBuilder.Internal.Select
 
         public ISelectQueryStatementBuilder Select(string[] columns)
         {
-            throw new System.NotImplementedException();
+            foreach (string column in columns)
+			{
+                AddComponent(ComponentTypes.Select, new Column
+                {
+                    Name = column,
+                });
+			}
+            return this;
         }
     }
 }

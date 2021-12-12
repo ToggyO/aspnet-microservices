@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using SqlStringBuilder.Common;
 using SqlStringBuilder.Interfaces.Common;
@@ -15,6 +16,14 @@ namespace SqlStringBuilder.Compilers
 	/// </summary>
 	public partial class Compiler
 	{
+		protected virtual string SelectAllIdentifier { get; set; } = "*";
+
+		protected virtual string AsIdentifier { get; set; } = "AS";
+
+		protected virtual string OpeningIdentifier { get; set; } = "\"";
+
+		protected virtual string ClosingIdentifier { get; set; } = "\"";
+
 		public virtual SqlResult Compile(IBaseQueryStatementBuilder builder)
 		{
 			return builder.QueryType switch
@@ -62,8 +71,20 @@ namespace SqlStringBuilder.Compilers
 		{
 			// TODO: add aggregated columns
 
+			var columns = ctx.Builder
+				.GetComponents<AbstractColumn>(ComponentTypes.Select)
+				.Select(x => CompileColumn(x))
+				.ToList();
 
-			return $"SELECT ";
+			// TODO: add distinct
+			string sql = columns.Any() ? string.Join(", ", columns) : SelectAllIdentifier;
+
+			return $"SELECT {sql}";
+		}
+
+		internal virtual string CompileTableExpression(AbstractFrom from)
+		{
+			return Wrap($"{from.Table}  {AsIdentifier}   {from.Alias}");
 		}
 
 		internal virtual string CompileFrom<TQuery>(CompilationContext<TQuery> ctx)
@@ -73,7 +94,9 @@ namespace SqlStringBuilder.Compilers
 				throw new InvalidOperationException("No table is set");
 
 			var fromComponent = ctx.Builder.GetComponent<AbstractFrom>(ComponentTypes.From);
-			return $"FROM {fromComponent.Table} AS {fromComponent.Alias}";
+			// TODO: delete
+			//return $"FROM {fromComponent.Table} {AsIdentifier} {fromComponent.Alias}";
+			return $"FROM {CompileTableExpression(fromComponent)}";
 		}
 
 		internal virtual string CompileWheres<TQuery>(CompilationContext<TQuery> ctx)
@@ -87,6 +110,54 @@ namespace SqlStringBuilder.Compilers
 			string sql = "";
 
 			return string.IsNullOrEmpty(sql) ? null : $"WHERE {sql}";
+		}
+
+		internal virtual string CompileColumn(AbstractColumn abstractColumn)
+		{
+			return ((Column)abstractColumn).Name;
+		}
+
+		/// <summary>
+		/// Wrap a single string in a column identifier.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		internal string Wrap(string value)
+		{
+			string _as = " as ";
+			string _point = ".";
+			string lower = value.ToLowerInvariant();
+
+			if (lower.Contains(_as))
+			{
+				var split = lower.Split(_as);
+				string before = split[0];
+				string after = split[1];
+				return Wrap(before) + AsIdentifier + WrapValue(after);
+			}
+
+			if (lower.Contains(_point))
+				return string.Join(_point, value.Split(_point).Select(x => WrapValue(x)));
+
+			// If we reach here then the value does not contain an "AS" alias
+			// nor dot "." expression, so wrap it as regular value.
+			return WrapValue(value);
+		}
+
+		/// <summary>
+		/// Wrap a single string in keyword identifiers.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		internal string WrapValue(string value)
+		{ 
+			if (value == SelectAllIdentifier)
+				return value;
+
+			var opening = OpeningIdentifier;
+			var closing = ClosingIdentifier;
+
+			return $"{opening}{value.Replace(closing, closing+ closing)}{closing}";
 		}
 	}
 }

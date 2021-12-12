@@ -7,11 +7,16 @@ namespace SqlStringBuilder.Internal.Components
 	{
 		protected string _alias;
 
-		/// <summary>
-		/// Try to extract the Alias for the current component.
-		/// </summary>
-		/// <returns></returns>
-		public virtual string Alias { get => _alias; set => _alias = value; }
+        /// <summary>
+        /// Table name.
+        /// </summary>
+        public string Table { get; init; }
+
+        /// <summary>
+        /// Try to extract the Alias for the current component.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string Alias { get => _alias; set => _alias = value; }
 	}
 
     /// <summary>
@@ -19,12 +24,6 @@ namespace SqlStringBuilder.Internal.Components
     /// </summary>
     internal class FromComponent : AbstractFrom
     {
-
-        /// <summary>
-        /// Table name.
-        /// </summary>
-        public string Table { get; init; }
-
         /// <inheritdoc cref="AbstractFrom.Alias"/>.
         public override string Alias
         {

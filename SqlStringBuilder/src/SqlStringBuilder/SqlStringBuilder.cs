@@ -14,24 +14,24 @@ namespace SqlStringBuilder
         /// Initialize new instance of <see cref="ISelectQueryStatementBuilder"/>.
         /// </summary>
         /// <returns>Select query statement builder.</returns>
-        public static ISelectQueryStatementBuilder UseSelect() => SelectQueryStatementBuilder.Create();
+        public static ISelectQueryStatementBuilder CreateSelectStatement() => SelectQueryStatementBuilder.Create();
 
         /// <summary>
         /// Initialize new instance of <see cref="IInsertQueryStatementBuilder"/>.
         /// </summary>
         /// <returns>Insert query statement builder.</returns>
-        public static IInsertQueryStatementBuilder UseInsert() => InsertQueryStatementBuilder.Create();
+        public static IInsertQueryStatementBuilder CreateInsertStatement() => InsertQueryStatementBuilder.Create();
 
         /// <summary>
         /// Initialize new instance of <see cref="IUpdateQueryStatementBuilder"/>.
         /// </summary>
         /// <returns>Update query statement builder.</returns>
-        public static IUpdateQueryStatementBuilder UseUpdate() => UpdateQueryStatementBuilder.Create();
+        public static IUpdateQueryStatementBuilder CreateUpdateStatement() => UpdateQueryStatementBuilder.Create();
 
         /// <summary>
         /// Initialize new instance of <see cref="IDeleteQueryStatementBuilder"/>.
         /// </summary>
         /// <returns>Delete query statement builder.</returns>
-        public static IDeleteQueryStatementBuilder UseDelete() => DeleteQueryStatementBuilder.Create();
+        public static IDeleteQueryStatementBuilder CreateDeleteStatement() => DeleteQueryStatementBuilder.Create();
     }
 }
