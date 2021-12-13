@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 using SqlStringBuilder.Interfaces.Common;
-using SqlStringBuilder.Internal.Components;
 
 namespace SqlStringBuilder.Internal.BaseQuery
 {

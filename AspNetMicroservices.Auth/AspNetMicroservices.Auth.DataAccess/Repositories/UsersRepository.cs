@@ -11,6 +11,8 @@ using AspNetMicroservices.Shared.Utils;
 using Dapper;
 using Dapper.Mapper;
 
+using SqlStringBuilder.Compilers;
+
 namespace AspNetMicroservices.Auth.DataAccess.Repositories
 {
 	/// <inheritdoc cref="IUsersRepository"/>.
@@ -33,7 +35,12 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 		/// <inheritdoc cref="IUsersRepository.GetList"/>.
 		public async Task<PaginationModel<UserModel>> GetList(QueryFilterModel filter)
 		{
-			var sqlStringBuilder = new SqlStringBuilder(UserModel.BaseQuery);
+			var builder = SqlStringBuilder.SqlStringBuilder
+				.CreateSelectStatement();
+			var compiler = new Compiler();
+			compiler.Compile(builder);
+
+			// var sqlStringBuilder = new SqlStringBuilder(UserModel.BaseQuery);
 			sqlStringBuilder.AppendSorting(
 				new SqlBuilderOrder
 				{

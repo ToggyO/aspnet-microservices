@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SqlStringBuilder\src\SqlStringBuilder\SqlStringBuilder.csproj" />
     <ProjectReference Include="..\AspNetMicroservices.Auth.Domain\AspNetMicroservices.Auth.Domain.csproj" />
     <ProjectReference Include="..\..\AspNetMicroservices.Shared\AspNetMicroservices.Shared.csproj" />
   </ItemGroup>
