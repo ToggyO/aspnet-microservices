@@ -37,6 +37,9 @@ namespace SqlStringBuilder.Compilers
 
 		internal virtual SqlResult CompileSelectStatement(ISelectQueryStatementBuilder builder)
 		{
+			// TODO: check IInternalBaseQueryStatementBuilder
+			// Неоднозначное решение. Если будет реализацияя билдеров, не имеплементирующая
+			// IInternalBaseQueryStatementBuilder, то Compiler не будет работать.
 			var ctx = new CompilationContext<ISelectQueryStatementBuilder>(
 				(IInternalBaseQueryStatementBuilder<ISelectQueryStatementBuilder>) builder);
 
@@ -84,6 +87,7 @@ namespace SqlStringBuilder.Compilers
 
 		internal virtual string CompileTableExpression(AbstractFrom from)
 		{
+			// TODO: check
 			return Wrap($"{from.Table}  {AsIdentifier}   {from.Alias}");
 		}
 
