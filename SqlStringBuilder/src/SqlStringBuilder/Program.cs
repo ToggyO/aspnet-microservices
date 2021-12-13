@@ -8,10 +8,11 @@ namespace SqlStringBuilder
     {
         static void Main(string[] args)
         {
-            var builder = SqlStringBuilder
-                .CreateSelectStatement()
-                .From("kek")
-                .Select("df", "sdf", "df");
+	        var builder = SqlStringBuilder
+		        .CreateSelectStatement()
+		        .From("users")
+		        .Select("users.id", "users.name as username", "users.age")
+		        .Where("users.id", ">", 1);
 
             var compiler = new Compiler();
             var result = compiler.Compile(builder);
