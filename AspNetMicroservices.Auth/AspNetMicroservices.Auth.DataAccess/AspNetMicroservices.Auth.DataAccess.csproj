@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="Npgsql" Version="5.0.1" />
+    <PackageReference Include="sqlkata" Version="2.3.7" />
   </ItemGroup>
 
   <PropertyGroup>

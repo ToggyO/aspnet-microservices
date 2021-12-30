@@ -12,7 +12,7 @@ services:
       - POSTGRES_DB=${AUTH_DB_NAME}
       - POSTGRES_HOST=${AUTH_DB_HOST}
     volumes:
-      - volume-auth-service-postgres-dev:/var/lib/postgresql/data
+      - ../../aspnet-microservices-volumes/volume-auth-service-postgres-dev:/var/lib/postgresql/data
 
   auth-service-redis-dev:
     container_name: auth-service-redis-dev
@@ -30,7 +30,7 @@ services:
       - '--maxmemory ${REDIS_MAXMEM:-50mb}'
       - '--maxmemory-policy ${REDIS_POLICY:-noeviction}'
     volumes:
-      - 'volume-auth-service-redis-dev:/data/redis'
+      - '../../aspnet-microservices-volumes/volume-auth-service-redis-dev:/data/redis'
     ports:
       - ${AUTH_REDIS_EXTERNAL_PORT}:${AUTH_REDIS_PORT}
     networks:
@@ -40,6 +40,6 @@ networks:
   external-network:
     driver: bridge
     
-volumes:
-  volume-auth-service-postgres-dev:
-  volume-auth-service-redis-dev:
+# volumes:
+#   volume-auth-service-postgres-dev:
+#   volume-auth-service-redis-dev:

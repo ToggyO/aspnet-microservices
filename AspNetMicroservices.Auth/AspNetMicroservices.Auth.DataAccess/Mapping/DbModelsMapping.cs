@@ -1,4 +1,5 @@
-﻿using AspNetMicroservices.Auth.Domain.Models.Database.Users;
+﻿using AspNetMicroservices.Auth.DataAccess.Helpers;
+using AspNetMicroservices.Auth.Domain.Models.Database.Users;
 
 namespace AspNetMicroservices.Auth.DataAccess.Mapping
 {

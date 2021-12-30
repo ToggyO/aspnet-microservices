@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 using AspNetMicroservices.Shared.Contracts;
 
@@ -11,7 +12,7 @@ namespace AspNetMicroservices.Auth.Domain.Models.Database.Users
 	public class UserModel : BaseModel, IHaveIdentifier
 	{
 		/// <inheritdoc cref="IHaveIdentifier.Id"/>.
-		[Column("id")]
+		[Key, Column("id")]
 		public int Id { get; set; }
 
 		/// <summary>
@@ -42,7 +43,5 @@ namespace AspNetMicroservices.Auth.Domain.Models.Database.Users
 		/// Detailed information about user.
 		/// </summary>
 		public UserDetailModel Details { get; set; }
-
-		public const string BaseQuery = "SELECT u.id, u.first_name, u.last_name, u.email, u.created_at, u.updated_at FROM users u ";
 	}
 }

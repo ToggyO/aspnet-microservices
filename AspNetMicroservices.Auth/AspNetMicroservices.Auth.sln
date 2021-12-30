@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMicroservices.Auth.In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMicroservices.Auth.DataAccess", "AspNetMicroservices.Auth.DataAccess\AspNetMicroservices.Auth.DataAccess.csproj", "{F6D8C0EA-EF37-4133-B24C-EAE235A8D0B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlStringBuilder", "..\SqlStringBuilder\src\SqlStringBuilder\SqlStringBuilder.csproj", "{8DE9D426-4FCF-4A12-B6E1-863991E0D92D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,17 +100,5 @@ Global
 		{F6D8C0EA-EF37-4133-B24C-EAE235A8D0B0}.Release|x64.Build.0 = Release|Any CPU
 		{F6D8C0EA-EF37-4133-B24C-EAE235A8D0B0}.Release|x86.ActiveCfg = Release|Any CPU
 		{F6D8C0EA-EF37-4133-B24C-EAE235A8D0B0}.Release|x86.Build.0 = Release|Any CPU
-		{8DE9D426-4FCF-4A12-B6E1-863991E0D92D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DE9D426-4FCF-4A12-B6E1-863991E0D92D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8DE9D426-4FCF-4A12-B6E1-863991E0D92D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8DE9D426-4FCF-4A12-B6E1-863991E0D92D}.Debug|x64.Build.0 = Debug|Any CPU
-		{8DE9D426-4FCF-4A12-B6E1-863991E0D92D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8DE9D426-4FCF-4A12-B6E1-863991E0D92D}.Debug|x86.Build.0 = Debug|Any CPU
-		{8DE9D426-4FCF-4A12-B6E1-863991E0D92D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DE9D426-4FCF-4A12-B6E1-863991E0D92D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8DE9D426-4FCF-4A12-B6E1-863991E0D92D}.Release|x64.ActiveCfg = Release|Any CPU
-		{8DE9D426-4FCF-4A12-B6E1-863991E0D92D}.Release|x64.Build.0 = Release|Any CPU
-		{8DE9D426-4FCF-4A12-B6E1-863991E0D92D}.Release|x86.ActiveCfg = Release|Any CPU
-		{8DE9D426-4FCF-4A12-B6E1-863991E0D92D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 using AspNetMicroservices.Shared.Contracts;
 
@@ -11,7 +12,7 @@ namespace AspNetMicroservices.Auth.Domain.Models.Database.Users
 	public class UserDetailModel : BaseModel, IHaveIdentifier
 	{
 		/// <inheritdoc cref="IHaveIdentifier.Id"/>.
-		[Column("id")]
+		[Key, Column("id")]
 		public int Id { get; set; }
 
 		/// <summary>

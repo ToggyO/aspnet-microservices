@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using AspNetMicroservices.Auth.DataAccess.Context;
+using AspNetMicroservices.Auth.DataAccess.Extensions;
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
 using AspNetMicroservices.Auth.Domain.Repositories;
 using AspNetMicroservices.Shared.Models.Pagination;
@@ -9,9 +11,9 @@ using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
 using AspNetMicroservices.Shared.Utils;
 
 using Dapper;
-using Dapper.Mapper;
 
-using SqlStringBuilder.Compilers;
+using SqlKata;
+using SqlKata.Compilers;
 
 namespace AspNetMicroservices.Auth.DataAccess.Repositories
 {
@@ -35,29 +37,19 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 		/// <inheritdoc cref="IUsersRepository.GetList"/>.
 		public async Task<PaginationModel<UserModel>> GetList(QueryFilterModel filter)
 		{
-			var builder = SqlStringBuilder.SqlStringBuilder
-				.CreateSelectStatement();
-			var compiler = new Compiler();
-			compiler.Compile(builder);
+			var sql = new Query("users as u")
+				.Select("u.id", "u.first_name", "u.last_name", "u.email", "u.created_at", "u.updated_at")
+				.Offset(SqlHelpers.CreateOffset(filter.Page, filter.PageSize))
+				.Limit(filter.PageSize)
+				.OrderByWithMapping(filter.OrderBy, filter.IsDesc);
 
-			// var sqlStringBuilder = new SqlStringBuilder(UserModel.BaseQuery);
-			sqlStringBuilder.AppendSorting(
-				new SqlBuilderOrder
-				{
-					ColumnName = "u.created_at",
-					Orientation = "DESC",
-				});
-			sqlStringBuilder.AppendPaginationQuery();
+			if (filter.Search is not null)
+				sql.WhereContains("u.first_name", filter.Search).OrWhereContains("u.last_name", filter.Search);
+
+			var compiled = new PostgresCompiler().Compile(sql);
 
 			await using var connection = _connectionFactory.GetDbConnection();
-
-			var users = await connection.QueryAsync<UserModel>(
-				sqlStringBuilder.ToString(),
-				new SqlStringBuilderParameters
-				{
-					Page = SqlStringBuilder.CreateOffset(filter.Page, filter.PageSize),
-					PageSize = filter.PageSize,
-				});
+			var users = await connection.QueryAsync<UserModel>(compiled.Sql, compiled.NamedBindings);
 
 			var result = users.ToList();
 			return new PaginationModel<UserModel>
@@ -72,16 +64,17 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 		/// <inheritdoc cref="IUsersRepository.GetById"/>.
 		public async Task<UserModel> GetById(int id)
 		{
-			var sqlStringBuilder = new SqlStringBuilder("SELECT u.id, u.first_name, u.last_name, u.email, u.created_at, u.updated_at, ud.* FROM users u ");
-			sqlStringBuilder.AppendLeftJoinQuery("user_details ud", "u.id", "ud.user_id");
-			sqlStringBuilder.AppendQuery("WHERE u.id = @Id ");
+			//var sqlStringBuilder = new SqlStringBuilder("SELECT u.id, u.first_name, u.last_name, u.email, u.created_at, u.updated_at, ud.* FROM users u ");
+			//sqlStringBuilder.AppendLeftJoinQuery("user_details ud", "u.id", "ud.user_id");
+			//sqlStringBuilder.AppendQuery("WHERE u.id = @Id ");
 
-			await using var connection = _connectionFactory.GetDbConnection();
+			//await using var connection = _connectionFactory.GetDbConnection();
 
-			var users = await connection.QueryAsync<UserModel, UserDetailModel>(
-				sqlStringBuilder.ToString(), param: new { Id = id });
+			//var users = await connection.QueryAsync<UserModel, UserDetailModel>(
+			//	sqlStringBuilder.ToString(), param: new { Id = id });
 
-			return users.FirstOrDefault();
+			//return users.FirstOrDefault();
+			return new UserModel();
 		}
 
 		/// <inheritdoc cref="IUsersRepository.Create"/>.
@@ -89,14 +82,11 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 		{
 			await using var connection = _connectionFactory.GetDbConnection();
 
-			// Вынести в конфиг названия таблиц
-			var sqlStringBuilder = new SqlStringBuilder("INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) ");
-			sqlStringBuilder.AppendQuery(
-				"VALUES (@FirstName, @LastName, @Email, @Password, @CreatedAt, @UpdatedAt)");
-			sqlStringBuilder.AppendReturningIdentity(connection);
+			var sql = new Query("users").AsInsertWithMapping(entity);
+			var compiled = new PostgresCompiler().Compile(sql);
+			compiled.Sql = SqlHelpers.Adapter.AppendReturningIdentity(connection, compiled.Sql);
 
-			entity.Id = await connection.ExecuteScalarAsync<int>(sqlStringBuilder.ToString(), entity);
-
+			entity.Id = await connection.ExecuteScalarAsync<int>(compiled.Sql, compiled.NamedBindings);
 			return entity;
 		}
 
@@ -117,12 +107,11 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 		{
 			await using var connection = _connectionFactory.GetDbConnection();
 
-			var sqlStringBuilder = new SqlStringBuilder("INSERT INTO user_details (address, user_id, phone_number, created_at, updated_at) ");
-			sqlStringBuilder.AppendQuery("VALUES (@Address, @UserId, @PhoneвыNumber, @CreatedAt, @UpdatedAt)");
-			sqlStringBuilder.AppendReturningIdentity(connection);
+			var sql = new Query("user_details").AsInsertWithMapping(entity);
+			var compiled = new PostgresCompiler().Compile(sql);
+			compiled.Sql = SqlHelpers.Adapter.AppendReturningIdentity(connection, compiled.Sql);
 
-			entity.Id = await connection.ExecuteScalarAsync<int>(sqlStringBuilder.ToString(), entity);
-
+			entity.Id = await connection.ExecuteScalarAsync<int>(compiled.Sql, compiled.NamedBindings);
 			return entity;
 		}
 	}
