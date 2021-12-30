@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Net;
 
-using AspNetMicroservices.Shared.Errors;
+using AspNetMicroservices.Shared.Constants.Errors;
 
 namespace AspNetMicroservices.Shared.Models.Response
 {

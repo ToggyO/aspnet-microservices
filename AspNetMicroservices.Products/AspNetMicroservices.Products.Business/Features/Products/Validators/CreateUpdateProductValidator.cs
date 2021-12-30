@@ -1,5 +1,5 @@
 ﻿using AspNetMicroservices.Products.Business.Features.Products.Models;
-using AspNetMicroservices.Shared.Errors;
+using AspNetMicroservices.Shared.Constants.Errors;
 
 using FluentValidation;
 

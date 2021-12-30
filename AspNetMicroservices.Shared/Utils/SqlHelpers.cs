@@ -7,7 +7,9 @@ using AspNetMicroservices.Shared.Extensions;
 
 namespace AspNetMicroservices.Shared.Utils
 {
-	// TODO: add description
+	/// <summary>
+	/// Represents methods, that helps to build SQL stament.
+	/// </summary>
 	public class SqlHelpers
 	{
 		/// <summary>
@@ -22,7 +24,13 @@ namespace AspNetMicroservices.Shared.Utils
 			return queryPage < 0 ? 0 : queryPage;
 		}
 
-		// TODO: add description.
+		/// <summary>
+		/// Matches between the class property name and the column name in the database table
+		/// and returns the column name.
+		/// </summary>
+		/// <param name="propertyName">Name of property.</param>
+		/// <typeparam name="TEntity">Type of entity, where property is declared.</typeparam>
+		/// <returns></returns>
 		public static string MapToTableColumnName<TEntity>(string propertyName) where TEntity : class
 		{
 			string name = propertyName.FirstLetterToUpper();
@@ -38,7 +46,9 @@ namespace AspNetMicroservices.Shared.Utils
 			return colAttr.Name;
 		}
 
-		// TODO: add description.
+		/// <summary>
+		/// Represents a class that flattens the differences between SQL syntax for different database management systemsю
+		/// </summary>
 		public class Adapter
 		{
 			private static readonly Dictionary<string, string> AdapterDictionary
@@ -52,6 +62,13 @@ namespace AspNetMicroservices.Shared.Utils
 					["fbconnection"] = ""
 				};
 
+			/// <summary>
+			/// Appends SQL statement, that allows to retrieve last inserted id.
+			/// </summary>
+			/// <param name="connection">Instance of <see cref="IDbConnection"/>.</param>
+			/// <param name="sql">SQL query.</param>
+			/// <param name="pkColumnName">Primary key column name.</param>
+			/// <returns></returns>
 			public static string AppendReturningIdentity(IDbConnection connection,
 				string sql, string pkColumnName = "id")
 			{

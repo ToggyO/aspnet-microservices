@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Create user data transfer object
 	/// </summary>
-	public class CreateUserDto
+	public class CreateUpdateUserDto
 	{
 		/// <summary>
 		/// First name.

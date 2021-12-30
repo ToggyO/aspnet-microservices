@@ -15,7 +15,7 @@ namespace AspNetMicroservices.Auth.DataAccess
 	public static class DependencyInjection
 	{
 		/// <summary>
-		///  Add data access module to an application.
+		/// Add data access module to an application services.
 		/// </summary>
 		/// <param name="services">Instance of <see cref="IServiceCollection"/>.</param>
 		/// <param name="connectionString">Database connection string.</param>

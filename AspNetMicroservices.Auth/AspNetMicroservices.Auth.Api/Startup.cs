@@ -3,9 +3,12 @@ using System;
 using AspNetMicroservices.Auth.Api.Extensions;
 using AspNetMicroservices.Auth.Api.Filters;
 using AspNetMicroservices.Auth.Api.Middleware;
+using AspNetMicroservices.Auth.Application;
 using AspNetMicroservices.Auth.DataAccess;
 using AspNetMicroservices.Auth.Infrastructure;
 using AspNetMicroservices.Shared.Models.Settings;
+
+using MediatR;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -71,8 +74,9 @@ namespace AspNetMicroservices.Auth.Api
 	            DbName = DotNetEnv.Env.GetString("AUTH_DB_NAME"),
             };
 
-            services.AddDataAccess(dbSettings.DbConnectionString);
+            services.AddApplicationLayer();
             services.AddInfrastructure();
+            services.AddDataAccess(dbSettings.DbConnectionString);
 
             services.AddControllersWithViews(mvcOpts =>
             {

@@ -1,4 +1,4 @@
-namespace AspNetMicroservices.Shared.Errors
+namespace AspNetMicroservices.Shared.Constants.Errors
 {
     public static class ErrorCodes
     {

@@ -38,7 +38,16 @@ namespace AspNetMicroservices.Auth.DataAccess.Helpers
             SqlMapper.SetTypeMap(typeof(T), map);
 		}
 
-        // TODO: add description. Check  multiple enumeration.
+        // TODO: check  multiple enumeration.
+        /// <summary>
+        /// Builds a set of key-value pairs from object.
+        /// </summary>
+        /// <param name="model">Target object.</param>
+        /// <param name="includePk">
+        /// Indicates, whether to include in result property,annotated by <see cref="KeyAttribute"/>.
+        /// </param>
+        /// <typeparam name="TEntity">Target object type.</typeparam>
+        /// <returns></returns>
         public static IEnumerable<KeyValuePair<string, object>> BuildKeyValuePairsFromObject<TEntity>(
 	        TEntity model, bool includePk = true)
         {

@@ -2,10 +2,13 @@
 using System.Transactions;
 
 using AspNetMicroservices.Auth.Application.Dto.Users;
+using AspNetMicroservices.Auth.Application.Features.Users.Commands;
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
 using AspNetMicroservices.Auth.Domain.Repositories;
 using AspNetMicroservices.Shared.Models.Pagination;
 using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
+
+using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +20,12 @@ namespace AspNetMicroservices.Auth.Api.Controllers.v1
 	{
 		private readonly IUsersRepository _repository;
 
-		public UsersController(IUsersRepository repository)
+		private readonly IMediator _mediator;
+
+		public UsersController(IUsersRepository repository, IMediator mediator)
 		{
 			_repository = repository;
+			_mediator = mediator;
 		}
 
 		[HttpPost("list")]
@@ -30,27 +36,7 @@ namespace AspNetMicroservices.Auth.Api.Controllers.v1
 		public async Task<UserModel> GetById([FromRoute] int id) => await _repository.GetById(id);
 
 		[HttpPost]
-		public async Task<UserModel> Create([FromBody] CreateUserDto dto)
-		{
-			var user = new UserModel
-			{
-				FirstName = dto.FirstName,
-				LastName = dto.LastName,
-				Email = dto.Email,
-				Password = dto.Password,
-				Details = new UserDetailModel
-				{
-					Address = dto.Address,
-					PhoneNumber = dto.PhoneNumber,
-				}
-			};
+		public async Task<UserModel> Create([FromBody] CreateUser.Command cmd) => await _mediator.Send(cmd);
 
-			using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);;
-			user = await _repository.Create(user);
-			user.Details.UserId = user.Id;
-			user.Details = await _repository.CreateDetails(user.Details);
-			scope.Complete();
-			return user;
-		}
 	}
 }
