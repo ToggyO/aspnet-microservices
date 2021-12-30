@@ -1,13 +1,14 @@
 ﻿using AspNetMicroservices.Shared.Constants.Common;
-using AspNetMicroservices.Shared.Contracts;
 
 namespace AspNetMicroservices.Shared.Models.QueryFilter.Implementation
 {
 	/// <inheritdoc cref="IQueryFilter"/>.
 	public class QueryFilterModel : IQueryFilter
 	{
+		private string _search;
+
 		/// <inheritdoc cref="IQueryFilter.Search"/>.
-		public string Search { get; set; }
+		public string Search { get => _search; set => _search = value.ToLower(); }
 
 		/// <inheritdoc cref="IQueryFilter.Page"/>.
 		public int Page { get; set; } = PaginationDefaults.DefaultPageNumber;
