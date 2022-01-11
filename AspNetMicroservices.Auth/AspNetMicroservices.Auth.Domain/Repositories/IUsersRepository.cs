@@ -20,6 +20,13 @@ namespace AspNetMicroservices.Auth.Domain.Repositories
 		Task<PaginationModel<UserModel>> GetList(QueryFilterModel filter);
 
 		/// <summary>
+		/// Retrieves entity by email from database.
+		/// </summary>
+		/// <param name="email"></param>
+		/// <returns></returns>
+		Task<UserModel> GetByEmail(string email);
+
+		/// <summary>
 		/// Creates entity of type <see cref="UserDetailModel"/>.
 		/// </summary>
 		/// <param name="entity">Instance of <see cref="UserDetailModel"/>.</param>

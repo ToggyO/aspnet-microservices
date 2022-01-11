@@ -1,15 +1,18 @@
 ﻿using System.Threading.Tasks;
 using System.Transactions;
 
+using AspNetMicroservices.Auth.Api.Handlers.Users;
 using AspNetMicroservices.Auth.Application.Dto.Users;
 using AspNetMicroservices.Auth.Application.Features.Users.Commands;
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
 using AspNetMicroservices.Auth.Domain.Repositories;
 using AspNetMicroservices.Shared.Models.Pagination;
 using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
+using AspNetMicroservices.Shared.Models.Response;
 
 using MediatR;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetMicroservices.Auth.Api.Controllers.v1
@@ -18,25 +21,23 @@ namespace AspNetMicroservices.Auth.Api.Controllers.v1
 	[Route("users")]
 	public class UsersController : ControllerBase
 	{
-		private readonly IUsersRepository _repository;
+		private readonly IUsersHandler _handler;
 
-		private readonly IMediator _mediator;
-
-		public UsersController(IUsersRepository repository, IMediator mediator)
+		public UsersController(IUsersHandler handler)
 		{
-			_repository = repository;
-			_mediator = mediator;
+			_handler = handler;
 		}
 
-		[HttpPost("list")]
-		public async Task<PaginationModel<UserModel>> GetList([FromBody] QueryFilterModel filter)
-			=> await _repository.GetList(filter);
+		// [HttpPost("list")]
+		// public async Task<PaginationModel<UserModel>> GetList([FromBody] QueryFilterModel filter)
+		// 	=> await _repository.GetList(filter);
 
 		[HttpGet("{id}")]
-		public async Task<UserModel> GetById([FromRoute] int id) => await _repository.GetById(id);
+		public Task<UserModel> GetById([FromRoute] int id) => Task.FromResult(new UserModel { Id = id });
 
-		[HttpPost]
-		public async Task<UserModel> Create([FromBody] CreateUser.Command cmd) => await _mediator.Send(cmd);
-
+		[AllowAnonymous]
+		[HttpPost("sign-up")]
+		public async Task<Response<UserDto>> SignUp([FromBody] CreateUser.Command cmd)
+			=> await _handler.CreateUser(cmd);
 	}
 }

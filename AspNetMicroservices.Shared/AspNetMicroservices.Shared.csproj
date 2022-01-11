@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Grpc.Core.Api" Version="2.37.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="5.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
   </ItemGroup>
 

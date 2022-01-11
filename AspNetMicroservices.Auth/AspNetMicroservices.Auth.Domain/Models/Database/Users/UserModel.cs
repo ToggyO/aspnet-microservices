@@ -9,7 +9,7 @@ namespace AspNetMicroservices.Auth.Domain.Models.Database.Users
 	/// Represents user model.
 	/// </summary>
 	[Table("users")]
-	public class UserModel : BaseModel, IHaveIdentifier
+	public class UserModel : BaseModel, IPortalUser
 	{
 		/// <inheritdoc cref="IHaveIdentifier.Id"/>.
 		[Key, Column("id")]
@@ -34,10 +34,16 @@ namespace AspNetMicroservices.Auth.Domain.Models.Database.Users
 		public string Email { get; set; }
 
 		/// <summary>
-		/// Hashed password.
+		/// Password hash.
 		/// </summary>
-		[Column("password")]
-		public string Password { get; set; }
+		[Column("hash")]
+		public string Hash { get; set; }
+
+		/// <summary>
+		/// Password salt.
+		/// </summary>
+		[Column("salt")]
+		public string Salt { get; set; }
 
 		/// <summary>
 		/// Detailed information about user.

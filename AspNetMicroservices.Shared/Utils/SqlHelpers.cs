@@ -8,7 +8,7 @@ using AspNetMicroservices.Shared.Extensions;
 namespace AspNetMicroservices.Shared.Utils
 {
 	/// <summary>
-	/// Represents methods, that helps to build SQL stament.
+	/// Represents methods, that helps to build SQL statement.
 	/// </summary>
 	public class SqlHelpers
 	{

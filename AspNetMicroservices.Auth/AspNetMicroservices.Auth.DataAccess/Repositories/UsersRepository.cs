@@ -61,6 +61,30 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 			};
 		}
 
+		public async Task<UserModel> GetByEmail(string email)
+		{
+			var sql = new Query("users as u")
+				.Select("u.id", "u.first_name", "u.last_name", "u.email", "u.salt", "u.hash", "u.created_at", "u.updated_at")
+				.Join("user_details as ud", "u.id", "ud.user_id")
+				.Select("ud.*")
+				.WhereLike("u.email", email);
+
+			var compiled = new PostgresCompiler().Compile(sql);
+
+			await using var connection = _connectionFactory.GetDbConnection();
+			var users = await connection.QueryAsync<UserModel, UserDetailModel, UserModel>(
+				compiled.Sql,
+				(u, d) =>
+				{
+					u.Details = d;
+					return u;
+				},
+				param: compiled.NamedBindings,
+				splitOn: "id");
+
+			return users.FirstOrDefault();
+		}
+
 		/// <inheritdoc cref="IUsersRepository.GetById"/>.
 		public async Task<UserModel> GetById(int id)
 		{

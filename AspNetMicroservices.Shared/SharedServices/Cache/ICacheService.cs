@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace AspNetMicroservices.Auth.Application.Common.Interfaces
+namespace AspNetMicroservices.Shared.SharedServices.Cache
 {
 	/// <summary>
 	/// Represents cache service.

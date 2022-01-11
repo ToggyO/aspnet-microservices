@@ -5,6 +5,10 @@ using FluentValidation;
 
 namespace AspNetMicroservices.Auth.Application.Features.Users.Validators
 {
+	/// <summary>
+	/// Create or update user validator.
+	/// </summary>
+	/// <typeparam name="TModel">Type of model to validate.</typeparam>
 	public class CreateUpdateUserValidator<TModel> : AbstractValidator<TModel>
 		where TModel : CreateUpdateUserDto
 	{

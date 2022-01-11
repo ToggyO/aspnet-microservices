@@ -6,7 +6,7 @@ using AspNetMicroservices.Shared.Contracts;
 namespace AspNetMicroservices.Auth.Domain.Models.Database.Users
 {
 	/// <summary>
-	/// RepDetailed information about user.
+	/// Detailed information about user.
 	/// </summary>
 	[Table("user_details")]
 	public class UserDetailModel : BaseModel, IHaveIdentifier

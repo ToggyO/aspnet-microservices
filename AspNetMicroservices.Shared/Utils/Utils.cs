@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 
 namespace AspNetMicroservices.Shared.Utils
@@ -50,5 +51,13 @@ namespace AspNetMicroservices.Shared.Utils
 
 			return attribute.Name;
 		}
+
+		/// <summary>
+		/// Generates stringified guid value in provided format.
+		/// </summary>
+		/// <param name="format">String guid format.</param>
+		/// <returns></returns>
+		public static string GenerateGuidString(string format = "N")
+			=> Guid.NewGuid().ToString(format);
 	}
 }

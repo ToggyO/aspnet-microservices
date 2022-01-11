@@ -31,7 +31,8 @@ namespace AspNetMicroservices.Auth.DataAccess.Migrations
 				.WithColumn(Utils.GetNameFromColumnAttribute<UserModel>(nameof(UserModel.FirstName))).AsString(100).NotNullable()
 				.WithColumn(Utils.GetNameFromColumnAttribute<UserModel>(nameof(UserModel.LastName))).AsString(100).NotNullable()
 				.WithColumn(Utils.GetNameFromColumnAttribute<UserModel>(nameof(UserModel.Email))).AsString(100).NotNullable()
-				.WithColumn(Utils.GetNameFromColumnAttribute<UserModel>(nameof(UserModel.Password))).AsString(50).NotNullable()
+				.WithColumn(Utils.GetNameFromColumnAttribute<UserModel>(nameof(UserModel.Hash))).AsString(50).NotNullable()
+				.WithColumn(Utils.GetNameFromColumnAttribute<UserModel>(nameof(UserModel.Salt))).AsString(50).NotNullable()
 				.WithColumn(Utils.GetNameFromColumnAttribute<UserModel>(nameof(UserModel.CreatedAt))).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
 				.WithColumn(Utils.GetNameFromColumnAttribute<UserModel>(nameof(UserModel.UpdatedAt))).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
 

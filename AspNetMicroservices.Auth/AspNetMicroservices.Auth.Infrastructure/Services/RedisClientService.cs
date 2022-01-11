@@ -2,8 +2,8 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 
-using AspNetMicroservices.Auth.Application.Common.Interfaces;
 using AspNetMicroservices.Shared.Models.Settings;
+using AspNetMicroservices.Shared.SharedServices.Cache;
 
 using Microsoft.Extensions.Options;
 

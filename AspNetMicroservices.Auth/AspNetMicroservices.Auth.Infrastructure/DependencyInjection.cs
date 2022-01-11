@@ -1,7 +1,10 @@
 ﻿using AspNetMicroservices.Auth.Application.Common.Interfaces;
+using AspNetMicroservices.Auth.Infrastructure.Factories;
 using AspNetMicroservices.Auth.Infrastructure.Services;
 using AspNetMicroservices.Shared.Extensions;
 using AspNetMicroservices.Shared.Models.Settings;
+using AspNetMicroservices.Shared.SharedServices.Cache;
+using AspNetMicroservices.Shared.SharedServices.PasswordService;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -28,6 +31,10 @@ namespace AspNetMicroservices.Auth.Infrastructure
 			});
 
 			services.Add<ICacheService, RedisClientService>(serviceLifetime);
+			services.Add<ITokensService, TokensService>(serviceLifetime);
+			services.Add<IPasswordService, PasswordService>(serviceLifetime);
+
+			services.Add<ITokensFactory, JwtTokensFactory>(serviceLifetime);
 		}
 	}
 }

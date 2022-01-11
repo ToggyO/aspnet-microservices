@@ -8,4 +8,8 @@
     <ProjectReference Include="..\..\AspNetMicroservices.Shared\AspNetMicroservices.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Api\Auth" />
+  </ItemGroup>
+
 </Project>

@@ -55,16 +55,6 @@ namespace AspNetMicroservices.Auth.Api
                     .AllowAnyOrigin()
                 ));
 
-            services.Configure<ApiBehaviorOptions>(o => o.SuppressModelStateInvalidFilter = true);
-            services.Configure<RedisSettings>(o =>
-            {
-	            o.Host = DotNetEnv.Env.GetString("AUTH_REDIS_HOST");
-	            o.Db = DotNetEnv.Env.GetInt("AUTH_REDIS_DATABASE");
-	            o.Password = DotNetEnv.Env.GetString("AUTH_REDIS_PASSWORD");
-	            o.Port = DotNetEnv.Env.GetInt(isDevelopment ? "AUTH_REDIS_EXTERNAL_PORT" : "AUTH_REDIS_PORT");
-	            o.KeyExpirationInSec = DotNetEnv.Env.GetInt("AUTH_REDIS_KEY_EXPIRATION_IN_SEC");
-            });
-
             var dbSettings = new PostgresDataSettings
             {
 	            Host = DotNetEnv.Env.GetString("AUTH_DB_HOST"),
@@ -74,13 +64,17 @@ namespace AspNetMicroservices.Auth.Api
 	            DbName = DotNetEnv.Env.GetString("AUTH_DB_NAME"),
             };
 
+            services.AddSettings(Configuration, isDevelopment);
             services.AddApplicationLayer();
             services.AddInfrastructure();
             services.AddDataAccess(dbSettings.DbConnectionString);
+            services.AddApiHandlers();
+            services.AddAuthServices(Configuration);
 
             services.AddControllersWithViews(mvcOpts =>
             {
 	            mvcOpts.UseGlobalRoutePrefix("api");
+	            mvcOpts.Filters.Add<AuthorizationFilter>();
 	            mvcOpts.Filters.Add<StatusCodeFilter>();
             });
             services.AddConfiguredSwaggerGen();
@@ -106,6 +100,10 @@ namespace AspNetMicroservices.Auth.Api
 
             logger.LogInformation("Cors");
             app.UseCors(CorsPolicy);
+
+            logger.LogInformation("Authorization");
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             logger.LogInformation("Custom middleware");
             app.UseMiddleware<ExceptionMiddleware>();

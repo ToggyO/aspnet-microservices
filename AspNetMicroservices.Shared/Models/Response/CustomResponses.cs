@@ -5,6 +5,46 @@ using AspNetMicroservices.Shared.Constants.Errors;
 
 namespace AspNetMicroservices.Shared.Models.Response
 {
+	public class BusinessConflictErrorResponse<T> : ErrorResponse<T> where T : class
+	{
+		public BusinessConflictErrorResponse(IEnumerable<Error> errors)
+		{
+			Code = ErrorCodes.Business.EmailExists;
+			Message = ErrorMessages.Business.EmailExists;
+			HttpStatusCode = HttpStatusCode.Conflict;
+
+			Errors = errors;
+		}
+
+		public BusinessConflictErrorResponse(Error error) : this(new[] {error})
+		{
+		}
+
+		public BusinessConflictErrorResponse() : this(new List<Error>())
+		{
+		}
+	}
+
+	public class BusinessConflictErrorResponse : ErrorResponse
+	{
+		public BusinessConflictErrorResponse(IEnumerable<Error> errors)
+		{
+			Code = ErrorCodes.Business.EmailExists;
+			Message = ErrorMessages.Business.EmailExists;
+			HttpStatusCode = HttpStatusCode.Conflict;
+
+			Errors = errors;
+		}
+
+		public BusinessConflictErrorResponse(Error error) : this(new[] {error})
+		{
+		}
+
+		public BusinessConflictErrorResponse() : this(new List<Error>())
+		{
+		}
+	}
+
 	public class BadParametersErrorResponse<T> : ErrorResponse<T> where T : class
 	{
 		public BadParametersErrorResponse(IEnumerable<Error> errors)
@@ -82,6 +122,46 @@ namespace AspNetMicroservices.Shared.Models.Response
 		}
 
 		public NotFoundErrorResponse() : this(new List<Error>())
+		{
+		}
+	}
+
+	public class SecurityErrorResponse<T> : ErrorResponse<T> where T : class
+	{
+		public SecurityErrorResponse(IEnumerable<Error> errors)
+		{
+			Code = ErrorCodes.Global.Unauthorized;
+			Message = ErrorMessages.Global.Unauthorized;
+			HttpStatusCode = HttpStatusCode.Unauthorized;
+
+			Errors = errors;
+		}
+
+		public SecurityErrorResponse(Error error) : this(new[] {error})
+		{
+		}
+
+		public SecurityErrorResponse() : this(new List<Error>())
+		{
+		}
+	}
+
+	public class SecurityErrorResponse : ErrorResponse
+	{
+		public SecurityErrorResponse(IEnumerable<Error> errors)
+		{
+			Code = ErrorCodes.Global.Unauthorized;
+			Message = ErrorMessages.Global.Unauthorized;
+			HttpStatusCode = HttpStatusCode.Unauthorized;
+
+			Errors = errors;
+		}
+
+		public SecurityErrorResponse(Error error) : this(new[] {error})
+		{
+		}
+
+		public SecurityErrorResponse() : this(new List<Error>())
 		{
 		}
 	}

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using AspNetMicroservices.Auth.Application.Common.Interfaces;
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
+using AspNetMicroservices.Shared.SharedServices.Cache;
 
 using Microsoft.AspNetCore.Mvc;
 

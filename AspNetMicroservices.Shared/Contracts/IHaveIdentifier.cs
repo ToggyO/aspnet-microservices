@@ -8,6 +8,6 @@
 		/// <summary>
 		/// Item unique identity.
 		/// </summary>
-		int Id { get; }
+		int Id { get; set; }
 	}
 }

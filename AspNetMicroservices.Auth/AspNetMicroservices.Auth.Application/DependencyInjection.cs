@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 
+using AspNetMicroservices.Auth.Application.Mappings;
+
 using FluentValidation.AspNetCore;
 
 using MediatR;
@@ -14,11 +16,16 @@ namespace AspNetMicroservices.Auth.Application
 		/// Add application layer module to an application services.
 		/// </summary>
 		/// <param name="services">Instance of <see cref="IServiceCollection"/>.</param>
-		public static void AddApplicationLayer(this IServiceCollection services)
+		/// <param name="serviceLifetime">Service lifetime enumeration.</param>
+		public static void AddApplicationLayer(this IServiceCollection services,
+			ServiceLifetime serviceLifetime = ServiceLifetime.Scoped)
 		{
 			var assembly = Assembly.GetExecutingAssembly();
+
 			services.AddMediatR(assembly);
-			services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(assembly));
+			services.AddMapsterMapper(serviceLifetime);
+			services.AddFluentValidation(fv
+				=> fv.RegisterValidatorsFromAssembly(assembly));
 		}
 	}
 }
