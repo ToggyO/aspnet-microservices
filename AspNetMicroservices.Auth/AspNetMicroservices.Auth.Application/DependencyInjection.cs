@@ -1,10 +1,13 @@
 ﻿using System.Reflection;
 
+using AspNetMicroservices.Auth.Application.Common.Behaviours;
 using AspNetMicroservices.Auth.Application.Mappings;
+using AspNetMicroservices.Shared.Extensions;
 
 using FluentValidation.AspNetCore;
 
 using MediatR;
+using MediatR.Pipeline;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,6 +26,9 @@ namespace AspNetMicroservices.Auth.Application
 			var assembly = Assembly.GetExecutingAssembly();
 
 			services.AddMediatR(assembly);
+			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+			services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(ValidationExceptionHandler<,,>));
+
 			services.AddMapsterMapper(serviceLifetime);
 			services.AddFluentValidation(fv
 				=> fv.RegisterValidatorsFromAssembly(assembly));

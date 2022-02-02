@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 
-namespace AspNetMicroservices.Gateway.Api.Filters
+namespace AspNetMicroservices.Gateway.Api.Interceptors
 {
 	/// <summary>
 	/// Rpc error interceptor.

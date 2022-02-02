@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using AspNetMicroservices.Auth.Application.Common.Enums;
 using AspNetMicroservices.Auth.Application.Common.Interfaces;
 using AspNetMicroservices.Auth.Application.Dto.Users;
+using AspNetMicroservices.Shared.Constants.Common;
 using AspNetMicroservices.Shared.Constants.Errors;
+using AspNetMicroservices.Shared.Constants.Http;
 using AspNetMicroservices.Shared.Models.Auth;
 using AspNetMicroservices.Shared.Models.Response;
 using AspNetMicroservices.Shared.SharedServices.Cache;
@@ -63,7 +65,7 @@ namespace AspNetMicroservices.Auth.Api.Filters
 			}
 
 			var tokenStatus = TokenStatus.Invalid;
-			string authHeader = context.HttpContext.Request.Headers["Authorization"];
+			string authHeader = context.HttpContext.Request.Headers[HttpHeaderNames.Authorization];
 
 			// TODO: check on refactoring possibilities.
 			if (!string.IsNullOrEmpty(authHeader))
@@ -75,10 +77,19 @@ namespace AspNetMicroservices.Auth.Api.Filters
 				{
 					string identityId = principal.Claims
 						.FirstOrDefault(x => x.Type.Equals(ClaimTypes.IdentityId, StringComparison.Ordinal))?.Value;
-					var ticket = await _cache.GetCacheValueAsync<AuthenticationTicket<UserDto>>(identityId);
+					var ticket = await _cache.GetCacheValueAsync<AuthenticationTicket<UserDto>>(
+						$"{Prefix.Access}::{identityId}");
 
 					if (ticket is not null)
+					{
+						var claims = new []
+						{
+							new Claim("user_id", ticket.User.Id.ToString())
+						};
+						var claimsIdentity = new ClaimsIdentity(claims);
+						context.HttpContext.User = new ClaimsPrincipal(claimsIdentity);
 						return;
+					}
 				}
 			}
 

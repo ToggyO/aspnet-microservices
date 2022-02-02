@@ -7,6 +7,7 @@ using AspNetMicroservices.Auth.Application;
 using AspNetMicroservices.Auth.DataAccess;
 using AspNetMicroservices.Auth.Infrastructure;
 using AspNetMicroservices.Shared.Models.Settings;
+using AspNetMicroservices.Shared.SharedServices.Cache;
 
 using MediatR;
 
@@ -64,12 +65,23 @@ namespace AspNetMicroservices.Auth.Api
 	            DbName = DotNetEnv.Env.GetString("AUTH_DB_NAME"),
             };
 
+            var redisSettings = new RedisSettings
+            {
+	            Host = DotNetEnv.Env.GetString("AUTH_REDIS_HOST"),
+	            Db = DotNetEnv.Env.GetInt("AUTH_REDIS_DATABASE"),
+	            Password = DotNetEnv.Env.GetString("AUTH_REDIS_PASSWORD"),
+	            Port = DotNetEnv.Env.GetInt(isDevelopment ? "AUTH_REDIS_EXTERNAL_PORT" : "PRODUCTS_REDIS_PORT"),
+	            KeyExpirationInSec = DotNetEnv.Env.GetInt("AUTH_REDIS_KEY_EXPIRATION_IN_SEC")
+            };
+
             services.AddSettings(Configuration, isDevelopment);
             services.AddApplicationLayer();
             services.AddInfrastructure();
             services.AddDataAccess(dbSettings.DbConnectionString);
+            services.AddRedisCache(redisSettings.ConnectionString);
             services.AddApiHandlers();
-            services.AddAuthServices(Configuration);
+            // TODO: check
+            // services.AddAuthServices(Configuration);
 
             services.AddControllersWithViews(mvcOpts =>
             {
@@ -102,8 +114,8 @@ namespace AspNetMicroservices.Auth.Api
             app.UseCors(CorsPolicy);
 
             logger.LogInformation("Authorization");
-            app.UseAuthentication();
-            app.UseAuthorization();
+            // app.UseAuthentication();
+            // app.UseAuthorization();
 
             logger.LogInformation("Custom middleware");
             app.UseMiddleware<ExceptionMiddleware>();

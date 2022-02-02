@@ -1,6 +1,8 @@
 using System;
 using System.Reflection;
 
+using AspNetMicroservices.Products.Api.Interceptors;
+
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,10 +16,15 @@ using LinqToDB.AspNet;
 using LinqToDB.Configuration;
 
 using AspNetMicroservices.Products.Api.Services;
+using AspNetMicroservices.Products.Business;
 using AspNetMicroservices.Products.Common.Behaviours;
 using AspNetMicroservices.Products.Common.Settings;
+using AspNetMicroservices.Products.DataLayer;
 using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection;
 using AspNetMicroservices.Shared.Models.Settings;
+using AspNetMicroservices.Shared.SharedServices.Cache;
+
+using Microsoft.Extensions.Options;
 
 namespace AspNetMicroservices.Products.Api
 {
@@ -40,40 +47,40 @@ namespace AspNetMicroservices.Products.Api
         public void ConfigureServices(IServiceCollection services)
         {
             bool isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
-            services.AddGrpc(opts =>
-            {
-                opts.EnableDetailedErrors = true;
-            });
-
-            services.AddMediatR(typeof(Business.DependencyInjectionModule));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            services.AddValidatorsFromAssembly(typeof(Business.DependencyInjectionModule).Assembly);
-            ValidatorConfigurationOverload.Override();
 
             var dbSettings = new PostgresDataSettings
             {
-                Host = DotNetEnv.Env.GetString("POSTGRES_DB_HOST"),
-                Port = DotNetEnv.Env.GetInt(
-                    isDevelopment ? "PRODUCTS_DB_EXTERNAL_PORT" : "PRODUCTS_DB_PORT"),
-                DbName = DotNetEnv.Env.GetString("PRODUCTS_DB_NAME"),
-                User = DotNetEnv.Env.GetString("PRODUCTS_DB_USER"),
-                Password = DotNetEnv.Env.GetString("PRODUCTS_DB_PASSWORD"),
+	            Host = DotNetEnv.Env.GetString("POSTGRES_DB_HOST"),
+	            Port = DotNetEnv.Env.GetInt(
+		            isDevelopment ? "PRODUCTS_DB_EXTERNAL_PORT" : "PRODUCTS_DB_PORT"),
+	            DbName = DotNetEnv.Env.GetString("PRODUCTS_DB_NAME"),
+	            User = DotNetEnv.Env.GetString("PRODUCTS_DB_USER"),
+	            Password = DotNetEnv.Env.GetString("PRODUCTS_DB_PASSWORD"),
             };
-            services.AddLinqToDbContext<AppDataConnection>((provider, options) =>
+
+            var redisSettings = new RedisSettings
             {
-                options.UsePostgreSQL(dbSettings.DbConnectionString);
+	            Host = DotNetEnv.Env.GetString("PRODUCTS_REDIS_HOST"),
+	            Db = DotNetEnv.Env.GetInt("PRODUCTS_REDIS_DATABASE"),
+	            Password = DotNetEnv.Env.GetString("PRODUCTS_REDIS_PASSWORD"),
+	            Port = DotNetEnv.Env.GetInt(
+		            isDevelopment ? "PRODUCTS_REDIS_EXTERNAL_PORT" : "PRODUCTS_REDIS_PORT"),
+	            KeyExpirationInSec = DotNetEnv.Env.GetInt("PRODUCTS_REDIS_KEY_EXPIRATION_IN_SEC")
+            };
+
+            services.AddGrpc(opts =>
+            {
+	            opts.EnableDetailedErrors = true;
+	            opts.Interceptors.Add<AuthInterceptor>();
             });
-            services.AddFluentMigratorCore()
-	            .ConfigureRunner(cfg => cfg
-		            .AddPostgres()
-		            .WithGlobalConnectionString(dbSettings.DbConnectionString)
-		            .ScanIn(Assembly.GetAssembly(typeof(AppDataConnection))).For.All()
-	            )
-	            .AddLogging(cfg => cfg.AddFluentMigratorConsole());
+
+            services.AddSettings(Configuration);
+            services.AddBusinessLayer();
+            services.AddDataLayer(dbSettings.DbConnectionString);
+            services.AddAuthServices(Configuration);
+            services.AddRedisCache(redisSettings.ConnectionString);
 
             services.AddAutoMapper(typeof(Startup), typeof(Business.DependencyInjectionModule));
-
-            Business.DependencyInjectionModule.Load(services);
         }
 
         public void Configure(
@@ -89,6 +96,9 @@ namespace AspNetMicroservices.Products.Api
             // app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

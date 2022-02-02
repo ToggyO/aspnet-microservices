@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Gateway.Api.Interceptors;
+
 using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -39,7 +41,22 @@ namespace AspNetMicroservices.Gateway.Api.Extensions
                         ServerCertificateCustomValidationCallback =
                             HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                     };
-                });
+
+                    // Http configuration
+                    cfg.Credentials = ChannelCredentials.Insecure;
+
+                    // Https configuration
+                    // // add SSL credentials
+                    // cfg.Credentials = new SslCredentials();
+                    // // allow invalid/untrusted certificates
+                    // var httpClientHandler = new HttpClientHandler
+                    // {
+                    //  ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                    // };
+                    // var httpClient = new HttpClient(httpClientHandler);
+                    // cfg.HttpClient = httpClient;
+                })
+                .AddInterceptor<AuthHeadersInterceptor>();
         }
 
 	    // TODO: Create implementation.
@@ -49,6 +66,7 @@ namespace AspNetMicroservices.Gateway.Api.Extensions
             {
                 StatusCode.InvalidArgument => HttpStatusCode.BadRequest,
                 StatusCode.NotFound => HttpStatusCode.NotFound,
+                StatusCode.Unauthenticated => HttpStatusCode.Unauthorized,
                 StatusCode.Internal => HttpStatusCode.InternalServerError,
                 _ => HttpStatusCode.OK
             };

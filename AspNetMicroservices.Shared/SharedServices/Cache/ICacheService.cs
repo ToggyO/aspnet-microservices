@@ -32,5 +32,12 @@ namespace AspNetMicroservices.Shared.SharedServices.Cache
 		/// <param name="timeToLive">Expiration time.</param>
 		/// <returns></returns>
 		Task SetCacheValueAsync<TValue>(string key, TValue value, TimeSpan timeToLive);
+
+		/// <summary>
+		/// Removes value from cache by specified key.
+		/// </summary>
+		/// <param name="key">The key associated with the stored value.</param>
+		/// <returns></returns>
+		Task<bool> RemoveCacheValueAsync(string key);
 	}
 }

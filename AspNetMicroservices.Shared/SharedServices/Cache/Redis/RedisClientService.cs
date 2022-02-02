@@ -2,21 +2,16 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 
-using AspNetMicroservices.Shared.Models.Settings;
-using AspNetMicroservices.Shared.SharedServices.Cache;
-
-using Microsoft.Extensions.Options;
-
 using StackExchange.Redis;
 
-namespace AspNetMicroservices.Auth.Infrastructure.Services
+namespace AspNetMicroservices.Shared.SharedServices.Cache.Redis
 {
 	/// <summary>
 	/// Provides possibility to store data in Redis cache.
 	/// </summary>
 	public class RedisClientService : ICacheService
 	{
-		private readonly IOptions<RedisSettings> _redisOptions;
+		private const int DefaultExpirationTime = 60 * 60;
 
 		private readonly IConnectionMultiplexer _connectionMultiplexer;
 
@@ -26,12 +21,9 @@ namespace AspNetMicroservices.Auth.Infrastructure.Services
 		/// Initialize new instance of <see cref="RedisClientService"/>.
 		/// </summary>
 		/// <param name="connectionMultiplexer">Stack exchange connection multiplexer.</param>
-		/// <param name="redisOptions">Redis connection options.</param>
-		public RedisClientService(IConnectionMultiplexer connectionMultiplexer,
-			IOptions<RedisSettings> redisOptions)
+		public RedisClientService(IConnectionMultiplexer connectionMultiplexer)
 		{
 			_connectionMultiplexer = connectionMultiplexer;
-			_redisOptions = redisOptions;
 			_serializerOptions = new JsonSerializerOptions();
 		}
 
@@ -49,7 +41,7 @@ namespace AspNetMicroservices.Auth.Infrastructure.Services
 
 		/// <inheritdoc cref="ICacheService.SetCacheValueAsync{TValue}(string, TValue)"/>.
 		public async Task SetCacheValueAsync<TValue>(string key, TValue value)
-			=> await SetCacheValueAsync(key, value, TimeSpan.FromSeconds(_redisOptions.Value.KeyExpirationInSec));
+			=> await SetCacheValueAsync(key, value, TimeSpan.FromSeconds(DefaultExpirationTime));
 
 
 		/// <inheritdoc cref="ICacheService.SetCacheValueAsync{TValue}(string, TValue, TimeSpan)"/>.
@@ -58,6 +50,13 @@ namespace AspNetMicroservices.Auth.Infrastructure.Services
 			var db = _connectionMultiplexer.GetDatabase();
 			var stringValue = JsonSerializer.Serialize(value);
 			await db.StringSetAsync(key, stringValue, timeToLive);
+		}
+
+		/// <inheritdoc cref="ICacheService.RemoveCacheValueAsync"/>.
+		public async Task<bool> RemoveCacheValueAsync(string key)
+		{
+			var db = _connectionMultiplexer.GetDatabase();
+			return await db.KeyDeleteAsync(key);
 		}
 	}
 }

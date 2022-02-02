@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 
 using AspNetMicroservices.Gateway.Api.Extensions;
 using AspNetMicroservices.Gateway.Api.Filters;
+using AspNetMicroservices.Gateway.Api.Interceptors;
 using AspNetMicroservices.Gateway.Api.Middleware;
 using AspNetMicroservices.Gateway.Common.Settings.RemoteServices;
 using AspNetMicroservices.Shared.Protos;
@@ -50,9 +51,8 @@ namespace AspNetMicroservices.Gateway.Api
             services.Configure<ApiBehaviorOptions>(opt => opt.SuppressModelStateInvalidFilter = true);
 
             var remoteServicesSettings = new RemoteServicesSettings(Configuration);
-            services.AddConfiguredGrpcClient<ProductsService.ProductsServiceClient>(remoteServicesSettings.ProductServiceUrl);
-            // services.AddConfiguredGrpcClient<ProductsService.ProductsServiceClient>("https://localhost:5003");
-                // .AddInterceptor<RpcErrorInterceptor>();
+            services
+	            .AddConfiguredGrpcClient<ProductsService.ProductsServiceClient>(remoteServicesSettings.ProductServiceUrl);
 
             services.AddControllersWithViews(opt =>
             {
