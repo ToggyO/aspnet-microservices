@@ -14,8 +14,15 @@ namespace AspNetMicroservices.Auth.Api.Handlers.Users
 		/// <summary>
 		/// Creates user.
 		/// </summary>
-		/// <param name="dto">New user data.</param>
+		/// <param name="cmd">New user data.</param>
 		/// <returns></returns>
 		Task<Response<UserDto>> CreateUser(CreateUser.Command cmd);
+
+		/// <summary>
+		/// Get user by identifier.
+		/// </summary>
+		/// <param name="id">User identifier.</param>
+		/// <returns></returns>
+		Task<Response<UserDto>> GetById(int id);
 	}
 }

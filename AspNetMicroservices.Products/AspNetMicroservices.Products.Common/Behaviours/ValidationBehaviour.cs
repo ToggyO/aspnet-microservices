@@ -14,16 +14,29 @@ using MediatR;
 
 namespace AspNetMicroservices.Products.Common.Behaviours
 {
+    /// <inheritdoc cref="IPipelineBehavior{TRequest,TResponse}"/>
+	/// <summary>
+	/// Represents object validation from incoming request with <see cref="FluentValidation"/> package.
+	/// </summary>
+	/// <typeparam name="TRequest">Request type.</typeparam>
+	/// <typeparam name="TResponse">Response type.</typeparam>
     public class ValidationBehaviour<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
+        /// <summary>
+		/// Initialize of <see cref="ValidationBehaviour{TRequest,TResponse}"/>.
+		/// </summary>
+		/// <param name="validators">
+		/// Set of validators <see cref="IValidator{TRequest}"/> of a given type.
+		/// </param>
         public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators)
         {
             _validators = validators;
         }
 
+        /// <inheritdoc cref="IPipelineBehavior{TRequest,TResponse}.Handle"/>.
         public async Task<TResponse> Handle(
             TRequest request,
             CancellationToken cancellationToken,

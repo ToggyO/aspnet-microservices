@@ -8,7 +8,8 @@ namespace AspNetMicroservices.Auth.Application.Features.Auth.Validators
 	/// <summary>
 	/// Refresh token validator.
 	/// </summary>
-	public class RefreshTokenValidator : AbstractValidator<RefreshTokenDto>
+	public class RefreshTokenValidator<TModel> : AbstractValidator<TModel>
+		where TModel : RefreshTokenDto
 	{
 		public RefreshTokenValidator()
 		{

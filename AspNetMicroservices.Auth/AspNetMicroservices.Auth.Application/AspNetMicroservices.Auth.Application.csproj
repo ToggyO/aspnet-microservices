@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AspNetMicroservices.Auth.Domain\AspNetMicroservices.Auth.Domain.csproj" />
+    <ProjectReference Include="..\..\AspNetMicroservices.Shared\AspNetMicroservices.Shared.csproj" />
   </ItemGroup>
 
 </Project>

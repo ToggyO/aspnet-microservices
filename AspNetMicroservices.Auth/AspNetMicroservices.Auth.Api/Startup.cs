@@ -86,6 +86,7 @@ namespace AspNetMicroservices.Auth.Api
             services.AddControllersWithViews(mvcOpts =>
             {
 	            mvcOpts.UseGlobalRoutePrefix("api");
+	            mvcOpts.Filters.Add<ApplicationExceptionFilterAttribute>();
 	            mvcOpts.Filters.Add<AuthorizationFilter>();
 	            mvcOpts.Filters.Add<StatusCodeFilter>();
             });
@@ -114,6 +115,7 @@ namespace AspNetMicroservices.Auth.Api
             app.UseCors(CorsPolicy);
 
             logger.LogInformation("Authorization");
+            // TODO: check
             // app.UseAuthentication();
             // app.UseAuthorization();
 

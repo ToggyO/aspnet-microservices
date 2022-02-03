@@ -44,9 +44,18 @@ namespace AspNetMicroservices.Auth.Api.Handlers.Auth.Implementation
 		}
 
 		/// <inheritdoc cref="IAuthHandler.RefreshToken"/>.
-		public Task<Response<TokenDto>> RefreshToken(string token)
+		public async Task<Response<TokenDto>> RefreshToken(Refresh.Command cmd)
 		{
-			throw new System.NotImplementedException();
+			var tokenDto = await _mediator.Send(cmd);
+			if (tokenDto is null)
+				return new ErrorResponse<TokenDto>
+				{
+					Code = ErrorCodes.Security.RefreshTokenInvalid,
+					Message = ErrorMessages.Security.RefreshTokenInvalid,
+					HttpStatusCode = HttpStatusCode.Unauthorized,
+				};
+
+			return new Response<TokenDto> { Data = tokenDto };
 		}
 	}
 }

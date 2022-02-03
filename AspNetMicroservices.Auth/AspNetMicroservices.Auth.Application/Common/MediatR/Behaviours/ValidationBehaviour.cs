@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Shared.Exceptions;
 using AspNetMicroservices.Shared.Models.Response;
 
 using FluentValidation;
@@ -12,18 +13,32 @@ using FluentValidation.Results;
 using MediatR;
 using MediatR.Pipeline;
 
-namespace AspNetMicroservices.Auth.Application.Common.Behaviours
+namespace AspNetMicroservices.Auth.Application.Common.MediatR.Behaviours
 {
+	/// <inheritdoc cref="IPipelineBehavior{TRequest,TResponse}"/>.
+	/// <summary>
+	/// Represents object validation from incoming request with <see cref="FluentValidation"/> package.
+	/// </summary>
+	/// <typeparam name="TRequest">Request type.</typeparam>
+	/// <typeparam name="TResponse">Response type.</typeparam>
 	public class ValidationBehaviour<TRequest, TResponse>
 		: IPipelineBehavior<TRequest, TResponse>
+			where TResponse : class, new()
 	{
 		private readonly IEnumerable<IValidator<TRequest>> _validators;
 
+		/// <summary>
+		/// Initialize of <see cref="ValidationBehaviour{TRequest,TResponse}"/>.
+		/// </summary>
+		/// <param name="validators">
+		/// Set of validators <see cref="IValidator{TRequest}"/> of a given type.
+		/// </param>
 		public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators)
 		{
 			_validators = validators;
 		}
 
+		/// <inheritdoc cref="IPipelineBehavior{TRequest,TResponse}.Handle"/>.
 		public async Task<TResponse> Handle(
 			TRequest request,
 			CancellationToken cancellationToken,
@@ -41,8 +56,8 @@ namespace AspNetMicroservices.Auth.Application.Common.Behaviours
 
 				if (validationErrors.Any())
 				{
-					// var error = new BadParametersErrorResponse(validationErrors.Select(GetError).ToArray());
-					throw new ValidationException(validationErrors);
+					var error = new BadParametersErrorResponse(validationErrors.Select(GetError).ToArray());
+					throw new ApplicationValidationException(error);
 				}
 			}
 
@@ -57,15 +72,6 @@ namespace AspNetMicroservices.Auth.Application.Common.Behaviours
 				Message = error.ErrorMessage,
 				Field = error.PropertyName,
 			};
-		}
-	}
-
-	public class ValidationExceptionHandler<TRequest, TResponse, TException>
-		: RequestExceptionHandler<TRequest, TResponse, TException> where TException : Exception
-	{
-		protected override void Handle(TRequest request, TException exception, RequestExceptionHandlerState<TResponse> state)
-		{
-			Console.WriteLine("ValidationExceptionHandler");
 		}
 	}
 }

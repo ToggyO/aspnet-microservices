@@ -15,15 +15,15 @@ namespace AspNetMicroservices.Auth.Api.Handlers.Auth
 		/// <summary>
 		/// Authenticate user handler.
 		/// </summary>
-		/// <param name="cmd">Authenticate user command.</param>
+		/// <param name="cmd">Authentication credentials command.</param>
 		/// <returns></returns>
 		Task<Response<AuthenticationTicket<UserDto>>> Authenticate(Authenticate.Command cmd);
 
 		/// <summary>
 		/// Refresh authentication tokens for user.
 		/// </summary>
-		/// <param name="token"></param>
+		/// <param name="cmd">Refresh token command.</param>
 		/// <returns></returns>
-		Task<Response<TokenDto>> RefreshToken(string token);
+		Task<Response<TokenDto>> RefreshToken(Refresh.Command cmd);
 	}
 }

@@ -61,44 +61,18 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 			};
 		}
 
+		/// <inheritdoc cref="IUsersRepository.GetByEmail"/>.
 		public async Task<UserModel> GetByEmail(string email)
 		{
-			var sql = new Query("users as u")
-				.Select("u.id", "u.first_name", "u.last_name", "u.email", "u.salt", "u.hash", "u.created_at", "u.updated_at")
-				.Join("user_details as ud", "u.id", "ud.user_id")
-				.Select("ud.*")
-				.WhereLike("u.email", email);
-
-			var compiled = new PostgresCompiler().Compile(sql);
-
-			await using var connection = _connectionFactory.GetDbConnection();
-			var users = await connection.QueryAsync<UserModel, UserDetailModel, UserModel>(
-				compiled.Sql,
-				(u, d) =>
-				{
-					u.Details = d;
-					return u;
-				},
-				param: compiled.NamedBindings,
-				splitOn: "id");
-
-			return users.FirstOrDefault();
+			var sql = GetBaseUserQuery().WhereLike("u.email", email);
+			return await GetUser(sql);
 		}
 
 		/// <inheritdoc cref="IUsersRepository.GetById"/>.
 		public async Task<UserModel> GetById(int id)
 		{
-			//var sqlStringBuilder = new SqlStringBuilder("SELECT u.id, u.first_name, u.last_name, u.email, u.created_at, u.updated_at, ud.* FROM users u ");
-			//sqlStringBuilder.AppendLeftJoinQuery("user_details ud", "u.id", "ud.user_id");
-			//sqlStringBuilder.AppendQuery("WHERE u.id = @Id ");
-
-			//await using var connection = _connectionFactory.GetDbConnection();
-
-			//var users = await connection.QueryAsync<UserModel, UserDetailModel>(
-			//	sqlStringBuilder.ToString(), param: new { Id = id });
-
-			//return users.FirstOrDefault();
-			return new UserModel();
+			var sql = GetBaseUserQuery().Where("u.id", id);
+			return await GetUser(sql);
 		}
 
 		/// <inheritdoc cref="IUsersRepository.Create"/>.
@@ -138,5 +112,30 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 			entity.Id = await connection.ExecuteScalarAsync<int>(compiled.Sql, compiled.NamedBindings);
 			return entity;
 		}
+
+
+		private async Task<UserModel> GetUser(Query query)
+		{
+			var compiled = new PostgresCompiler().Compile(query);
+
+			await using var connection = _connectionFactory.GetDbConnection();
+			var users = await connection.QueryAsync<UserModel, UserDetailModel, UserModel>(
+				compiled.Sql,
+				(u, d) =>
+				{
+					u.Details = d;
+					return u;
+				},
+				param: compiled.NamedBindings,
+				splitOn: "id");
+
+			return users.FirstOrDefault();
+		}
+
+		private Query GetBaseUserQuery()
+			=> new Query("users as u")
+				.Select("u.id", "u.first_name", "u.last_name", "u.email", "u.salt", "u.hash", "u.created_at", "u.updated_at")
+				.Join("user_details as ud", "u.id", "ud.user_id")
+				.Select("ud.*");
 	}
 }

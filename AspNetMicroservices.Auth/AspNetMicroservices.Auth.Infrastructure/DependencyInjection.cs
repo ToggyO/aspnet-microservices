@@ -1,5 +1,6 @@
 ﻿using AspNetMicroservices.Auth.Application.Common.Interfaces;
 using AspNetMicroservices.Auth.Infrastructure.Factories;
+using AspNetMicroservices.Auth.Infrastructure.Services;
 using AspNetMicroservices.Shared.Extensions;
 using AspNetMicroservices.Shared.SharedServices.PasswordService;
 
@@ -18,6 +19,7 @@ namespace AspNetMicroservices.Auth.Infrastructure
 			ServiceLifetime serviceLifetime = ServiceLifetime.Scoped)
 		{
 			services.Add<IPasswordService, PasswordService>(serviceLifetime);
+			services.Add<IAuthenticationService, AuthenticationService>(serviceLifetime);
 
 			services.Add<ITokensFactory, JwtTokensFactory>(serviceLifetime);
 		}

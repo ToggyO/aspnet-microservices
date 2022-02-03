@@ -13,6 +13,7 @@ using AspNetMicroservices.Shared.Constants.Http;
 using AspNetMicroservices.Shared.Models.Auth;
 using AspNetMicroservices.Shared.Models.Response;
 using AspNetMicroservices.Shared.SharedServices.Cache;
+using AspNetMicroservices.Shared.Utils;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -78,7 +79,7 @@ namespace AspNetMicroservices.Auth.Api.Filters
 					string identityId = principal.Claims
 						.FirstOrDefault(x => x.Type.Equals(ClaimTypes.IdentityId, StringComparison.Ordinal))?.Value;
 					var ticket = await _cache.GetCacheValueAsync<AuthenticationTicket<UserDto>>(
-						$"{Prefix.Access}::{identityId}");
+						Utils.CreateCacheKey(Prefix.Access, identityId));
 
 					if (ticket is not null)
 					{

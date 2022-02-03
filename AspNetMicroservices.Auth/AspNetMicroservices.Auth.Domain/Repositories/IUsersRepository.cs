@@ -22,7 +22,7 @@ namespace AspNetMicroservices.Auth.Domain.Repositories
 		/// <summary>
 		/// Retrieves entity by email from database.
 		/// </summary>
-		/// <param name="email"></param>
+		/// <param name="email">User email.</param>
 		/// <returns></returns>
 		Task<UserModel> GetByEmail(string email);
 

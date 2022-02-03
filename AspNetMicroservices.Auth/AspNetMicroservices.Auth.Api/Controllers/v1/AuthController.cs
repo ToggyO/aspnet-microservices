@@ -26,5 +26,11 @@ namespace AspNetMicroservices.Auth.Api.Controllers.v1
 		[HttpPost("sign-in")]
 		public async Task<Response<AuthenticationTicket<UserDto>>> Authenticate([FromBody] Authenticate.Command cmd)
 			=> await _handler.Authenticate(cmd);
+
+
+		[AllowAnonymous]
+		[HttpPost("refresh")]
+		public async Task<Response<TokenDto>> Refresh([FromBody] Refresh.Command cmd)
+			=> await _handler.RefreshToken(cmd);
 	}
 }

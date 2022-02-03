@@ -35,5 +35,15 @@ namespace AspNetMicroservices.Auth.Api.Handlers.Users.Implementation
 
 			return new Response<UserDto> { Data = await _mediator.Send(cmd) };
 		}
+
+		/// <inheritdoc cref="IUsersHandler.GetById"/>.
+		public async Task<Response<UserDto>> GetById(int id)
+		{
+			var user = await _mediator.Send(new GetUserById.Query { Id = id });
+			if (user is null)
+				return new NotFoundErrorResponse<UserDto>();
+
+			return new Response<UserDto> { Data = user };
+		}
 	}
 }

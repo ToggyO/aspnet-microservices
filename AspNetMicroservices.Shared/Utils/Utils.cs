@@ -59,5 +59,8 @@ namespace AspNetMicroservices.Shared.Utils
 		/// <returns></returns>
 		public static string GenerateGuidString(string format = "N")
 			=> Guid.NewGuid().ToString(format);
+
+		// TODO: add description
+		public static string CreateCacheKey(string prefix, string body) => $"{prefix}::{body}";
 	}
 }
