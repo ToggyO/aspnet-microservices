@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 
 using AspNetMicroservices.Auth.Api.Handlers.Auth;
 using AspNetMicroservices.Auth.Application.Dto.Users;
@@ -8,6 +9,8 @@ using AspNetMicroservices.Shared.Models.Response;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace AspNetMicroservices.Auth.Api.Controllers.v1
 {
@@ -24,6 +27,9 @@ namespace AspNetMicroservices.Auth.Api.Controllers.v1
 
 		[AllowAnonymous]
 		[HttpPost("sign-in")]
+		[SwaggerResponse((int)HttpStatusCode.OK, null, typeof(Response<AuthenticationTicket<UserDto>>))]
+		[SwaggerResponse((int)HttpStatusCode.Unauthorized, "Invalid auth data.", typeof(SecurityErrorResponse))]
+		[ProducesResponseType(typeof(BadParametersErrorResponse), (int)HttpStatusCode.Forbidden)]
 		public async Task<Response<AuthenticationTicket<UserDto>>> Authenticate([FromBody] Authenticate.Command cmd)
 			=> await _handler.Authenticate(cmd);
 

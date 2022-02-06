@@ -22,6 +22,8 @@ namespace AspNetMicroservices.Auth.Api.Extensions
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AspNetMicroservices.Auth.Api", Version = "v1" });
+                c.CustomSchemaIds(x => x.FullName);
+
                 var fileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
                 c.IncludeXmlComments(filePath);
