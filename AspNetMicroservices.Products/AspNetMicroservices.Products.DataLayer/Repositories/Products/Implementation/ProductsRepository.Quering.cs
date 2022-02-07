@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AspNetMicroservices.Products.DataLayer.Common;
 using AspNetMicroservices.Products.DataLayer.DataBase.Extensions;
 using AspNetMicroservices.Products.DataLayer.Entities.Product;
-using AspNetMicroservices.Shared.Extensions;
+using AspNetMicroservices.Shared.Extensions.QueryableExtensions;
 using AspNetMicroservices.Shared.Models.Pagination;
 using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
 

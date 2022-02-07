@@ -1,3 +1,5 @@
+using System.Reflection;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +10,10 @@ using Microsoft.Extensions.Logging;
 
 using AspNetMicroservices.Gateway.Api.Extensions;
 using AspNetMicroservices.Gateway.Api.Filters;
-using AspNetMicroservices.Gateway.Api.Interceptors;
 using AspNetMicroservices.Gateway.Api.Middleware;
 using AspNetMicroservices.Gateway.Common.Settings.RemoteServices;
+using AspNetMicroservices.Shared.Extensions.MvcExtensions;
+using AspNetMicroservices.Shared.Extensions.Swagger;
 using AspNetMicroservices.Shared.Protos;
 
 namespace AspNetMicroservices.Gateway.Api
@@ -59,7 +62,13 @@ namespace AspNetMicroservices.Gateway.Api
 	            opt.UseGlobalRoutePrefix("api");
 	            opt.Filters.Add<StatusCodeFilter>();
             });
-            services.AddConfiguredSwaggerGen();
+            services.AddConfiguredSwaggerGen(o =>
+            {
+	            o.Title = "AspNetMicroservices.Gateway.Api";
+	            o.Version = "v1";
+	            o.UseFullModelName = true;
+	            o.ExcutingAssembly = Assembly.GetExecutingAssembly();
+            });
 
             DependencyInjectionModule.LoadRpcDependencies(services);
             DependencyInjectionModule.Load(services);
@@ -73,7 +82,7 @@ namespace AspNetMicroservices.Gateway.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwaggerMiddleware();
+                app.UseSwaggerMiddleware("AspNetMicroservices.Gateway.Api v1");
             }
             else
             {

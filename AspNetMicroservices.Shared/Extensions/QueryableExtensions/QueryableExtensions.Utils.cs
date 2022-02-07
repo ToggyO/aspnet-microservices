@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace AspNetMicroservices.Shared.Extensions
+namespace AspNetMicroservices.Shared.Extensions.QueryableExtensions
 {
 	/// <summary>
 	/// Queryable extensions.

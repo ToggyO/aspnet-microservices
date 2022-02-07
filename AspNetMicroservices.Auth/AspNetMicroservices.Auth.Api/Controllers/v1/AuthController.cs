@@ -10,33 +10,43 @@ using AspNetMicroservices.Shared.Models.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-using Swashbuckle.AspNetCore.Annotations;
-
 namespace AspNetMicroservices.Auth.Api.Controllers.v1
 {
+	/// <summary>
+	/// Http request controller for authentication and authorization.
+	/// </summary>
 	[ApiController]
 	[Route("auth")]
-	public class AuthController : ControllerBase
+	public class AuthController : ControllerBase, IAuthHandler
 	{
+		/// <summary>
+		/// Authentication handler.
+		/// </summary>
 		private readonly IAuthHandler _handler;
 
+		/// <summary>
+		/// Initialize new instance of <see cref="AuthController"/>.
+		/// </summary>
+		/// <param name="handler">Instance of <see cref="IAuthHandler"/>.</param>
 		public AuthController(IAuthHandler handler)
 		{
 			_handler = handler;
 		}
 
+		/// <inheritdoc cref="IAuthHandler.Authenticate"/>.
 		[AllowAnonymous]
 		[HttpPost("sign-in")]
-		[SwaggerResponse((int)HttpStatusCode.OK, null, typeof(Response<AuthenticationTicket<UserDto>>))]
-		[SwaggerResponse((int)HttpStatusCode.Unauthorized, "Invalid auth data.", typeof(SecurityErrorResponse))]
-		[ProducesResponseType(typeof(BadParametersErrorResponse), (int)HttpStatusCode.Forbidden)]
+		[ProducesResponseType(typeof(Response<AuthenticationTicket<UserDto>>), (int)HttpStatusCode.OK)]
+		[ProducesResponseType(typeof(SecurityErrorResponse), (int)HttpStatusCode.Unauthorized)]
 		public async Task<Response<AuthenticationTicket<UserDto>>> Authenticate([FromBody] Authenticate.Command cmd)
 			=> await _handler.Authenticate(cmd);
 
-
+		/// <inheritdoc cref="IAuthHandler.RefreshToken"/>
 		[AllowAnonymous]
 		[HttpPost("refresh")]
-		public async Task<Response<TokenDto>> Refresh([FromBody] Refresh.Command cmd)
+		[ProducesResponseType(typeof(Response<TokenDto>), (int)HttpStatusCode.OK)]
+		[ProducesResponseType(typeof(SecurityErrorResponse), (int)HttpStatusCode.Unauthorized)]
+		public async Task<Response<TokenDto>> RefreshToken([FromBody] Refresh.Command cmd)
 			=> await _handler.RefreshToken(cmd);
 	}
 }

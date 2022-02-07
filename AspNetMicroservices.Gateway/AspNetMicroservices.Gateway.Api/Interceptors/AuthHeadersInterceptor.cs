@@ -24,7 +24,7 @@ namespace AspNetMicroservices.Gateway.Api.Interceptors
 
 			var rawToken = _httpContextAccessor.HttpContext?
 				.Request
-				.Headers[HttpHeaderNames.Authorization];
+				.Headers[HttpHeaderNames.Authorization].ToString();
 
 			var metadata = new Metadata
 			{

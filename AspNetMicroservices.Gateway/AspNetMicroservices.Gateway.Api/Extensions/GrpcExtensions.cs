@@ -42,8 +42,9 @@ namespace AspNetMicroservices.Gateway.Api.Extensions
                             HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                     };
 
+                    // TODO: check, why this isn't working in dev
                     // Http configuration
-                    cfg.Credentials = ChannelCredentials.Insecure;
+                    // cfg.Credentials = ChannelCredentials.Insecure;
 
                     // Https configuration
                     // // add SSL credentials

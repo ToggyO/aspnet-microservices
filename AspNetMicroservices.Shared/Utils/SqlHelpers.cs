@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Reflection;
 
-using AspNetMicroservices.Shared.Extensions;
+using AspNetMicroservices.Shared.Extensions.StringExtensions;
 
 namespace AspNetMicroservices.Shared.Utils
 {

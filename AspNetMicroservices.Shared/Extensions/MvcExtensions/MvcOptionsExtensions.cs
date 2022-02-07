@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Routing;
 
-namespace AspNetMicroservices.Auth.Api.Extensions
+namespace AspNetMicroservices.Shared.Extensions.MvcExtensions
 {
     /// <summary>
     /// Provides an extension methods for <see cref="MvcOptions"/> class.
@@ -15,17 +15,17 @@ namespace AspNetMicroservices.Auth.Api.Extensions
         /// Extension method adds route prefix for every controller.
         /// </summary>
         /// <param name="options">Instance of <see cref="MvcOptions"/></param>
-        /// <param name="prefix">String route prefix</param>
-        public static void UseGlobalRoutePrefix(this MvcOptions options, string prefix)
-            => options.UseGlobalRoutePrefix(new RouteAttribute(prefix));
+        /// <param name="routeAttribute">Instance of object, that implements <see cref="IRouteTemplateProvider"/></param>
+        public static void UseGlobalRoutePrefix(this MvcOptions options, IRouteTemplateProvider routeAttribute)
+            => options.Conventions.Add(new RoutePrefixConvention(routeAttribute));
 
         /// <summary>
         /// Extension method adds route prefix for every controller.
         /// </summary>
         /// <param name="options">Instance of <see cref="MvcOptions"/></param>
-        /// <param name="routeAttribute">Instance of object, that implements <see cref="IRouteTemplateProvider"/></param>
-        public static void UseGlobalRoutePrefix(this MvcOptions options, IRouteTemplateProvider routeAttribute)
-            => options.Conventions.Add(new RoutePrefixConvention(routeAttribute));
+        /// <param name="prefix">String route prefix</param>
+        public static void UseGlobalRoutePrefix(this MvcOptions options, string prefix)
+            => options.UseGlobalRoutePrefix(new RouteAttribute(prefix));
     }
 
     /// <summary>

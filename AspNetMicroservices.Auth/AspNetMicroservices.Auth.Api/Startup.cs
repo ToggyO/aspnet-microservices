@@ -1,19 +1,18 @@
 using System;
+using System.Reflection;
 
-using AspNetMicroservices.Auth.Api.Extensions;
 using AspNetMicroservices.Auth.Api.Filters;
 using AspNetMicroservices.Auth.Api.Middleware;
 using AspNetMicroservices.Auth.Application;
 using AspNetMicroservices.Auth.DataAccess;
 using AspNetMicroservices.Auth.Infrastructure;
+using AspNetMicroservices.Shared.Extensions.MvcExtensions;
 using AspNetMicroservices.Shared.Models.Settings;
 using AspNetMicroservices.Shared.SharedServices.Cache;
-
-using MediatR;
+using AspNetMicroservices.Shared.Extensions.Swagger;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -90,7 +89,13 @@ namespace AspNetMicroservices.Auth.Api
 	            mvcOpts.Filters.Add<AuthorizationFilter>();
 	            mvcOpts.Filters.Add<StatusCodeFilter>();
             });
-            services.AddConfiguredSwaggerGen();
+            services.AddConfiguredSwaggerGen(o =>
+            {
+                o.Title = "AspNetMicroservices.Auth.Api";
+                o.Version = "v1";
+                o.UseFullModelName = true;
+                o.ExcutingAssembly = Assembly.GetExecutingAssembly();
+            });
         }
 
         public void Configure(IApplicationBuilder app,
@@ -106,7 +111,7 @@ namespace AspNetMicroservices.Auth.Api
                 app.UseHttpsRedirection();
             }
 
-            app.UseSwaggerMiddleware();
+            app.UseSwaggerMiddleware("AspNetMicroservices.Auth.Api v1");
 
             logger.LogInformation("Routing");
             app.UseRouting();

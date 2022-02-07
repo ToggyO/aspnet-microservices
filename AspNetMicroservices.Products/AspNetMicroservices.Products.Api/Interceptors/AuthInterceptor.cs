@@ -37,7 +37,6 @@ namespace AspNetMicroservices.Products.Api.Interceptors
 		{
 			var httpContext = context.GetHttpContext();
 			var claimsPrincipal = httpContext.User;
-			Console.WriteLine(claimsPrincipal);
 
 			var identityId = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.IdentityId)?.Value;
 			var ticket = await _cache.GetCacheValueAsync<AuthenticationTicket<User>>(

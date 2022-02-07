@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-using AspNetMicroservices.Shared.Extensions;
+using AspNetMicroservices.Shared.Extensions.StringExtensions;
 
-namespace AspNetMicroservices.Shared.Extensions
+namespace AspNetMicroservices.Shared.Extensions.QueryableExtensions
 {
 	/// <summary>
 	/// Queryable extensions.
