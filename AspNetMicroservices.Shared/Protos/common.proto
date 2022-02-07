@@ -1,0 +1,28 @@
+syntax = "proto3";
+package common;
+option csharp_namespace = "AspNetMicroservices.Shared.Protos.Common";
+
+import "google/protobuf/any.proto";
+
+message QueryFilterRequest {
+  string search = 1;
+  int32 page = 2;
+  int32 pageSize = 3;
+  string orderBy = 4;
+  bool isDesc = 5;
+}
+
+message RetrieveSingleEntityRequest {
+  int32 id = 1; 
+}
+
+message RemoveSingleEntityRequest {
+  int32 id = 1;
+}
+
+message PaginationDto {
+  int32 page = 1;
+  int32 pageSize = 2;
+  int32 total = 3;
+}
+

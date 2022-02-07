@@ -1,0 +1,18 @@
+version: '3.5'
+services:
+  products-service-postgres-dev:
+    image: postgres:12.1
+    container_name: products-service-postgres-dev
+    restart: on-failure
+    ports:
+      - ${PRODUCTS_DB_EXTERNAL_PORT}:${PRODUCTS_DB_PORT}
+    environment:
+      - POSTGRES_USER=${PRODUCTS_DB_USER}
+      - POSTGRES_PASSWORD=${PRODUCTS_DB_PASSWORD}
+      - POSTGRES_DB=${PRODUCTS_DB_NAME}
+      - POSTGRES_HOST=${POSTGRES_DB_HOST}
+    volumes:
+      - volume-products-service-postgres-dev:/var/lib/postgresql/data
+        
+volumes:
+  volume-products-service-postgres-dev:

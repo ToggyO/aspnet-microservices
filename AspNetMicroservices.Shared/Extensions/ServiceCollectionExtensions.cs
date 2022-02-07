@@ -38,7 +38,7 @@ namespace AspNetMicroservices.Shared.Extensions
         }
 
         /// <summary>
-        /// Adds a service with an implementation type 
+        /// Adds a service with an implementation type
         /// specified in <typeparamref name="TService"/> to the
         /// specified <see cref="IServiceCollection"/> with lifetime of <see cref="ServiceLifetime"/>.
         /// </summary>

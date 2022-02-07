@@ -1,4 +1,4 @@
-using System;
+using System.Reflection;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,7 +11,10 @@ using Microsoft.Extensions.Logging;
 using AspNetMicroservices.Gateway.Api.Extensions;
 using AspNetMicroservices.Gateway.Api.Filters;
 using AspNetMicroservices.Gateway.Api.Middleware;
-using AspNetMicroservices.Shared.Protos.ProductsProtos;
+using AspNetMicroservices.Gateway.Common.Settings.RemoteServices;
+using AspNetMicroservices.Shared.Extensions.MvcExtensions;
+using AspNetMicroservices.Shared.Extensions.Swagger;
+using AspNetMicroservices.Shared.Protos;
 
 namespace AspNetMicroservices.Gateway.Api
 {
@@ -24,7 +27,7 @@ namespace AspNetMicroservices.Gateway.Api
                 .AddJsonFile("appsettings.json", true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
-            
+
             Configuration = builder.Build();
         }
 
@@ -49,15 +52,24 @@ namespace AspNetMicroservices.Gateway.Api
                     ));
 
             services.Configure<ApiBehaviorOptions>(opt => opt.SuppressModelStateInvalidFilter = true);
-            
-            services.AddGrpcClient<ProductsService.ProductsServiceClient>(opts =>
+
+            var remoteServicesSettings = new RemoteServicesSettings(Configuration);
+            services
+	            .AddConfiguredGrpcClient<ProductsService.ProductsServiceClient>(remoteServicesSettings.ProductServiceUrl);
+
+            services.AddControllersWithViews(opt =>
             {
-                opts.Address = new Uri("http://localhost:5002");
-            }).AddInterceptor<RpcErrorInterceptor>();
-            
-            services.AddControllersWithViews(opt => opt.UseGlobalRoutePrefix("api"));
-            services.AddConfiguredSwaggerGen();
-            
+	            opt.UseGlobalRoutePrefix("api");
+	            opt.Filters.Add<StatusCodeFilter>();
+            });
+            services.AddConfiguredSwaggerGen(o =>
+            {
+	            o.Title = "AspNetMicroservices.Gateway.Api";
+	            o.Version = "v1";
+	            o.UseFullModelName = true;
+	            o.ExcutingAssembly = Assembly.GetExecutingAssembly();
+            });
+
             DependencyInjectionModule.LoadRpcDependencies(services);
             DependencyInjectionModule.Load(services);
         }
@@ -70,7 +82,7 @@ namespace AspNetMicroservices.Gateway.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwaggerMiddleware();
+                app.UseSwaggerMiddleware("AspNetMicroservices.Gateway.Api v1");
             }
             else
             {
@@ -79,16 +91,16 @@ namespace AspNetMicroservices.Gateway.Api
 
             logger.LogInformation("Routing");
             app.UseRouting();
-            
+
             logger.LogInformation("Cors");
             app.UseCors(CorsPolicy);
-            
+
             // logger.LogInformation("Auth middleware");
             // app.UseAuthorization();
-            
+
             logger.LogInformation("Custom middleware");
             app.UseMiddleware<ExceptionMiddleware>();
-            
+
             logger.LogInformation("Endpoints");
             app.UseEndpoints(endpoints => endpoints.MapControllers());
             logger.LogInformation("Exit Configure");

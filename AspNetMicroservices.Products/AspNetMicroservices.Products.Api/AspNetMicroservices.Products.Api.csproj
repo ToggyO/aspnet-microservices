@@ -6,14 +6,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\AspNetMicroservices.Shared\AspNetMicroservices.Shared.csproj" />
+    <ProjectReference Include="..\AspNetMicroservices.Products.Business\AspNetMicroservices.Products.Business.csproj" />
+    <ProjectReference Include="..\AspNetMicroservices.Products.Dto\AspNetMicroservices.Products.Dto.csproj" />
+    <ProjectReference Include="..\AspNetMicroservices.Products.DataLayer\AspNetMicroservices.Products.DataLayer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.38.0" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Protobuf Include="..\..\AspNetMicroservices.Shared\Protos\ProductsProtos\products.proto" GrpcServices="Server" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="DotNetEnv" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1" />
   </ItemGroup>
 
 </Project>
