@@ -1,4 +1,4 @@
-﻿using AspNetMicroservices.Shared.Models.PortalUser;
+﻿using AspNetMicroservices.Abstractions.Models.PortalUser;
 
 namespace AspNetMicroservices.Products.Dto.Users
 {

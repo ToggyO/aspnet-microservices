@@ -10,13 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetMicroservices.Grpc" Version="1.0.3" GeneratePathProperty="true" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.38.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AspNetMicroservices.Shared\AspNetMicroservices.Shared.csproj" />
     <ProjectReference Include="..\AspNetMicroservices.Gateway.Common\AspNetMicroservices.Gateway.Common.csproj" />
   </ItemGroup>
   
@@ -26,8 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\..\AspNetMicroservices.Shared\Protos\products.proto" GrpcServices="Client" ProtoRoot="..\..\AspNetMicroservices.Shared" />
-    <Protobuf Include="..\..\AspNetMicroservices.Shared\Protos\common.proto" GrpcServices="Client" ProtoRoot="..\..\AspNetMicroservices.Shared" />
+    <Protobuf Include="$(PkgAspNetMicroservices_Grpc)\Protos\**\*.proto" ProtoRoot="$(PkgAspNetMicroservices_Grpc)\Protos" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

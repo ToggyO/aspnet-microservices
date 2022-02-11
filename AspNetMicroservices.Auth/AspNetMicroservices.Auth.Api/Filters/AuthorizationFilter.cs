@@ -4,23 +4,23 @@ using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Models.Auth;
+using AspNetMicroservices.Abstractions.Models.Response;
 using AspNetMicroservices.Auth.Application.Common.Enums;
 using AspNetMicroservices.Auth.Application.Common.Interfaces;
 using AspNetMicroservices.Auth.Application.Dto.Users;
-using AspNetMicroservices.Shared.Constants.Common;
-using AspNetMicroservices.Shared.Constants.Errors;
-using AspNetMicroservices.Shared.Constants.Http;
-using AspNetMicroservices.Shared.Models.Auth;
-using AspNetMicroservices.Shared.Models.Response;
-using AspNetMicroservices.Shared.SharedServices.Cache;
-using AspNetMicroservices.Shared.Utils;
+using AspNetMicroservices.Common.Constants.Common;
+using AspNetMicroservices.Common.Constants.Errors;
+using AspNetMicroservices.Common.Constants.Http;
+using AspNetMicroservices.Common.Utils;
+using AspNetMicroservices.SharedServices.Cache;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-using ClaimTypes = AspNetMicroservices.Shared.Constants.Claims.ClaimTypes;
+using ClaimTypes = AspNetMicroservices.Common.Constants.Claims.ClaimTypes;
 
 namespace AspNetMicroservices.Auth.Api.Filters
 {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using AspNetMicroservices.Shared.Contracts;
+using AspNetMicroservices.Abstractions.Contracts;
 
 namespace AspNetMicroservices.Auth.Domain.Models.Database.Users
 {

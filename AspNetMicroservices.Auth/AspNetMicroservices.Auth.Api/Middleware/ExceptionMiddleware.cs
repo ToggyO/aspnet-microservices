@@ -3,7 +3,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-using AspNetMicroservices.Shared.Models.Response;
+using AspNetMicroservices.Abstractions.Models.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -25,12 +25,12 @@ namespace AspNetMicroservices.Auth.Api.Middleware
             _next = next;
             _logger = logger;
         }
-        
+
         /// <summary>
         /// Instance of <see cref="RequestDelegate"/>
         /// </summary>
         private readonly RequestDelegate _next;
-        
+
         /// <summary>
         /// Instance of <see cref="ILogger{TCategoryName}"/>
         /// </summary>

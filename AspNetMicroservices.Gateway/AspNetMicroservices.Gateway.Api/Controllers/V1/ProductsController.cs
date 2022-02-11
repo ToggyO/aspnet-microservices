@@ -1,12 +1,13 @@
+using System.Net;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
 
 using AspNetMicroservices.Gateway.Api.Handlers.Products;
-using AspNetMicroservices.Shared.Models.Response;
-using AspNetMicroservices.Shared.Protos;
-using AspNetMicroservices.Shared.Protos.Common;
-using System.Net;
+
+using AspNetMicroservices.Abstractions.Models.Response;
+using AspNetMicroservices.Grpc.Protos.Common;
+using AspNetMicroservices.Grpc.Protos.Products;
 
 namespace AspNetMicroservices.Gateway.Api.Controllers.V1
 {

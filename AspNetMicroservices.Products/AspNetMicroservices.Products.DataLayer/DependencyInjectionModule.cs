@@ -1,9 +1,9 @@
 using System.Reflection;
 
+using AspNetMicroservices.Extensions.ServiceCollection;
 using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection;
 using AspNetMicroservices.Products.DataLayer.Repositories.Products;
 using AspNetMicroservices.Products.DataLayer.Repositories.Products.Implementation;
-using AspNetMicroservices.Shared.Extensions;
 
 using FluentMigrator.Runner;
 

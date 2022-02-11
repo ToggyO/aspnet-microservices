@@ -1,6 +1,5 @@
 ﻿using AspNetMicroservices.Auth.Application.Dto.Users;
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
-using AspNetMicroservices.Shared.Models.PortalUser;
 
 using Mapster;
 
@@ -21,19 +20,6 @@ namespace AspNetMicroservices.Auth.Application.Mappings.Registry
 						PhoneNumber = src.PhoneNumber
 					});
 
-			// config.NewConfig<UserModel, UserDto>()
-			// 	.Map(desc => desc.Details,
-			// 		src => new UserDetailDto
-			// 		{
-			// 			Id = src.Details.Id,
-			// 			Address = src.Details.Address,
-			// 			PhoneNumber = src.Details.PhoneNumber,
-			// 			UserId = src.Details.UserId
-			// 		})
-			// 		// src => src.Details.Adapt<UserDetailDto>())
-			// 	;
-			//
-			// config.NewConfig<UserDetailModel, UserDetailDto>().TwoWays();
 			config.NewConfig<UserModel, UserDto>()
 				.Map(desc => desc.Details,
 					src => new UserDetailDto
@@ -45,9 +31,7 @@ namespace AspNetMicroservices.Auth.Application.Mappings.Registry
 					})
 				.TwoWays();
 
-			config.NewConfig<UserDetailModel, UserDetailDto>()
-				// .Include<UserDetailModel, UserDetailDto>()
-				.TwoWays();
+			config.NewConfig<UserDetailModel, UserDetailDto>().TwoWays();
 		}
 	}
 }

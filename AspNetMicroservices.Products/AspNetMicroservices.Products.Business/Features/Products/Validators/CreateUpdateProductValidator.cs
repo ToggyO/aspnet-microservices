@@ -1,5 +1,5 @@
-﻿using AspNetMicroservices.Products.Business.Features.Products.Models;
-using AspNetMicroservices.Shared.Constants.Errors;
+﻿using AspNetMicroservices.Common.Constants.Errors;
+using AspNetMicroservices.Products.Business.Features.Products.Models;
 
 using FluentValidation;
 
@@ -16,8 +16,10 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Validators
 		/// </summary>
 		public CreateUpdateProductValidator()
 		{
-			RuleFor(x => x.Name).NotEmpty().WithErrorCode(ErrorCodes.Validation.FieldNotEmpty);
-			RuleFor(x => x.Price).NotEmpty().WithErrorCode(ErrorCodes.Validation.FieldNotEmpty);
+			RuleFor(x => x.Name)
+				.NotEmpty().WithErrorCode(ErrorCodes.Validation.FieldNotEmpty);
+			RuleFor(x => x.Price)
+				.NotEmpty().WithErrorCode(ErrorCodes.Validation.FieldNotEmpty);
 		}
 	}
 }

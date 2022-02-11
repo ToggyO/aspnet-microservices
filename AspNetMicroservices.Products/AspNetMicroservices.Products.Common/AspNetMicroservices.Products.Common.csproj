@@ -5,6 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetMicroservices.Abstractions" Version="1.0.0" />
+    <PackageReference Include="AspNetMicroservices.Grpc" Version="1.0.3" GeneratePathProperty="true" />
+    <PackageReference Include="AspNetMicroservices.SharedServices" Version="1.0.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.38.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.2.3" />
@@ -12,12 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AspNetMicroservices.Shared\AspNetMicroservices.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Protobuf Include="..\..\AspNetMicroservices.Shared\Protos\common.proto" GrpcServices="Server" ProtoRoot="..\..\AspNetMicroservices.Shared" />
-    <Protobuf Include="..\..\AspNetMicroservices.Shared\Protos\products.proto" GrpcServices="Server" ProtoRoot="..\..\AspNetMicroservices.Shared" />
+    <Protobuf Include="$(PkgAspNetMicroservices_Grpc)\Protos\**\*.proto" ProtoRoot="$(PkgAspNetMicroservices_Grpc)\Protos" GrpcServices="Server" />
   </ItemGroup>
 
 </Project>

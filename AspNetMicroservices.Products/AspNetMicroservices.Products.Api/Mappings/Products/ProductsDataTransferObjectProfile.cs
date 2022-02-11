@@ -1,6 +1,5 @@
-﻿using AspNetMicroservices.Products.Business.Features.Products.Commands;
-using AspNetMicroservices.Products.Business.Features.Products.Models;
-using AspNetMicroservices.Shared.Protos;
+﻿using AspNetMicroservices.Grpc.Protos.Products;
+using AspNetMicroservices.Products.Business.Features.Products.Commands;
 
 using AutoMapper;
 

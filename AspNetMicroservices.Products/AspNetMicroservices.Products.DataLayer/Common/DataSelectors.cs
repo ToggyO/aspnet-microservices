@@ -1,12 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
-using AspNetMicroservices.Shared.Contracts;
-using AspNetMicroservices.Shared.Exceptions;
-using AspNetMicroservices.Shared.Extensions;
-using AspNetMicroservices.Shared.Models.Response;
-
-using Grpc.Core;
+using AspNetMicroservices.Abstractions.Contracts;
 
 using LinqToDB;
 

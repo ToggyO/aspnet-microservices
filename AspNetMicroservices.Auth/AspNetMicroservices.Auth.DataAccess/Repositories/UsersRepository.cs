@@ -1,14 +1,13 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Models.Pagination;
+using AspNetMicroservices.Abstractions.Models.QueryFilter.Implementation;
 using AspNetMicroservices.Auth.DataAccess.Context;
 using AspNetMicroservices.Auth.DataAccess.Extensions;
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
 using AspNetMicroservices.Auth.Domain.Repositories;
-using AspNetMicroservices.Shared.Models.Pagination;
-using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
-using AspNetMicroservices.Shared.Utils;
+using AspNetMicroservices.Data;
 
 using Dapper;
 

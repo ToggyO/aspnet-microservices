@@ -1,6 +1,6 @@
-﻿using AspNetMicroservices.Shared.Constants.Common;
-using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
-using AspNetMicroservices.Shared.Protos.Common;
+﻿using AspNetMicroservices.Abstractions.Models.QueryFilter.Implementation;
+using AspNetMicroservices.Common.Constants.Common;
+using AspNetMicroservices.Grpc.Protos.Common;
 
 using AutoMapper;
 

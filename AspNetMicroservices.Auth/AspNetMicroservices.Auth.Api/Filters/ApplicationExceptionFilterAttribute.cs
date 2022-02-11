@@ -1,6 +1,4 @@
-using System;
-
-using AspNetMicroservices.Shared.Exceptions;
+using AspNetMicroservices.Validation.Exceptions;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

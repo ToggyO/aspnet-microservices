@@ -1,10 +1,10 @@
 ﻿using System;
 
+using AspNetMicroservices.Abstractions.Models.Response;
+
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-
-using AspNetMicroservices.Shared.Models.Response;
 
 namespace AspNetMicroservices.Gateway.Api.Filters
 {

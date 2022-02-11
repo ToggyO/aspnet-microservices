@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 
 using AspNetMicroservices.Auth.DataAccess.Mapping;
-using AspNetMicroservices.Shared.Utils;
+using AspNetMicroservices.Common.Utils;
 
 using Dapper;
 

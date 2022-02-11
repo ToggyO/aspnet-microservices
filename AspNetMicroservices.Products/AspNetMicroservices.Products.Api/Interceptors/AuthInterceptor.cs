@@ -1,21 +1,22 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Models.Auth;
+using AspNetMicroservices.Abstractions.Models.Response;
+using AspNetMicroservices.Common.Constants.Claims;
+using AspNetMicroservices.Common.Constants.Common;
+using AspNetMicroservices.Grpc.Exceptions;
 using AspNetMicroservices.Products.Dto.Users;
-using AspNetMicroservices.Shared.Constants.Claims;
-using AspNetMicroservices.Shared.Constants.Common;
-using AspNetMicroservices.Shared.Exceptions;
-using AspNetMicroservices.Shared.Models.Auth;
-using AspNetMicroservices.Shared.Models.Response;
-using AspNetMicroservices.Shared.SharedServices.Cache;
+using AspNetMicroservices.SharedServices.Cache;
 
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 
 namespace AspNetMicroservices.Products.Api.Interceptors
 {
-	// TODO: add description
+	/// <summary>
+	/// Authentication interceptor for Grpc services.
+	/// </summary>
 	public class AuthInterceptor : Interceptor
 	{
 		/// <summary>

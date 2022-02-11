@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Contracts;
 using AspNetMicroservices.Products.DataLayer.Repositories.Products;
-using AspNetMicroservices.Shared.Contracts;
 
 using MediatR;
 

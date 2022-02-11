@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Models.Pagination;
+using AspNetMicroservices.Abstractions.Models.QueryFilter.Implementation;
+using AspNetMicroservices.Extensions.Queryable;
 using AspNetMicroservices.Products.DataLayer.Common;
 using AspNetMicroservices.Products.DataLayer.DataBase.Extensions;
 using AspNetMicroservices.Products.DataLayer.Entities.Product;
-using AspNetMicroservices.Shared.Extensions.QueryableExtensions;
-using AspNetMicroservices.Shared.Models.Pagination;
-using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
 
 namespace AspNetMicroservices.Products.DataLayer.Repositories.Products.Implementation
 {

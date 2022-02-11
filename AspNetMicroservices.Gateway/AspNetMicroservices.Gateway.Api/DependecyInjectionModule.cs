@@ -1,10 +1,10 @@
+using AspNetMicroservices.Extensions.ServiceCollection;
+
 using Microsoft.Extensions.DependencyInjection;
 
-using AspNetMicroservices.Gateway.Api.Filters;
 using AspNetMicroservices.Gateway.Api.Handlers.Products;
 using AspNetMicroservices.Gateway.Api.Handlers.Products.Implementation;
 using AspNetMicroservices.Gateway.Api.Interceptors;
-using AspNetMicroservices.Shared.Extensions;
 
 namespace AspNetMicroservices.Gateway.Api
 {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Contracts;
 using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection;
-using AspNetMicroservices.Shared.Contracts;
 
 using LinqToDB.Data;
 

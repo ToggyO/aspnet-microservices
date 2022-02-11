@@ -1,8 +1,8 @@
 ﻿using AspNetMicroservices.Auth.Application.Common.Interfaces;
 using AspNetMicroservices.Auth.Infrastructure.Factories;
 using AspNetMicroservices.Auth.Infrastructure.Services;
-using AspNetMicroservices.Shared.Extensions;
-using AspNetMicroservices.Shared.SharedServices.PasswordService;
+using AspNetMicroservices.Extensions.ServiceCollection;
+using AspNetMicroservices.SharedServices.PasswordService;
 
 using Microsoft.Extensions.DependencyInjection;
 

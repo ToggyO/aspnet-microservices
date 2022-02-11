@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Contracts;
 using AspNetMicroservices.Products.Business.Features.Products.Models;
 using AspNetMicroservices.Products.DataLayer.Entities.Product;
 using AspNetMicroservices.Products.DataLayer.Repositories.Products;
-using AspNetMicroservices.Shared.Contracts;
 
 using AutoMapper;
 
@@ -22,7 +22,7 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Queries
 		/// </summary>
 		public sealed class Query : IHaveIdentifier, IRequest<ProductModel>
 		{
-			/// <inheritdoc cref="IHaveIdentifier"/>
+			/// <inheritdoc cref="IHaveIdentifier"/>.
 			public int Id { get; set; }
 		}
 
@@ -54,7 +54,7 @@ namespace AspNetMicroservices.Products.Business.Features.Products.Queries
 				_mapper = mapper;
 			}
 
-			/// <inheritdoc cref="IRequestHandler{TRequest,TResponse}"/>
+			/// <inheritdoc cref="IRequestHandler{TRequest,TResponse}"/>.
 			public async Task<ProductModel> Handle(Query query, CancellationToken cancellationToken = default)
 			{
 				var entity = await _repository.GetById(query.Id);

@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Models.Auth;
 using AspNetMicroservices.Auth.Application.Dto.Users;
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
-using AspNetMicroservices.Shared.Models.Auth;
 
 namespace AspNetMicroservices.Auth.Application.Common.Interfaces
 {

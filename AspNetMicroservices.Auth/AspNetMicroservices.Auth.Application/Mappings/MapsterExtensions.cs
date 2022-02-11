@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-using AspNetMicroservices.Shared.Extensions;
+using AspNetMicroservices.Extensions.ServiceCollection;
 
 using Mapster;
 
@@ -18,7 +18,8 @@ namespace AspNetMicroservices.Auth.Application.Mappings
 		/// <summary>
 		/// Add MapsterMapper services to an application services.
 		/// </summary>
-		/// <param name="services"></param>
+		/// <param name="services">Instance of <see cref="IServiceCollection"/>.</param>
+		/// <param name="serviceLifetime">Service lifetime.</param>
 		public static void AddMapsterMapper(this IServiceCollection services,
 			ServiceLifetime serviceLifetime = ServiceLifetime.Scoped)
 		{
