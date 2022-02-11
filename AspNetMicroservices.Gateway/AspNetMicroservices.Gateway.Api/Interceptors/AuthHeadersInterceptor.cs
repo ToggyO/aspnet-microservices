@@ -1,4 +1,4 @@
-﻿using AspNetMicroservices.Shared.Constants.Http;
+﻿using AspNetMicroservices.Common.Constants.Http;
 
 using Grpc.Core;
 using Grpc.Core.Interceptors;

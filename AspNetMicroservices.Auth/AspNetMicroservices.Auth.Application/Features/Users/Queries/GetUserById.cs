@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Contracts;
 using AspNetMicroservices.Auth.Application.Dto.Users;
 using AspNetMicroservices.Auth.Domain.Repositories;
-using AspNetMicroservices.Shared.Contracts;
 
 using MapsterMapper;
 

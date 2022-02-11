@@ -3,16 +3,16 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
+using AspNetMicroservices.Abstractions.Models.Auth;
+using AspNetMicroservices.Abstractions.Models.Settings;
 using AspNetMicroservices.Auth.Application.Common.Enums;
 using AspNetMicroservices.Auth.Application.Common.Interfaces;
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
-using AspNetMicroservices.Shared.Models.Auth;
-using AspNetMicroservices.Shared.Models.Settings;
 
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-using ClaimTypes = AspNetMicroservices.Shared.Constants.Claims.ClaimTypes;
+using ClaimTypes = AspNetMicroservices.Common.Constants.Claims.ClaimTypes;
 
 namespace AspNetMicroservices.Auth.Infrastructure.Factories
 {

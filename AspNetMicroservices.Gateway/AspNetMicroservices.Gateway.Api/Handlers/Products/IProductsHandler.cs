@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 
-using AspNetMicroservices.Shared.Models.Response;
-using AspNetMicroservices.Shared.Protos;
-using AspNetMicroservices.Shared.Protos.Common;
+using AspNetMicroservices.Abstractions.Models.Response;
+using AspNetMicroservices.Grpc.Protos.Common;
+using AspNetMicroservices.Grpc.Protos.Products;
 
 namespace AspNetMicroservices.Gateway.Api.Handlers.Products
 {

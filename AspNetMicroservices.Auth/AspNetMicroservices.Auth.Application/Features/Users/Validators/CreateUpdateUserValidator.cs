@@ -1,5 +1,5 @@
 ﻿using AspNetMicroservices.Auth.Application.Dto.Users;
-using AspNetMicroservices.Shared.Constants.Errors;
+using AspNetMicroservices.Common.Constants.Errors;
 
 using FluentValidation;
 

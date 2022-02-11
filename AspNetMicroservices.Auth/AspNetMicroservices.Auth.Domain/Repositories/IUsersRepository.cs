@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Contracts;
+using AspNetMicroservices.Abstractions.Models.Pagination;
+using AspNetMicroservices.Abstractions.Models.QueryFilter.Implementation;
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
-using AspNetMicroservices.Shared.Contracts;
-using AspNetMicroservices.Shared.Models.Pagination;
-using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
 
 namespace AspNetMicroservices.Auth.Domain.Repositories
 {

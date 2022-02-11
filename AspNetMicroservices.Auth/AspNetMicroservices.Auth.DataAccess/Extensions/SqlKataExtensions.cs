@@ -1,6 +1,6 @@
 ﻿using AspNetMicroservices.Auth.DataAccess.Helpers;
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
-using AspNetMicroservices.Shared.Utils;
+using AspNetMicroservices.Data;
 
 using SqlKata;
 

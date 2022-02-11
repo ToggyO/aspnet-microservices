@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Text;
 
+using AspNetMicroservices.Abstractions.Models.Settings;
 using AspNetMicroservices.Auth.Api.Handlers.Auth;
 using AspNetMicroservices.Auth.Api.Handlers.Auth.Implementation;
 using AspNetMicroservices.Auth.Api.Handlers.Users;
 using AspNetMicroservices.Auth.Api.Handlers.Users.Implementation;
-using AspNetMicroservices.Shared.Extensions;
-using AspNetMicroservices.Shared.Models.Settings;
+using AspNetMicroservices.Extensions.ServiceCollection;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;

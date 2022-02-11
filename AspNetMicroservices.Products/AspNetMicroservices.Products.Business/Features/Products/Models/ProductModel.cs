@@ -1,4 +1,4 @@
-using AspNetMicroservices.Shared.Contracts;
+using AspNetMicroservices.Abstractions.Contracts;
 
 namespace AspNetMicroservices.Products.Business.Features.Products.Models
 {

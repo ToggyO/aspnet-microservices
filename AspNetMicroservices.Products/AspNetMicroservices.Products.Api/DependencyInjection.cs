@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-using AspNetMicroservices.Shared.Models.Settings;
+using AspNetMicroservices.Abstractions.Models.Settings;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;

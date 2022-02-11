@@ -1,15 +1,15 @@
 using System;
 using System.Reflection;
 
+using AspNetMicroservices.Abstractions.Models.Settings;
 using AspNetMicroservices.Auth.Api.Filters;
 using AspNetMicroservices.Auth.Api.Middleware;
 using AspNetMicroservices.Auth.Application;
 using AspNetMicroservices.Auth.DataAccess;
 using AspNetMicroservices.Auth.Infrastructure;
-using AspNetMicroservices.Shared.Extensions.MvcExtensions;
-using AspNetMicroservices.Shared.Models.Settings;
-using AspNetMicroservices.Shared.SharedServices.Cache;
-using AspNetMicroservices.Shared.Extensions.Swagger;
+using AspNetMicroservices.Extensions.Mvc;
+using AspNetMicroservices.Extensions.Swagger;
+using AspNetMicroservices.SharedServices.Cache;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

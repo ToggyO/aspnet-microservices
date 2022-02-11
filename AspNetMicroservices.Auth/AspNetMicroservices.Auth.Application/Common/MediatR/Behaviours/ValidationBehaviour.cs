@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using AspNetMicroservices.Shared.Exceptions;
-using AspNetMicroservices.Shared.Models.Response;
+using AspNetMicroservices.Abstractions.Models.Response;
+using AspNetMicroservices.Validation.Exceptions;
 
 using FluentValidation;
 using FluentValidation.Results;
 
 using MediatR;
-using MediatR.Pipeline;
 
 namespace AspNetMicroservices.Auth.Application.Common.MediatR.Behaviours
 {

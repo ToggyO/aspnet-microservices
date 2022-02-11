@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AspNetMicroservices.Shared\AspNetMicroservices.Shared.csproj" />
     <ProjectReference Include="..\AspNetMicroservices.Products.Business\AspNetMicroservices.Products.Business.csproj" />
     <ProjectReference Include="..\AspNetMicroservices.Products.Dto\AspNetMicroservices.Products.Dto.csproj" />
     <ProjectReference Include="..\AspNetMicroservices.Products.DataLayer\AspNetMicroservices.Products.DataLayer.csproj" />

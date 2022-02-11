@@ -1,14 +1,14 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Models.Auth;
 using AspNetMicroservices.Auth.Application.Common.Interfaces;
 using AspNetMicroservices.Auth.Application.Dto.Auth;
 using AspNetMicroservices.Auth.Application.Features.Auth.Validators;
 using AspNetMicroservices.Auth.Domain.Repositories;
-using AspNetMicroservices.Shared.Constants.Common;
-using AspNetMicroservices.Shared.Models.Auth;
-using AspNetMicroservices.Shared.SharedServices.Cache;
-using AspNetMicroservices.Shared.Utils;
+using AspNetMicroservices.Common.Constants.Common;
+using AspNetMicroservices.Common.Utils;
+using AspNetMicroservices.SharedServices.Cache;
 
 using MediatR;
 

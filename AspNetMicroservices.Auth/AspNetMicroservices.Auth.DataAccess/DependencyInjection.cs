@@ -4,7 +4,7 @@ using AspNetMicroservices.Auth.DataAccess.Context;
 using AspNetMicroservices.Auth.DataAccess.Mapping;
 using AspNetMicroservices.Auth.DataAccess.Repositories;
 using AspNetMicroservices.Auth.Domain.Repositories;
-using AspNetMicroservices.Shared.Extensions;
+using AspNetMicroservices.Extensions.ServiceCollection;
 
 using FluentMigrator.Runner;
 

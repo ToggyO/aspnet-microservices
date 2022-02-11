@@ -1,5 +1,5 @@
-﻿using AspNetMicroservices.Shared.Models.Pagination;
-using AspNetMicroservices.Shared.Protos.Common;
+﻿using AspNetMicroservices.Abstractions.Models.Pagination;
+using AspNetMicroservices.Grpc.Protos.Common;
 
 namespace AspNetMicroservices.Products.Common.Extensions
 {

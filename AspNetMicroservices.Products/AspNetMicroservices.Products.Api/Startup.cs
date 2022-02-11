@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 
+using AspNetMicroservices.Abstractions.Models.Settings;
 using AspNetMicroservices.Products.Api.Interceptors;
 
 using MediatR;
@@ -10,21 +11,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using FluentValidation;
+
 using FluentMigrator.Runner;
-using LinqToDB.AspNet;
-using LinqToDB.Configuration;
 
 using AspNetMicroservices.Products.Api.Services;
 using AspNetMicroservices.Products.Business;
-using AspNetMicroservices.Products.Common.Behaviours;
-using AspNetMicroservices.Products.Common.Settings;
 using AspNetMicroservices.Products.DataLayer;
-using AspNetMicroservices.Products.DataLayer.DataBase.AppDataConnection;
-using AspNetMicroservices.Shared.Models.Settings;
-using AspNetMicroservices.Shared.SharedServices.Cache;
-
-using Microsoft.Extensions.Options;
+using AspNetMicroservices.SharedServices.Cache;
 
 namespace AspNetMicroservices.Products.Api
 {

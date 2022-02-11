@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Models.Response;
 using AspNetMicroservices.Auth.Application.Dto.Users;
 using AspNetMicroservices.Auth.Application.Features.Users.Commands;
 using AspNetMicroservices.Auth.Application.Features.Users.Queries;
-using AspNetMicroservices.Shared.Models.Response;
 
 using MediatR;
 

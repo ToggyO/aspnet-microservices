@@ -1,5 +1,8 @@
 using System.Reflection;
 
+using AspNetMicroservices.Extensions.Mvc;
+using AspNetMicroservices.Extensions.Swagger;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +15,7 @@ using AspNetMicroservices.Gateway.Api.Extensions;
 using AspNetMicroservices.Gateway.Api.Filters;
 using AspNetMicroservices.Gateway.Api.Middleware;
 using AspNetMicroservices.Gateway.Common.Settings.RemoteServices;
-using AspNetMicroservices.Shared.Extensions.MvcExtensions;
-using AspNetMicroservices.Shared.Extensions.Swagger;
-using AspNetMicroservices.Shared.Protos;
+using AspNetMicroservices.Grpc.Protos.Products;
 
 namespace AspNetMicroservices.Gateway.Api
 {

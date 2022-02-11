@@ -2,7 +2,7 @@
 using System.Data;
 
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
-using AspNetMicroservices.Shared.Utils;
+using AspNetMicroservices.Common.Utils;
 
 using FluentMigrator;
 

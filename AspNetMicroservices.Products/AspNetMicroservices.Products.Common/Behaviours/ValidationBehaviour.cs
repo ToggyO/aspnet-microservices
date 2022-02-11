@@ -3,8 +3,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using AspNetMicroservices.Shared.Exceptions;
-using AspNetMicroservices.Shared.Models.Response;
+using AspNetMicroservices.Abstractions.Models.Response;
+using AspNetMicroservices.Grpc.Exceptions;
+
 using FluentValidation;
 using FluentValidation.Results;
 

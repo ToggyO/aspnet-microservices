@@ -1,10 +1,8 @@
-﻿using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 
+using AspNetMicroservices.Abstractions.Models.Auth;
 using AspNetMicroservices.Auth.Application.Common.Enums;
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
-using AspNetMicroservices.Shared.Models.Auth;
 
 namespace AspNetMicroservices.Auth.Application.Common.Interfaces
 {

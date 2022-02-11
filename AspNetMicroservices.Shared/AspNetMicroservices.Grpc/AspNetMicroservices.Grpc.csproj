@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <PackageId>AspNetMicroservices.Grpc</PackageId>
+    <Version>1.0.3</Version>
+    <Authors>Toggy-O</Authors>
+    <Company>AspNetMicroservices</Company>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+    <LangVersion>10</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetMicroservices.Abstractions" Version="1.0.0" />
+    <PackageReference Include="Grpc.Core.Api" Version="2.43.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="**\*.proto" Pack="true" PackagePath="Protos" />
+  </ItemGroup>
+  
+</Project>

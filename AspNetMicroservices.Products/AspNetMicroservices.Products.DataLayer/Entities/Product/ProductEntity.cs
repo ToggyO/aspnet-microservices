@@ -1,4 +1,4 @@
-using AspNetMicroservices.Shared.Contracts;
+using AspNetMicroservices.Abstractions.Contracts;
 
 using LinqToDB.Mapping;
 

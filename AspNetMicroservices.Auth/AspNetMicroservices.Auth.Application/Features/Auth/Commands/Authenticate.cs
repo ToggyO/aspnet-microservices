@@ -1,13 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Models.Auth;
 using AspNetMicroservices.Auth.Application.Common.Interfaces;
 using AspNetMicroservices.Auth.Application.Dto.Auth;
 using AspNetMicroservices.Auth.Application.Dto.Users;
 using AspNetMicroservices.Auth.Application.Features.Auth.Validators;
 using AspNetMicroservices.Auth.Domain.Repositories;
-using AspNetMicroservices.Shared.Models.Auth;
-using AspNetMicroservices.Shared.SharedServices.PasswordService;
+using AspNetMicroservices.SharedServices.PasswordService;
 
 using MediatR;
 

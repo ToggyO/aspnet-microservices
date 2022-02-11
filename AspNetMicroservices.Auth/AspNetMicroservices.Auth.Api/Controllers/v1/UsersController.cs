@@ -2,10 +2,10 @@
 using System.Net;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Models.Response;
 using AspNetMicroservices.Auth.Api.Handlers.Users;
 using AspNetMicroservices.Auth.Application.Dto.Users;
 using AspNetMicroservices.Auth.Application.Features.Users.Commands;
-using AspNetMicroservices.Shared.Models.Response;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

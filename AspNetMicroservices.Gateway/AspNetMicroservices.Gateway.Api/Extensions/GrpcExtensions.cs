@@ -4,12 +4,11 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Models.Response;
 using AspNetMicroservices.Gateway.Api.Interceptors;
 
 using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
-
-using AspNetMicroservices.Shared.Models.Response;
 
 namespace AspNetMicroservices.Gateway.Api.Extensions
 {

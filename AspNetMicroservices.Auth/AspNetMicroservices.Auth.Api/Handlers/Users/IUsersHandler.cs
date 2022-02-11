@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Models.Response;
 using AspNetMicroservices.Auth.Application.Dto.Users;
 using AspNetMicroservices.Auth.Application.Features.Users.Commands;
-using AspNetMicroservices.Shared.Models.Response;
 
 namespace AspNetMicroservices.Auth.Api.Handlers.Users
 {

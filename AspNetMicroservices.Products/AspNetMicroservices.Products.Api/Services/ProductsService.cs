@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Models.QueryFilter.Implementation;
+using AspNetMicroservices.Abstractions.Models.Response;
+using AspNetMicroservices.Grpc.Exceptions;
+using AspNetMicroservices.Grpc.Protos.Common;
+using AspNetMicroservices.Grpc.Protos.Products;
 using AspNetMicroservices.Products.Business.Features.Products.Commands;
 using AspNetMicroservices.Products.Business.Features.Products.Models;
 using AspNetMicroservices.Products.Business.Features.Products.Queries;
 using AspNetMicroservices.Products.Common.Extensions;
-using AspNetMicroservices.Shared.Exceptions;
-using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
-using AspNetMicroservices.Shared.Models.Response;
-using AspNetMicroservices.Shared.Protos;
-using AspNetMicroservices.Shared.Protos.Common;
 
 using AutoMapper;
 
@@ -24,7 +24,7 @@ namespace AspNetMicroservices.Products.Api.Services
     /// <summary>
     /// Products service. Handles Grpc calls from different remote clients.
     /// </summary>
-    public class ProductsService : Shared.Protos.ProductsService.ProductsServiceBase
+    public class ProductsService : Grpc.Protos.Products.ProductsService.ProductsServiceBase
     {
         /// <summary>
         /// Instance of <see cref="IMediator"/>.

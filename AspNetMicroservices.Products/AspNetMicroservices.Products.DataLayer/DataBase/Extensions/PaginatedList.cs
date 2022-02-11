@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
-using AspNetMicroservices.Shared.Constants.Common;
-using AspNetMicroservices.Shared.Contracts;
-using AspNetMicroservices.Shared.Models.Pagination;
+using AspNetMicroservices.Abstractions.Contracts;
+using AspNetMicroservices.Abstractions.Models.Pagination;
+using AspNetMicroservices.Common.Constants.Common;
 
 using LinqToDB;
 

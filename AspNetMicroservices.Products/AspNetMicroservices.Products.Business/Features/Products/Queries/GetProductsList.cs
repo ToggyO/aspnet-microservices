@@ -2,12 +2,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 
+using AspNetMicroservices.Abstractions.Models.Pagination;
+using AspNetMicroservices.Abstractions.Models.QueryFilter;
+using AspNetMicroservices.Abstractions.Models.QueryFilter.Implementation;
 using AspNetMicroservices.Products.Business.Features.Products.Models;
 using AspNetMicroservices.Products.DataLayer.Entities.Product;
 using AspNetMicroservices.Products.DataLayer.Repositories.Products;
-using AspNetMicroservices.Shared.Models.Pagination;
-using AspNetMicroservices.Shared.Models.QueryFilter;
-using AspNetMicroservices.Shared.Models.QueryFilter.Implementation;
 
 using AutoMapper;
 

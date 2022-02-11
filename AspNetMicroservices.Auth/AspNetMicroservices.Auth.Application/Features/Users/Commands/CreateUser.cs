@@ -6,8 +6,7 @@ using AspNetMicroservices.Auth.Application.Dto.Users;
 using AspNetMicroservices.Auth.Application.Features.Users.Validators;
 using AspNetMicroservices.Auth.Domain.Models.Database.Users;
 using AspNetMicroservices.Auth.Domain.Repositories;
-using AspNetMicroservices.Shared.Models.Response;
-using AspNetMicroservices.Shared.SharedServices.PasswordService;
+using AspNetMicroservices.SharedServices.PasswordService;
 
 using MapsterMapper;
 
