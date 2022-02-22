@@ -11,8 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\AspNetMicroservices.Shared\AspNetMicroservices.Logging\AspNetMicroservices.Logging.csproj" />
     <ProjectReference Include="..\AspNetMicroservices.Auth.Application\AspNetMicroservices.Auth.Application.csproj" />
     <ProjectReference Include="..\AspNetMicroservices.Auth.Domain\AspNetMicroservices.Auth.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="AspNetMicroservices.Logging" />
+  </ItemGroup>
 </Project>

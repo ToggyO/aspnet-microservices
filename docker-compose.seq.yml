@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  aspnet-mic-seq:
+    image: datalust/seq:latest
+    container_name: aspnet-mic-seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 8081:80
+    networks:
+      - seqnetwork
+
+networks:
+  seqnetwork:

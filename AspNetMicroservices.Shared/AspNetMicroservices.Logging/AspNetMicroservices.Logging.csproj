@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <PackageId>AspNetMicroservices.Logging</PackageId>
+    <Version>1.0.1</Version>
+    <Authors>Toggy-O</Authors>
+    <Company>AspNetMicroservices</Company>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+    <LangVersion>10</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetMicroservices.Common" Version="1.0.2" />
+    <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
+    <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
+    <PackageReference Include="Serilog.Enrichers.Process" Version="2.0.2" />
+    <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Serilog" />
+    <None Remove="Serilog.Settings.Configuration" />
+    <None Remove="Serilog.Enrichers.Environment" />
+    <None Remove="Serilog.Enrichers.Thread" />
+    <None Remove="Serilog.Enrichers.Process" />
+    <None Remove="Serilog.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Serilog\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Serilog\" />
+  </ItemGroup>
+</Project>
