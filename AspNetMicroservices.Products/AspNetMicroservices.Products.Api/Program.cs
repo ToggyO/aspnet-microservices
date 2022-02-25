@@ -1,5 +1,7 @@
 using System.Runtime.InteropServices;
 
+using AspNetMicroservices.Logging.Serilog;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Hosting;
@@ -15,6 +17,7 @@ namespace AspNetMicroservices.Products.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+	            .UseSerilogLogging()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))

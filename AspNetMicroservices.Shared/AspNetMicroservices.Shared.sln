@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMicroservices.Validat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMicroservices.Data", "AspNetMicroservices.Data\AspNetMicroservices.Data.csproj", "{CF57EC12-B0F8-4527-80F5-EAD0A130D0A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMicroservices.Logging", "AspNetMicroservices.Logging\AspNetMicroservices.Logging.csproj", "{4C419C09-9891-4ACE-8C7D-8B087D993127}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +56,9 @@ Global
 		{CF57EC12-B0F8-4527-80F5-EAD0A130D0A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF57EC12-B0F8-4527-80F5-EAD0A130D0A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF57EC12-B0F8-4527-80F5-EAD0A130D0A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C419C09-9891-4ACE-8C7D-8B087D993127}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C419C09-9891-4ACE-8C7D-8B087D993127}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C419C09-9891-4ACE-8C7D-8B087D993127}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C419C09-9891-4ACE-8C7D-8B087D993127}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
