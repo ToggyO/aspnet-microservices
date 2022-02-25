@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="AspNetMicroservices.Abstractions" Version="1.0.0" />
     <PackageReference Include="AspNetMicroservices.Grpc" Version="1.0.3" GeneratePathProperty="true" />
+    <PackageReference Include="AspNetMicroservices.Logging" Version="1.0.2" />
     <PackageReference Include="AspNetMicroservices.SharedServices" Version="1.0.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.38.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />

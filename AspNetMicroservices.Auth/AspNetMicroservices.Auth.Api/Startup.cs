@@ -9,6 +9,7 @@ using AspNetMicroservices.Auth.DataAccess;
 using AspNetMicroservices.Auth.Infrastructure;
 using AspNetMicroservices.Extensions.Mvc;
 using AspNetMicroservices.Extensions.Swagger;
+using AspNetMicroservices.Logging.Serilog;
 using AspNetMicroservices.SharedServices.Cache;
 
 using Microsoft.AspNetCore.Builder;
@@ -20,7 +21,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AspNetMicroservices.Auth.Api
 {
-    public class Startup
+	public class Startup
     {
         public Startup(IWebHostEnvironment env)
         {
@@ -46,7 +47,8 @@ namespace AspNetMicroservices.Auth.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-	        bool isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+	        bool isDevelopment = Environment
+		        .GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
 
             services.AddCors(o =>
                 o.AddPolicy(CorsPolicy, builder => builder
@@ -75,7 +77,7 @@ namespace AspNetMicroservices.Auth.Api
 
             services.AddSettings(Configuration, isDevelopment);
             services.AddApplicationLayer();
-            services.AddInfrastructure();
+            services.AddInfrastructure(Configuration);
             services.AddDataAccess(dbSettings.DbConnectionString);
             services.AddRedisCache(redisSettings.ConnectionString);
             services.AddApiHandlers();
@@ -99,9 +101,13 @@ namespace AspNetMicroservices.Auth.Api
         }
 
         public void Configure(IApplicationBuilder app,
+	        IHostApplicationLifetime hostLifetime,
             IWebHostEnvironment env,
             ILogger<Startup> logger)
         {
+	        hostLifetime.UseSerilogCloseAndFlush();
+
+	        logger.LogInformation("Startup.Configure: Start");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -111,25 +117,26 @@ namespace AspNetMicroservices.Auth.Api
                 app.UseHttpsRedirection();
             }
 
+            logger.LogInformation("Startup.Configure: Api documentation");
             app.UseSwaggerMiddleware("AspNetMicroservices.Auth.Api v1");
 
-            logger.LogInformation("Routing");
+            logger.LogInformation("Startup.Configure: Routing");
             app.UseRouting();
 
-            logger.LogInformation("Cors");
+            logger.LogInformation("Startup.Configure: Cors");
             app.UseCors(CorsPolicy);
 
-            logger.LogInformation("Authorization");
             // TODO: check
+            // logger.LogInformation("Startup.Configure: Authorization");
             // app.UseAuthentication();
             // app.UseAuthorization();
 
-            logger.LogInformation("Custom middleware");
+            logger.LogInformation("Startup.Configure: Custom middleware");
             app.UseMiddleware<ExceptionMiddleware>();
 
-            logger.LogInformation("Endpoints");
+            logger.LogInformation("Startup.Configure: Endpoints");
             app.UseEndpoints(endpoints => endpoints.MapControllers());
-            logger.LogInformation("Exit Configure");
+            logger.LogInformation("Startup.Configure: Finish");
         }
     }
 }

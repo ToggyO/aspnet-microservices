@@ -7,9 +7,12 @@ using AspNetMicroservices.Auth.Application.Dto.Auth;
 using AspNetMicroservices.Auth.Application.Dto.Users;
 using AspNetMicroservices.Auth.Application.Features.Auth.Validators;
 using AspNetMicroservices.Auth.Domain.Repositories;
+using AspNetMicroservices.Common.Utils;
 using AspNetMicroservices.SharedServices.PasswordService;
 
 using MediatR;
+
+using Microsoft.Extensions.Logging;
 
 namespace AspNetMicroservices.Auth.Application.Features.Auth.Commands
 {
