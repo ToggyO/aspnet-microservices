@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 
 using AspNetMicroservices.Abstractions.Models.Settings;
+using AspNetMicroservices.Logging.Serilog;
 using AspNetMicroservices.Products.Api.Interceptors;
 
 using MediatR;
@@ -72,6 +73,7 @@ namespace AspNetMicroservices.Products.Api
             services.AddDataLayer(dbSettings.DbConnectionString);
             services.AddAuthServices(Configuration);
             services.AddRedisCache(redisSettings.ConnectionString);
+            services.AddConfiguredSerilog(Configuration);
 
             services.AddAutoMapper(typeof(Startup), typeof(Business.DependencyInjectionModule));
         }
@@ -79,8 +81,11 @@ namespace AspNetMicroservices.Products.Api
         public void Configure(
 	        IApplicationBuilder app,
 	        IWebHostEnvironment env,
-	        IMigrationRunner runner)
+	        IMigrationRunner runner,
+	        IHostApplicationLifetime lifetime)
         {
+	        lifetime.UseSerilogCloseAndFlush();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

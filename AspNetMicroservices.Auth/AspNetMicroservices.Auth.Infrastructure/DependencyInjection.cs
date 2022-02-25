@@ -3,7 +3,6 @@ using AspNetMicroservices.Auth.Infrastructure.Factories;
 using AspNetMicroservices.Auth.Infrastructure.Services;
 using AspNetMicroservices.Extensions.ServiceCollection;
 using AspNetMicroservices.Logging.Serilog;
-// using AspNetMicroservices.Logging.Serilog;
 using AspNetMicroservices.SharedServices.PasswordService;
 
 using Microsoft.Extensions.Configuration;

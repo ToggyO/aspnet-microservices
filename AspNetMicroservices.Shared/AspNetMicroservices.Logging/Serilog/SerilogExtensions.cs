@@ -1,6 +1,6 @@
 ﻿using System;
 
-using AspNetMicroservices.Logging.Serilog.Enrichers;
+using AspNetMicroservices.Logging.Serilog.Enrichers.Extensions;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,13 +41,11 @@ namespace AspNetMicroservices.Logging.Serilog
 			{
 				var loggerConfiguration = new LoggerConfiguration()
 					.ReadFrom.Configuration(configuration);
-					// .Enrich.WithProperty("Application", "AppKek");
 
-				// if (enrichWithSolutionName)
-				// 	loggerConfiguration.Enrich.With<ApplicationNameEnricher>();
+				if (enrichWithSolutionName)
+					loggerConfiguration.Enrich.WithApplicationName();
 
 				Log.Logger = loggerConfiguration.CreateLogger();
-
 				services.AddSingleton(Log.Logger);
 
 				return services;
@@ -62,13 +60,13 @@ namespace AspNetMicroservices.Logging.Serilog
 		/// <summary>
 		/// Dispose Serilog logger on application shutdown.
 		/// </summary>
-		/// <param name="liftime">Application host lifetime instance.</param>
+		/// <param name="lifetime">Application host lifetime instance.</param>
 		/// <returns></returns>
 		public static IHostApplicationLifetime UseSerilogCloseAndFlush(
-			this IHostApplicationLifetime liftime)
+			this IHostApplicationLifetime lifetime)
 		{
-			liftime.ApplicationStopping.Register(Log.CloseAndFlush);
-			return liftime;
+			lifetime.ApplicationStopping.Register(Log.CloseAndFlush);
+			return lifetime;
 		}
 	}
 }

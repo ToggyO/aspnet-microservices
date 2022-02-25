@@ -5,13 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetMicroservices.SharedServices" Version="1.0.0" />
+    <PackageReference Include="AspNetMicroservices.Logging" Version="1.0.2" />
+    <PackageReference Include="AspNetMicroservices.SharedServices" Version="1.0.1" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AspNetMicroservices.Shared\AspNetMicroservices.Logging\AspNetMicroservices.Logging.csproj" />
     <ProjectReference Include="..\AspNetMicroservices.Auth.Application\AspNetMicroservices.Auth.Application.csproj" />
     <ProjectReference Include="..\AspNetMicroservices.Auth.Domain\AspNetMicroservices.Auth.Domain.csproj" />
   </ItemGroup>

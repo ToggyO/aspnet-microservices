@@ -9,10 +9,11 @@ namespace AspNetMicroservices.Logging.Serilog.Enrichers
 	{
 		private const string PropName = "Application";
 
+		private readonly string _currentSolutionName = Project.GetCurrentSolutionName();
+
 		public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
 		{
-			var solutionName = Project.GetCurrentSolutionName();
-			var eventType = propertyFactory.CreateProperty(PropName, solutionName);
+			var eventType = propertyFactory.CreateProperty(PropName, _currentSolutionName);
 			logEvent.AddPropertyIfAbsent(eventType);
 		}
 	}

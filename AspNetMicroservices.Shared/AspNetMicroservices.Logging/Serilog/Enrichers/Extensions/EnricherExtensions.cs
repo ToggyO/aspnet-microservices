@@ -1,7 +1,19 @@
-﻿namespace AspNetMicroservices.Logging.Serilog.Enrichers.Extensions
+﻿using System;
+
+using Serilog;
+using Serilog.Configuration;
+
+namespace AspNetMicroservices.Logging.Serilog.Enrichers.Extensions
 {
-	public class EnricherExtensions
+	public static class EnricherExtensions
 	{
-		
+		public static LoggerConfiguration WithApplicationName(
+			this LoggerEnrichmentConfiguration enrich)
+		{
+			if (enrich is null)
+				throw new ArgumentNullException(nameof(enrich));
+
+			return enrich.With<ApplicationNameEnricher>();
+		}
 	}
 }

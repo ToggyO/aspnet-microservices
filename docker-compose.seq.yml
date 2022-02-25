@@ -1,15 +1,37 @@
 version: '3.8'
 
+# TODO: creds into env
 services:
+  seqcli:
+    image: datalust/seqcli:2021.3
+    command: apikey create -t newapikey --token 12345678901234567890 -s http://aspnet-mic-seq --connect-username=seq-user --connect-password=seq-password
+    depends_on:
+      - seq
+    restart: on-failure
+    networks:
+      - seqnetwork
+
   aspnet-mic-seq:
-    image: datalust/seq:latest
+    image: datalust/seq:2021.4
     container_name: aspnet-mic-seq
+    restart: unless-stopped
     environment:
-      - ACCEPT_EULA=Y
+      ACCEPT_EULA: 'Y'
+      SEQ_FIRSTRUN_REQUIREAUTHENTICATIONFORHTTPINGESTION: 'true'
+      SEQ_FIRSTRUN_ADMINUSERNAME: 'seq-user'
+      SEQ_FIRSTRUN_ADMINPASSWORD: 'seq-password'
+      SEQ_FIRSTRUN_ADMINPASSWORDHASH: 'FB6exc/kcNXbcQcXNwDYOjiKmkRkyPD0tCM7k3N0LOljsYKtAw=='
+#      SEQ_FIRSTRUN_ADMINUSERNAME: ${SEQ_USERNAME}
+#      SEQ_FIRSTRUN_ADMINPASSWORD: ${SEQ_PASSWORD}
+    volumes:
+      - '../aspnet-microservices-volumes/volume-seq:/data'
     ports:
-      - 8081:80
+      - '8081:80'
     networks:
       - seqnetwork
 
 networks:
   seqnetwork:
+    
+# SEQ_USERNAME=seq-user
+# SEQ_PASSWORD=seq-password
