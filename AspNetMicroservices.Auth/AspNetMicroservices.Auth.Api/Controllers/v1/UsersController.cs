@@ -17,6 +17,7 @@ namespace AspNetMicroservices.Auth.Api.Controllers.v1
 	/// </summary>
 	[ApiController]
 	[Route("users")]
+	[ApiVersion("1.0")]
 	public class UsersController : ControllerBase, IUsersHandler
 	{
 		/// <summary>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.810.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMicroservices.Abstractions", "AspNetMicroservices.Abstractions.csproj", "{986F8CEB-A4A8-42C0-82EC-7020324208AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{986F8CEB-A4A8-42C0-82EC-7020324208AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{986F8CEB-A4A8-42C0-82EC-7020324208AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{986F8CEB-A4A8-42C0-82EC-7020324208AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{986F8CEB-A4A8-42C0-82EC-7020324208AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3A9C795-57F0-4217-B5F2-7EBFC1B5C943}
+	EndGlobalSection
+EndGlobal

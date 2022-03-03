@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\AspNetMicroservices.Shared\AspNetMicroservices.Extensions\AspNetMicroservices.Extensions.csproj" />
     <ProjectReference Include="..\AspNetMicroservices.Auth.DataAccess\AspNetMicroservices.Auth.DataAccess.csproj" />
     <ProjectReference Include="..\AspNetMicroservices.Auth.Domain\AspNetMicroservices.Auth.Domain.csproj" />
     <ProjectReference Include="..\AspNetMicroservices.Auth.Infrastructure\AspNetMicroservices.Auth.Infrastructure.csproj" />

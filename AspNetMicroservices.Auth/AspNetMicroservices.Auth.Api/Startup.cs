@@ -7,6 +7,8 @@ using AspNetMicroservices.Auth.Api.Middleware;
 using AspNetMicroservices.Auth.Application;
 using AspNetMicroservices.Auth.DataAccess;
 using AspNetMicroservices.Auth.Infrastructure;
+using AspNetMicroservices.Common.Utils;
+using AspNetMicroservices.Extensions.ApiVersioning;
 using AspNetMicroservices.Extensions.Mvc;
 using AspNetMicroservices.Extensions.Swagger;
 using AspNetMicroservices.Logging.Serilog;
@@ -86,17 +88,20 @@ namespace AspNetMicroservices.Auth.Api
 
             services.AddControllersWithViews(mvcOpts =>
             {
-	            mvcOpts.UseGlobalRoutePrefix("api");
+	            mvcOpts.UseGlobalRoutePrefix("api/{version:apiVersion}");
 	            mvcOpts.Filters.Add<ApplicationExceptionFilterAttribute>();
 	            mvcOpts.Filters.Add<AuthorizationFilter>();
+                // mvcOpts.Filters.Add<ValidationFilter>();
 	            mvcOpts.Filters.Add<StatusCodeFilter>();
             });
+
+            services.AddConfiguredApiVersioning();
             services.AddConfiguredSwaggerGen(o =>
             {
                 o.Title = "AspNetMicroservices.Auth.Api";
-                o.Version = "v1";
+                // o.Version = "v1";
                 o.UseFullModelName = true;
-                o.ExcutingAssembly = Assembly.GetExecutingAssembly();
+                o.ExecutingAssembly = Assembly.GetExecutingAssembly();
             });
         }
 
@@ -118,7 +123,7 @@ namespace AspNetMicroservices.Auth.Api
             }
 
             logger.LogInformation("Startup.Configure: Api documentation");
-            app.UseSwaggerMiddleware("AspNetMicroservices.Auth.Api v1");
+            app.UseSwaggerMiddleware(Project.GetCurrentSolutionName());
 
             logger.LogInformation("Startup.Configure: Routing");
             app.UseRouting();
