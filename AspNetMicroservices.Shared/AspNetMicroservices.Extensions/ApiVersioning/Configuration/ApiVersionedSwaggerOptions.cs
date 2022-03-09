@@ -1,14 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
+﻿using AspNetMicroservices.Extensions.ApiVersioning.Filters;
+using AspNetMicroservices.Extensions.Swagger.Configuration;
+
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace AspNetMicroservices.Extensions.Swagger.Configuration
+namespace AspNetMicroservices.Extensions.ApiVersioning.Configuration
 {
 	// TODO: add description
-	public class ApiVersionedSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
+	/// <summary>
+	///
+	/// </summary>
+	internal class ApiVersionedSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 	{
 		private readonly IApiVersionDescriptionProvider _provider;
 
@@ -23,6 +29,9 @@ namespace AspNetMicroservices.Extensions.Swagger.Configuration
 
 		public void Configure(SwaggerGenOptions options)
 		{
+			options.DocumentFilter<SwaggerSetVersionInPaths>();
+			options.OperationFilter<SwaggerRemoveVersionParameters>();
+
 			foreach (var description in _provider.ApiVersionDescriptions)
 				options.SwaggerDoc(
 					description.GroupName,

@@ -1,10 +1,8 @@
-﻿using System;
-
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace AspNetMicroservices.Extensions.Swagger.Filters
+namespace AspNetMicroservices.Extensions.ApiVersioning.Filters
 {
 	// TODO: add description
 	public class SwaggerSetVersionInPaths : IDocumentFilter

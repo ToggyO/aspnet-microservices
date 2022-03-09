@@ -2,12 +2,9 @@ using System;
 using System.IO;
 
 using AspNetMicroservices.Common.Constants.Http;
-using AspNetMicroservices.Extensions.ApiVersioning;
 using AspNetMicroservices.Extensions.Swagger.Configuration;
-using AspNetMicroservices.Extensions.Swagger.Filters;
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -23,31 +20,24 @@ namespace AspNetMicroservices.Extensions.Swagger
     public static class SwaggerExtensions
     {
         /// <summary>
-        /// Extension method adds configured Swagger documentation service
+        /// Extension method adds configured Swagger documentation service.
         /// to instance of <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="services">Instance of <see cref="IServiceCollection"/>.</param>
         /// <param name="configured">Swagger options retriever.</param>
         public static void AddConfiguredSwaggerGen(this IServiceCollection services,
             Action<SwaggerGenConfiguration> configured)
-        // public static void AddConfiguredSwaggerGen(this IServiceCollection services,
-        //     string title, string version,  bool useFullModelName = false)
         {
             var options = new SwaggerGenConfiguration();
             configured(options);
 
             services.AddSingleton(options);
-            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ApiVersionedSwaggerOptions>();
-
             services.AddSwaggerGen(c =>
             {
                 // TODO: check
                 if (options.UseFullModelName)
                     c.CustomSchemaIds(x => x.FullName);
                 //
-
-                c.DocumentFilter<SwaggerSetVersionInPaths>();
-                c.OperationFilter<SwaggerRemoveVersionParameters>();
 
                 c.AddJwtSecurityDefinition();
 
@@ -64,44 +54,52 @@ namespace AspNetMicroservices.Extensions.Swagger
         /// Extension method adds configured Swagger documentation middleware to
         /// instance of <see cref="IApplicationBuilder"/>.
         /// </summary>
-        /// <param name="app"></param>
-        public static void UseSwaggerMiddleware(this IApplicationBuilder app,
-            string name)
+        /// <param name="app">Instance of <see cref="IApplicationBuilder"/>.</param>
+        /// <param name="setupAction">Configure swagger UI options action.</param>
+        /// <param name="apiServers">List of api servers.</param>
+        public static IApplicationBuilder UseSwaggerMiddleware(this IApplicationBuilder app,
+	        Action<SwaggerUIOptions> setupAction = null,
+	        System.Collections.Generic.IEnumerable<OpenApiServer> apiServers = null)
         {
-
-	        // TODO: check
-            // app.UseSwagger();
-            // app.UseSwaggerUI(c
-            //     => c.SwaggerEndpoint(swaggerEndpoint, name));
-
-            // if (!env.IsDevelopment())
-            // {
-	           //  app.UseSwagger(options =>
-	           //  {
-		          //   options.RouteTemplate = "swagger/{documentName}/swagger.json";
-		          //   options.PreSerializeFilters.Add((swaggerDoc, httpReq) => swaggerDoc.Servers = new System.Collections.Generic.List<OpenApiServer>
-		          //   {
-			         //    new OpenApiServer { Url = $"https://api.squad.magora.team", Description = "Dev"},
-			         //    new OpenApiServer { Url = $"{httpReq.Scheme}://{httpReq.Host.Value}", Description = "Local"}
-		          //   });
-	           //  });
-            // }
-            // else
-            // {
-	           //  app.UseSwagger();
-            // }
-
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
+	        app.UseSwagger(options =>
             {
-	            var apiVersionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
+	            options.RouteTemplate = "swagger/{documentName}/swagger.json";
+	            options.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
+	            {
+		            var servers = new System.Collections.Generic.List<OpenApiServer>
+		            {
+			            new OpenApiServer { Url = $"{httpReq.Scheme}://{httpReq.Host.Value}", Description = "Local" }
+		            };
 
-	            foreach (var description in apiVersionProvider.ApiVersionDescriptions)
-		            options.SwaggerEndpoint($"{description.GroupName}/swagger.json"
-			            , $"{name} {description.GroupName.ToUpperInvariant()}");
+		            if (apiServers is not null)
+						servers.AddRange(apiServers);
 
-	            options.DocExpansion(DocExpansion.None);
+		            swaggerDoc.Servers = servers;
+	            });
             });
+            app.UseSwaggerUICustom(setupAction);
+
+            return app;
+        }
+
+        /// <summary>
+        /// Enable usage of swagger UI middleware.
+        /// </summary>
+        /// <param name="app">Instance of <see cref="IApplicationBuilder"/>.</param>
+        /// <param name="setupAction">Configure swagger UI options action.</param>
+        /// <returns></returns>
+        public static IApplicationBuilder UseSwaggerUICustom(this IApplicationBuilder app,
+	        Action<SwaggerUIOptions> setupAction = null)
+        {
+	        var options = app.ApplicationServices
+		        .GetRequiredService<IOptions<SwaggerUIOptions>>().Value ?? new SwaggerUIOptions();
+
+	        if (setupAction is not null)
+		        setupAction(options);
+
+	        app.UseMiddleware<SwaggerUIMiddleware>(options);
+
+	        return app;
         }
 
         private static void AddJwtSecurityDefinition(this SwaggerGenOptions options)

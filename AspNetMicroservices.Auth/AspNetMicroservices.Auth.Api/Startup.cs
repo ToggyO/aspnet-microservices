@@ -96,10 +96,9 @@ namespace AspNetMicroservices.Auth.Api
             });
 
             services.AddConfiguredApiVersioning();
-            services.AddConfiguredSwaggerGen(o =>
+            services.AddConfiguredVersionedSwaggerGen(o =>
             {
                 o.Title = "AspNetMicroservices.Auth.Api";
-                // o.Version = "v1";
                 o.UseFullModelName = true;
                 o.ExecutingAssembly = Assembly.GetExecutingAssembly();
             });
@@ -123,7 +122,7 @@ namespace AspNetMicroservices.Auth.Api
             }
 
             logger.LogInformation("Startup.Configure: Api documentation");
-            app.UseSwaggerMiddleware(Project.GetCurrentSolutionName());
+            app.UseSwaggerMiddleware();
 
             logger.LogInformation("Startup.Configure: Routing");
             app.UseRouting();
