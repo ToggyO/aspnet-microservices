@@ -72,12 +72,14 @@ namespace AspNetMicroservices.Auth.Infrastructure.Services
                 Tokens = tokens
             };
 
-            await _cache.SetCacheValueAsync(Utils.CreateCacheKey(Prefix.Access, identityId),
+            var setAccessTask = _cache.SetCacheValueAsync(Utils.CreateCacheKey(Prefix.Access, identityId),
                 ticket, TimeSpan.FromMinutes(_settings.AccessTokenExpiresInMinutes));
 
-            await _cache.SetCacheValueAsync( Utils.CreateCacheKey(Prefix.Refresh, tokens.RefreshToken),
+            var setRefreshTask = _cache.SetCacheValueAsync( Utils.CreateCacheKey(Prefix.Refresh, tokens.RefreshToken),
                 new RefreshAuthTicketDto { Id = user.Id, AuthenticationTicketId = identityId },
                 TimeSpan.FromMinutes(_settings.RefreshTokenExpiresInMinutes));
+
+            await Task.WhenAll(setAccessTask, setRefreshTask);
 
             return ticket;
         }
