@@ -49,5 +49,9 @@ namespace AspNetMicroservices.Auth.Api.Controllers.v1
 		[ProducesResponseType(typeof(SecurityErrorResponse), (int)HttpStatusCode.Unauthorized)]
 		public async Task<Response<TokenDto>> RefreshToken([FromBody] Refresh.Command cmd)
 			=> await _handler.RefreshToken(cmd);
+
+		[HttpGet("check")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public bool CheckAuthentication() => true;
 	}
 }

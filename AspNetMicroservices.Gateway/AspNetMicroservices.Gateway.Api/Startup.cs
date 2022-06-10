@@ -66,9 +66,7 @@ namespace AspNetMicroservices.Gateway.Api
             services.AddConfiguredSwaggerGen(o =>
             {
 	            o.Title = "AspNetMicroservices.Gateway.Api";
-	            o.Version = "v1";
 	            o.UseFullModelName = true;
-	            o.ExcutingAssembly = Assembly.GetExecutingAssembly();
             });
 
             DependencyInjectionModule.LoadRpcDependencies(services);
@@ -83,7 +81,7 @@ namespace AspNetMicroservices.Gateway.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwaggerMiddleware("AspNetMicroservices.Gateway.Api v1");
+                app.UseSwaggerMiddleware();
             }
             else
             {

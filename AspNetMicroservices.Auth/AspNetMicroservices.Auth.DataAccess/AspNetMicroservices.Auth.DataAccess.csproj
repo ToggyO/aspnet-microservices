@@ -5,7 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetMicroservices.Data" Version="1.0.0" />
+    <PackageReference Include="AspNetMicroservices.Data" Version="1.0.2" />
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Dapper.Contrib" Version="2.0.78" />
     <PackageReference Include="Dapper.Mapper" Version="2.0.0" />

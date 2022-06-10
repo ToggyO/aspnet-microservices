@@ -23,8 +23,9 @@ namespace AspNetMicroservices.Extensions.ApiVersioning
 		/// Extension method adds configured api versioning services.
 		/// </summary>
 		/// <param name="services">Instance of <see cref="IServiceCollection"/>.</param>
+		/// <param name="versionNameFormat">Format of version name.</param>
 		/// <returns></returns>
-		public static IServiceCollection AddConfiguredApiVersioning(this IServiceCollection services)
+		public static IServiceCollection AddConfiguredApiVersioning(this IServiceCollection services, string versionNameFormat = null)
 		{
 			services.AddApiVersioning(o =>
 			{
@@ -34,7 +35,7 @@ namespace AspNetMicroservices.Extensions.ApiVersioning
 				o.ApiVersionReader = new UrlSegmentApiVersionReader();
 			});
 
-			services.AddVersionedApiExplorer(opt => opt.GroupNameFormat = "'v'VVV");
+			services.AddVersionedApiExplorer(opt => opt.GroupNameFormat = versionNameFormat ?? "VVV");
 
 			return services;
 		}

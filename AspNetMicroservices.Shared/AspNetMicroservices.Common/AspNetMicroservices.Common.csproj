@@ -6,17 +6,17 @@
     <Nullable>enable</Nullable>
 
     <PackageId>AspNetMicroservices.Common</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>Toggy-O</Authors>
     <Company>AspNetMicroservices</Company>
 
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
     <LangVersion>10</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetMicroservices.Common" Version="1.0.2" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
 

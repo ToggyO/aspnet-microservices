@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetMicroservices.Grpc" Version="1.0.3" GeneratePathProperty="true" />
+    <PackageReference Include="AspNetMicroservices.Grpc" Version="1.0.5" GeneratePathProperty="true" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.38.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />

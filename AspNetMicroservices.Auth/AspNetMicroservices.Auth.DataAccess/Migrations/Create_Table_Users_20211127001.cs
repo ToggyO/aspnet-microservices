@@ -9,7 +9,8 @@ using FluentMigrator;
 namespace AspNetMicroservices.Auth.DataAccess.Migrations
 {
 	/// <summary>
-	/// Create users table migration.
+	/// Migration:
+	/// Create users table.
 	/// </summary>
 	[Migration(20211127001)]
 	public class Create_Table_Users_20211127001 : Migration

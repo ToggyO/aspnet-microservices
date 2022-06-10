@@ -25,12 +25,18 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 		private readonly AuthServiceDbContext _connectionFactory;
 
 		/// <summary>
+		/// Instance of SQL query compiler <see cref="Compiler"/>.
+		/// </summary>
+		private readonly Compiler _sqlCompiler;
+
+		/// <summary>
 		/// Initialize new instance of <see cref="UsersRepository"/>.
 		/// </summary>
 		/// <param name="context">Instance of <see cref="AuthServiceDbContext"/>.</param>
 		public UsersRepository(AuthServiceDbContext context)
 		{
 			_connectionFactory = context;
+			_sqlCompiler = new PostgresCompiler();
 		}
 
 		/// <inheritdoc cref="IUsersRepository.GetList"/>.
@@ -45,7 +51,7 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 			if (filter.Search is not null)
 				sql.WhereContains("u.first_name", filter.Search).OrWhereContains("u.last_name", filter.Search);
 
-			var compiled = new PostgresCompiler().Compile(sql);
+			var compiled = _sqlCompiler.Compile(sql);
 
 			await using var connection = _connectionFactory.GetDbConnection();
 			var users = await connection.QueryAsync<UserModel>(compiled.Sql, compiled.NamedBindings);
@@ -80,7 +86,7 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 			await using var connection = _connectionFactory.GetDbConnection();
 
 			var sql = new Query("users").AsInsertWithMapping(entity);
-			var compiled = new PostgresCompiler().Compile(sql);
+			var compiled = _sqlCompiler.Compile(sql);
 			compiled.Sql = SqlHelpers.Adapter.AppendReturningIdentity(connection, compiled.Sql);
 
 			entity.Id = await connection.ExecuteScalarAsync<int>(compiled.Sql, compiled.NamedBindings);
@@ -105,7 +111,7 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 			await using var connection = _connectionFactory.GetDbConnection();
 
 			var sql = new Query("user_details").AsInsertWithMapping(entity);
-			var compiled = new PostgresCompiler().Compile(sql);
+			var compiled = _sqlCompiler.Compile(sql);
 			compiled.Sql = SqlHelpers.Adapter.AppendReturningIdentity(connection, compiled.Sql);
 
 			entity.Id = await connection.ExecuteScalarAsync<int>(compiled.Sql, compiled.NamedBindings);
@@ -115,7 +121,7 @@ namespace AspNetMicroservices.Auth.DataAccess.Repositories
 
 		private async Task<UserModel> GetUser(Query query)
 		{
-			var compiled = new PostgresCompiler().Compile(query);
+			var compiled = _sqlCompiler.Compile(query);
 
 			await using var connection = _connectionFactory.GetDbConnection();
 			var users = await connection.QueryAsync<UserModel, UserDetailModel, UserModel>(

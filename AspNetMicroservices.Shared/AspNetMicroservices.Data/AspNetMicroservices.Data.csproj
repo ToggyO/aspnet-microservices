@@ -4,17 +4,18 @@
     <TargetFramework>net5.0</TargetFramework>
 
     <PackageId>AspNetMicroservices.Data</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.2</Version>
     <Authors>Toggy-O</Authors>
     <Company>AspNetMicroservices</Company>
 
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
     <LangVersion>10</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetMicroservices.Extensions" Version="1.0.0" />
+    <PackageReference Include="AspNetMicroservices.Extensions" Version="1.0.3" />
   </ItemGroup>
 
 </Project>

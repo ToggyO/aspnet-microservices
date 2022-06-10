@@ -7,7 +7,6 @@ using AspNetMicroservices.Auth.Api.Middleware;
 using AspNetMicroservices.Auth.Application;
 using AspNetMicroservices.Auth.DataAccess;
 using AspNetMicroservices.Auth.Infrastructure;
-using AspNetMicroservices.Common.Utils;
 using AspNetMicroservices.Extensions.ApiVersioning;
 using AspNetMicroservices.Extensions.Mvc;
 using AspNetMicroservices.Extensions.Swagger;
@@ -34,7 +33,10 @@ namespace AspNetMicroservices.Auth.Api
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
-            DotNetEnv.Env.TraversePath().Load();
+            // TODO: remove
+            // DotNetEnv.Env.TraversePath().Load();
+            // TODO: configure for production
+            DotNetEnv.Env.Load($"../.env.{env.EnvironmentName.ToLower()}");
         }
 
         /// <summary>
@@ -88,7 +90,7 @@ namespace AspNetMicroservices.Auth.Api
 
             services.AddControllersWithViews(mvcOpts =>
             {
-	            mvcOpts.UseGlobalRoutePrefix("api/{version:apiVersion}");
+	            mvcOpts.UseGlobalRoutePrefix("api/v{version:apiVersion}");
 	            mvcOpts.Filters.Add<ApplicationExceptionFilterAttribute>();
 	            mvcOpts.Filters.Add<AuthorizationFilter>();
                 // mvcOpts.Filters.Add<ValidationFilter>();
